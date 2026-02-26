@@ -7,8 +7,8 @@ import TubesBackground from "./TubesBackground";
 
 export default function HeroSection() {
   return (
-    <TubesBackground className="w-full min-h-[90vh] overflow-visible">
-      <section className="flex-grow flex items-center justify-center px-6 lg:px-12 pb-20 pt-10 relative z-10 w-full min-h-[90vh]">
+    <TubesBackground className="w-full min-h-screen overflow-hidden">
+      <section className="flex-grow flex items-center justify-center px-6 lg:px-12 pb-20 pt-20 relative z-10 w-full min-h-screen">
         <div className="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center pointer-events-none mt-20">
           
           {/* CỘT TRÁI: TEXT & CALL TO ACTION */}

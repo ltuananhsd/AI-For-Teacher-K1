@@ -83,11 +83,11 @@ export default function TubesBackground({
 
       <canvas 
         ref={canvasRef} 
-        className={`fixed inset-0 w-full h-full block transition-opacity duration-1000 ${isLoaded ? 'opacity-100' : 'opacity-0'} pointer-events-none z-0`}
+        className={`absolute inset-0 w-full h-full block transition-opacity duration-1000 ${isLoaded ? 'opacity-100' : 'opacity-0'} pointer-events-none z-0`}
         style={{ touchAction: 'none' }}
       />
       
-      <div className="relative z-10 w-full flex flex-col min-h-screen">
+      <div className="relative z-10 w-full flex flex-col h-full">
         {children}
       </div>
     </div>
