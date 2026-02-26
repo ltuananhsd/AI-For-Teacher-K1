@@ -64,9 +64,9 @@ const TubesBackground = ({
 
       try {
         // Tải động thư viện threejs-components chứa hiệu ứng Tubes1 từ CDN
-        // Sử dụng @ts-ignore để bỏ qua cảnh báo của TypeScript về module động
-        // @ts-ignore
-        const module = await import('https://cdn.jsdelivr.net/npm/threejs-components@0.0.19/build/cursors/tubes1.min.js');
+        // Sử dụng new Function thay cho import() trực tiếp để tránh lỗi context của Turbopack trong Next.js (SSR)
+        const importFunc = new Function('url', 'return import(url)');
+        const module = await importFunc('https://cdn.jsdelivr.net/npm/threejs-components@0.0.19/build/cursors/tubes1.min.js');
         const TubesCursor = module.default;
 
         if (!mounted) return;
