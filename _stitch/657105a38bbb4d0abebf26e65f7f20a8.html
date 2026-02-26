@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#4387f4",
+                        "background-light": "#f5f7f8",
+                        "background-dark": "#0a0f18",
+                        "glass": "rgba(255, 255, 255, 0.03)",
+                        "border-subtle": "rgba(255, 255, 255, 0.1)",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .glass-morphism {
+            background: rgba(16, 23, 34, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .glow-button {
+            box-shadow: 0 0 15px rgba(67, 135, 244, 0.4);
+        }
+        .progress-glow {
+            box-shadow: 0 0 10px rgba(67, 135, 244, 0.6);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen">
+<div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
+<!-- Top Navigation -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-white/10 px-6 lg:px-20 py-4 bg-background-dark/80 backdrop-blur-md sticky top-0 z-50">
+<div class="flex items-center gap-3">
+<div class="text-primary size-8">
+<svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M36.7273 44C33.9891 44 31.6043 39.8386 30.3636 33.69C29.123 39.8386 26.7382 44 24 44C21.2618 44 18.877 39.8386 17.6364 33.69C16.3957 39.8386 14.0109 44 11.2727 44C7.25611 44 4 35.0457 4 24C4 12.9543 7.25611 4 11.2727 4C14.0109 4 16.3957 8.16144 17.6364 14.31C18.877 8.16144 21.2618 4 24 4C26.7382 4 29.123 8.16144 30.3636 14.31C31.6043 8.16144 33.9891 4 36.7273 4C40.7439 4 44 12.9543 44 24C44 35.0457 40.7439 44 36.7273 44Z" fill="currentColor"></path>
+</svg>
+</div>
+<h2 class="text-white text-lg font-bold tracking-tight">GOOGLE AI ECOSYSTEM 2026</h2>
+</div>
+<div class="hidden md:flex items-center gap-8">
+<nav class="flex items-center gap-8">
+<a class="text-slate-400 hover:text-white text-sm font-medium transition-colors" href="#">Bootcamp</a>
+<a class="text-slate-400 hover:text-white text-sm font-medium transition-colors" href="#">Lộ trình</a>
+<a class="text-slate-400 hover:text-white text-sm font-medium transition-colors" href="#">Giảng viên</a>
+</nav>
+<button class="bg-primary/10 hover:bg-primary/20 text-primary border border-primary/30 rounded-lg px-5 py-2 text-sm font-bold transition-all">
+                    Đăng nhập
+                </button>
+</div>
+</header>
+<main class="flex-1 flex flex-col items-center py-12 px-4 md:px-10">
+<div class="max-w-5xl w-full grid grid-cols-1 lg:grid-cols-12 gap-10">
+<!-- Registration Form Container -->
+<div class="lg:col-span-8 flex flex-col gap-8">
+<!-- Progress Section -->
+<div class="flex flex-col gap-4">
+<div class="flex justify-between items-end">
+<div>
+<h1 class="text-white text-2xl font-bold">Đăng ký tham gia</h1>
+<p class="text-slate-400 text-sm mt-1">Bước 1: Thông tin cá nhân &amp; Mục tiêu</p>
+</div>
+<span class="text-primary font-bold">25% Hoàn tất</span>
+</div>
+<div class="h-1.5 w-full bg-slate-800 rounded-full overflow-hidden">
+<div class="h-full bg-primary progress-glow w-1/4 rounded-full"></div>
+</div>
+</div>
+<!-- Main Form Card -->
+<div class="glass-morphism rounded-xl p-8 flex flex-col gap-8">
+<div class="flex items-start gap-4">
+<div class="bg-primary/20 p-3 rounded-lg">
+<span class="material-symbols-outlined text-primary">person_add</span>
+</div>
+<div>
+<h3 class="text-white text-xl font-bold">Hoàn tất thông tin đăng ký Bootcamp</h3>
+<p class="text-slate-400 text-sm mt-1">Vui lòng cung cấp chính xác thông tin để chúng tôi xác thực tư cách hội viên AI của bạn.</p>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- Full Name -->
+<div class="flex flex-col gap-2">
+<label class="text-slate-300 text-sm font-medium ml-1">Họ và tên</label>
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-primary transition-colors">person</span>
+<input class="w-full bg-slate-900/50 border border-white/10 rounded-lg py-4 pl-12 pr-4 text-white placeholder:text-slate-600 focus:border-primary focus:ring-1 focus:ring-primary/30 outline-none transition-all" placeholder="Nguyễn Văn A" type="text"/>
+</div>
+</div>
+<!-- Phone -->
+<div class="flex flex-col gap-2">
+<label class="text-slate-300 text-sm font-medium ml-1">Số điện thoại</label>
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-primary transition-colors">call</span>
+<input class="w-full bg-slate-900/50 border border-white/10 rounded-lg py-4 pl-12 pr-4 text-white placeholder:text-slate-600 focus:border-primary focus:ring-1 focus:ring-primary/30 outline-none transition-all" placeholder="0901 234 567" type="tel"/>
+</div>
+</div>
+<!-- Job Title Dropdown -->
+<div class="flex flex-col gap-2 md:col-span-2">
+<label class="text-slate-300 text-sm font-medium ml-1">Chức vụ / Nghề nghiệp</label>
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-primary transition-colors">work</span>
+<select class="w-full appearance-none bg-slate-900/50 border border-white/10 rounded-lg py-4 pl-12 pr-10 text-white focus:border-primary focus:ring-1 focus:ring-primary/30 outline-none transition-all">
+<option disabled="" selected="" value="">Chọn nghề nghiệp của bạn</option>
+<option value="student">Sinh viên CNTT</option>
+<option value="developer">Lập trình viên (Developer)</option>
+<option value="manager">Quản lý dự án (PM/PO)</option>
+<option value="researcher">Nghiên cứu viên AI</option>
+<option value="other">Khác</option>
+</select>
+<span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 pointer-events-none">expand_more</span>
+</div>
+</div>
+<!-- Goals Text Area -->
+<div class="flex flex-col gap-2 md:col-span-2">
+<label class="text-slate-300 text-sm font-medium ml-1">Mục tiêu của bạn khi tham gia Bootcamp</label>
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-4 top-4 text-slate-500 group-focus-within:text-primary transition-colors">track_changes</span>
+<textarea class="w-full bg-slate-900/50 border border-white/10 rounded-lg py-4 pl-12 pr-4 text-white placeholder:text-slate-600 focus:border-primary focus:ring-1 focus:ring-primary/30 outline-none transition-all resize-none" placeholder="Chia sẻ kỳ vọng của bạn về kiến thức AI Ecosystem..." rows="4"></textarea>
+</div>
+</div>
+</div>
+<!-- CTA Section -->
+<div class="flex flex-col gap-4 pt-4">
+<button class="glow-button w-full bg-primary hover:bg-primary/90 text-white font-bold py-4 rounded-xl flex items-center justify-center gap-2 transition-all group">
+<span>Tiếp tục thanh toán</span>
+<span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+<div class="flex items-center justify-center gap-2 text-xs text-slate-500">
+<span class="material-symbols-outlined text-sm">shield</span>
+<span>Dữ liệu của bạn được mã hóa và bảo mật theo tiêu chuẩn Google Cloud</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Sidebar Decor / Benefits -->
+<aside class="lg:col-span-4 flex flex-col gap-6">
+<div class="bg-gradient-to-br from-primary/20 to-transparent border border-primary/20 rounded-xl p-6">
+<h4 class="text-white font-bold mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">verified</span>
+                            Lợi ích khóa học
+                        </h4>
+<ul class="flex flex-col gap-4">
+<li class="flex gap-3">
+<span class="material-symbols-outlined text-primary text-lg">check_circle</span>
+<div class="text-sm">
+<p class="text-white font-medium">Chứng chỉ chính thức</p>
+<p class="text-slate-400">Được công nhận bởi Google Developer Groups.</p>
+</div>
+</li>
+<li class="flex gap-3">
+<span class="material-symbols-outlined text-primary text-lg">check_circle</span>
+<div class="text-sm">
+<p class="text-white font-medium">Truy cập tài nguyên độc quyền</p>
+<p class="text-slate-400">Sử dụng Google AI Studio &amp; Vertex AI API miễn phí.</p>
+</div>
+</li>
+<li class="flex gap-3">
+<span class="material-symbols-outlined text-primary text-lg">check_circle</span>
+<div class="text-sm">
+<p class="text-white font-medium">Networking toàn cầu</p>
+<p class="text-slate-400">Kết nối với hơn 500+ chuyên gia AI hàng đầu.</p>
+</div>
+</li>
+</ul>
+</div>
+<!-- Visual Accent Card -->
+<div class="relative rounded-xl h-48 overflow-hidden group">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" data-alt="Futuristic AI digital network pattern dark background" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDFmy662Q2haioyqEfKEYfVbNXd-kmtACxyf6sRVSszizsumar2ef9i4VU6adEgd_vlLTUB7LiL87ibLNU8pGl0nqvHzLtepAK7o59lXNnUs5aeRr2ysSq52djqxya1x8L3RkCF5TQAwUoAXXei6uYstQgvAzSXHNeqSfj8vcIcakYTvxwcNwiAZ_euQIUYSdeRpldmP6hc5fF6BU-arSomOgyDj_6UeTIGRFNErWbOOEA6Ejkeim5mJPlKKmckUtL3-YHXvoSGBy8');"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-background-dark via-background-dark/40 to-transparent"></div>
+<div class="absolute bottom-4 left-4 right-4">
+<p class="text-white text-xs font-bold uppercase tracking-widest opacity-70">Sẵn sàng bứt phá</p>
+<p class="text-white text-sm font-medium">Thế hệ AI mới bắt đầu từ bạn.</p>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="border-t border-white/5 py-8 px-6 lg:px-20 bg-background-dark/50">
+<div class="flex flex-col md:flex-row justify-between items-center gap-4 text-slate-500 text-sm">
+<p>© 2026 Google AI Ecosystem. All rights reserved.</p>
+<div class="flex gap-6">
+<a class="hover:text-primary transition-colors" href="#">Điều khoản</a>
+<a class="hover:text-primary transition-colors" href="#">Bảo mật</a>
+<a class="hover:text-primary transition-colors" href="#">Liên hệ</a>
+</div>
+</div>
+</footer>
+</div>
+</body></html>

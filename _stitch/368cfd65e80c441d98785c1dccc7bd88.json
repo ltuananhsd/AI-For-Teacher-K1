@@ -1,0 +1,31 @@
+{
+  "screenshot": {
+    "name": "projects/2610013991513547021/files/f758547a9933408eb65021b201187544",
+    "downloadUrl": "https://lh3.googleusercontent.com/aida/AOfcidVz2Jp9hYf--LIEaaZK5b20JJo-uacdladJP-bukFe0T12pA7M67_hep9o34UwhdsWTSdwAI2YiHgtHZqzkNvd3bq-jzhdNyQDpXeNcIP6D1Jw7InGML99G2nOGs_UQ3-X1lLqtAWjFQckUdk87Sg7cejyYlVJihLzZf7AZaAuelgNBt5Xh0FNPeBbqZ47Wbeig0pQ1WceCMbri_Zr82eav_SymkZ6FCNb_qDdDEzgndwhliBOsrf1YCD4"
+  },
+  "htmlCode": {
+    "name": "projects/2610013991513547021/files/8b31511d3f5f41d89b511028dcec41ba",
+    "downloadUrl": "https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ7Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpaCiVodG1sXzBkMGE0NWQxZWRkZTRmZWY5YjU4OGU5MmQ1MzdlMjI0EgsSBxDl2_SfoR0YAZIBIwoKcHJvamVjdF9pZBIVQhMyNjEwMDEzOTkxNTEzNTQ3MDIx&filename=&opi=96797242",
+    "mimeType": "text/html"
+  },
+  "id": "368cfd65e80c441d98785c1dccc7bd88",
+  "generatedBy": "figaro_agent",
+  "width": "2560",
+  "height": "2852",
+  "title": "QR Payment - Dark Tech Style",
+  "prompt": "Title: QR Payment - Dark Tech Style\nContext: QR Payment page for GOOGLE AI ECOSYSTEM BOOTCAMP 2026.\nDescription of the screen: A sleek 'Dark Mode' QR Payment page for the AI Bootcamp. \n- LAYOUT: Focused single-column center card with glassmorphism effects.\n- HEADER: 'Thanh toán học phí Bootcamp 2026' with a glowing progress stepper.\n- CENTER PIECE: A glowing QR Code box. Above it, the amount '5.000.000 VNĐ' is highlighted in a vibrant green bubble.\n- DETAILS: Bank information listed clearly below the QR with minimalist 'Copy' buttons that change color when clicked.\n- TIMER: A circular countdown timer around the QR code or positioned prominently below it.\n- NOTES: 'Tự động xác nhận trong 1-5 phút' in a subtle gold/yellow alert box.\n- ACTIONS: Large 'Xác nhận đã chuyển' primary button and 'Quay lại' secondary button.\n- FEEL: Secure, futuristic, and high-tech. Variant 2 of 2.\nPlatform: web\nForm factor: desktop",
+  "name": "projects/2610013991513547021/screens/368cfd65e80c441d98785c1dccc7bd88",
+  "theme": {
+    "colorMode": "DARK",
+    "font": "SPACE_GROTESK",
+    "roundness": "ROUND_EIGHT",
+    "customColor": "#4387f4",
+    "saturation": 2
+  },
+  "deviceType": "DESKTOP",
+  "screenType": "DESIGN",
+  "screenMetadata": {
+    "agentType": "PRO_AGENT",
+    "status": "COMPLETE"
+  }
+}

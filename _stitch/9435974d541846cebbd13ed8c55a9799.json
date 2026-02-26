@@ -1,0 +1,31 @@
+{
+  "screenshot": {
+    "name": "projects/2610013991513547021/files/f18994c485754dc186b3ca9efeca5b43",
+    "downloadUrl": "https://lh3.googleusercontent.com/aida/AOfcidVHjT7CoKfZWsYiCdYJeEW9XkB5yQpJY4gv0L0lzTbMkEV4WwkLQqviphXWQTA-TiHD57JGPbl2ML0IMsd3qZQyQ2yy-N9Nu_UEWnZoAeAi0OEtAL0i8bDjuS75eTsBjLxdRMn-hU3NKof38Ehmlbly0SMaWPorAm_vPvTGM2P_QQ9ucAZw06Op8-7QHjIHuUFeYvkSKts7RL1qU55bPw7l46Wnoxz1yeMiOo3v_wCnN0G8mjwRFM2Nrnk"
+  },
+  "htmlCode": {
+    "name": "projects/2610013991513547021/files/233936ef7f5244fdb29a2f79cd8810ac",
+    "downloadUrl": "https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ7Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpaCiVodG1sX2Y0ZWIxMWI5YTAwNzRlNmZiZDYzMWE5ZDc2NWJlNjIyEgsSBxDl2_SfoR0YAZIBIwoKcHJvamVjdF9pZBIVQhMyNjEwMDEzOTkxNTEzNTQ3MDIx&filename=&opi=96797242",
+    "mimeType": "text/html"
+  },
+  "id": "9435974d541846cebbd13ed8c55a9799",
+  "generatedBy": "figaro_agent",
+  "width": "2560",
+  "height": "8070",
+  "title": "Google AI Bootcamp Landing Page - Dark Theme",
+  "prompt": "Title: Google AI Bootcamp Landing Page - Dark Theme\nContext: Landing page for GOOGLE AI ECOSYSTEM BOOTCAMP 2026, a professional training program for office workers and marketers.\nDescription of the screen: A modern, high-conversion landing page for 'GOOGLE AI ECOSYSTEM BOOTCAMP 2026'. \n- HERO: Bold headline 'CHINH PHỤC HỆ SINH THÁI GOOGLE AI 2026', sub-headline about building a virtual team, 3 key highlights (5 sessions, 30/70 formula, guaranteed products), and a prominent 'Đăng Ký Tham Gia Ngay' CTA button. Background features abstract AI/neural network elements with Google's brand colors (blue, red, yellow, green) as accents.\n- PROBLEM SECTION: 'BẠN CÓ ĐANG KIỆT SỨC...?' with 4 cards detailing common workplace pain points like information overload and repetitive tasks.\n- SOLUTION SECTION: 'BIẾN GOOGLE AI THÀNH CỘNG SỰ ĐẮC LỰC NHẤT' highlighting Gemini, NotebookLM, Whisk & Flow, and Opal & Workspace Studio.\n- CURRICULUM: A clean vertical timeline or grid of 5 cards showing the 5-session roadmap from Gemini overview to Capstone project.\n- OUTCOMES: 4 icons representing Virtual Staff, 70% Time Saved, AI Master Mindset, and Certification.\n- FINAL CTA: 'SẴN SÀNG TRỞ THÀNH NHÂN SỰ CỦA TƯƠNG LAI?' with a large CTA button and a note about needing a laptop/Gmail. \nThe theme is a sleek 'Dark Mode' (AI-tech style) with clean typography, professional spacing, and subtle Google-colored glow effects. Variant 1 of 2.\nPlatform: web\nForm factor: desktop",
+  "name": "projects/2610013991513547021/screens/9435974d541846cebbd13ed8c55a9799",
+  "theme": {
+    "colorMode": "DARK",
+    "font": "INTER",
+    "roundness": "ROUND_EIGHT",
+    "customColor": "#4387f4",
+    "saturation": 2
+  },
+  "deviceType": "DESKTOP",
+  "screenType": "DESIGN",
+  "screenMetadata": {
+    "agentType": "PRO_AGENT",
+    "status": "COMPLETE"
+  }
+}

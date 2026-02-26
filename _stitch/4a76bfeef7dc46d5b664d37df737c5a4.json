@@ -1,0 +1,31 @@
+{
+  "screenshot": {
+    "name": "projects/2610013991513547021/files/13fd5e59542b43b8aa4782f3fc811f81",
+    "downloadUrl": "https://lh3.googleusercontent.com/aida/AOfcidXLwxSaTTxIjEmt2kwKS-qFDsLl-Sh_MVqUI-jo0hQVuJHOFmavFAnJ9kUFIbzcMDyQS5mxhn8aaig3RIBX8Utf0WxV85Pdi8RiSJc6qT84LMObH1Mxag3iVPyVii-pQgM9NONiqE3MhGQiTSaskdUsuRQqRuQtf9qMqqHKqp-3p9sGPFBGaAxlV2vF0RdwW2spB46_CeCQptCgj7PTuhDwDzkFnNNhfn73ID5KIgHN0sV-oOGs6qDK2Lc"
+  },
+  "htmlCode": {
+    "name": "projects/2610013991513547021/files/adf07a48f5184d03a1e6b96212ca7184",
+    "downloadUrl": "https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ7Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpaCiVodG1sXzE0MWE3NjViZjZhZTQ5MzdiZTFkNzM1YTBiNjUzN2VhEgsSBxDl2_SfoR0YAZIBIwoKcHJvamVjdF9pZBIVQhMyNjEwMDEzOTkxNTEzNTQ3MDIx&filename=&opi=96797242",
+    "mimeType": "text/html"
+  },
+  "id": "4a76bfeef7dc46d5b664d37df737c5a4",
+  "generatedBy": "figaro_agent",
+  "width": "2560",
+  "height": "2048",
+  "title": "Success Page - Community Focus Style",
+  "prompt": "Title: Success Page - Community Focus Style\nContext: Registration success page with Zalo QR for GOOGLE AI ECOSYSTEM BOOTCAMP 2026.\nDescription of the screen: A futuristic 'Success & Community' page for the AI Bootcamp. \n- VISUALS: Features a central glowing card with 'Đăng ký thành công!' in a bold modern font. A prominent green success badge is at the top.\n- QR SECTION: The QR code is housed in a sleek frame with 'Scan to Join' instructions. The box has a soft neon border using Google's signature colors.\n- CONTENT: Clearly states that the user is now part of the 2026 cohort. \n- BUTTONS: 'Vào Nhóm Zalo Ngay' (Primary Blue) and 'Quay lại Trang chủ' (Minimalist link).\n- STYLE: Dark mode with a focus on 'Conversion' to the Zalo group. High-quality UI components and crisp typography. Variant 2 of 2.\nPlatform: web\nForm factor: desktop",
+  "name": "projects/2610013991513547021/screens/4a76bfeef7dc46d5b664d37df737c5a4",
+  "theme": {
+    "colorMode": "DARK",
+    "font": "SPACE_GROTESK",
+    "roundness": "ROUND_TWELVE",
+    "customColor": "#2b6cee",
+    "saturation": 2
+  },
+  "deviceType": "DESKTOP",
+  "screenType": "DESIGN",
+  "screenMetadata": {
+    "agentType": "PRO_AGENT",
+    "status": "COMPLETE"
+  }
+}

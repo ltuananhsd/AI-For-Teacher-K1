@@ -1,0 +1,31 @@
+{
+  "screenshot": {
+    "name": "projects/2610013991513547021/files/84f75992e1ed4036912c78599f01c085",
+    "downloadUrl": "https://lh3.googleusercontent.com/aida/AOfcidXlbRf83SdY0YYCeY0YS-PtRByy7by5b74fiaYUHq3r1jnJWaXt-w6uGSEe0SUPOBfc1Tw6ieb8YGnATcbd_LgxMagqPj8s5UONmcpcnah-_eRIFwF7NSfLWstL_bcdXd3Nwl16AXiRcW_SHFlXV11l__x_bw_p3uBgoSR99QKQySvtu8F2dyn-cC43vyQfidhx9aVCWZL9GaF7k7mC3pfVu1-9JcqBqmR0W36C5ZOoTsTmnMEelHO-Xw"
+  },
+  "htmlCode": {
+    "name": "projects/2610013991513547021/files/5b6e3345e7b54ed48383ebdd4400b0b9",
+    "downloadUrl": "https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ7Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpaCiVodG1sXzVkMDhlY2NlMGU3NjQ0ZTZiMDVmMDZjNmZkYTNmMzFmEgsSBxDl2_SfoR0YAZIBIwoKcHJvamVjdF9pZBIVQhMyNjEwMDEzOTkxNTEzNTQ3MDIx&filename=&opi=96797242",
+    "mimeType": "text/html"
+  },
+  "id": "8a133fcb812540aa8225e438b84ffda2",
+  "generatedBy": "figaro_agent",
+  "width": "2560",
+  "height": "2064",
+  "title": "Login Page - Dark Glassmorphism Style",
+  "prompt": "Title: Login Page - Dark Glassmorphism Style\nContext: Login page for GOOGLE AI ECOSYSTEM BOOTCAMP 2026 participants.\nDescription of the screen: A sleek, full-screen 'Dark Mode' Login Page for 'GOOGLE AI ECOSYSTEM BOOTCAMP 2026'. \n- Background: A deep charcoal/navy gradient with a faint, animated-like grid or geometric pattern, using subtle Google-colored glows in the corners.\n- Central Card: A glassmorphism-style login container (semi-transparent with blur).\n- Headline: 'Đăng nhập hệ thống BootCamp 2026' centered at the top of the card.\n- Form: High-contrast inputs for 'Email' and 'Mật khẩu'.\n- Main Button: 'Đăng nhập' button with a vibrant hover state.\n- Google Login: A large, modern 'Tiếp tục với Google' button with the iconic logo.\n- Links: 'Quên mật khẩu?' and 'Đăng ký tham gia ngay' positioned clearly at the bottom.\n- Overall feel: Cutting-edge, secure, and futuristic, aligning with the AI theme. Variant 2 of 2.\nPlatform: web\nForm factor: desktop",
+  "name": "projects/2610013991513547021/screens/8a133fcb812540aa8225e438b84ffda2",
+  "theme": {
+    "colorMode": "DARK",
+    "font": "SPACE_GROTESK",
+    "roundness": "ROUND_EIGHT",
+    "customColor": "#4387f4",
+    "saturation": 2
+  },
+  "deviceType": "DESKTOP",
+  "screenType": "DESIGN",
+  "screenMetadata": {
+    "agentType": "PRO_AGENT",
+    "status": "COMPLETE"
+  }
+}

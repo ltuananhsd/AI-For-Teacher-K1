@@ -1,0 +1,189 @@
+<html class="dark"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b6cee",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                        "google-blue": "#4285F4",
+                        "google-red": "#EA4335",
+                        "google-yellow": "#FBBC05",
+                        "google-green": "#34A853",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: "Space Grotesk", sans-serif;
+        }
+        .glow-border {
+            position: relative;
+        }
+        .glow-border::after {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            background: linear-gradient(45deg, #4285F4, #EA4335, #FBBC05, #34A853);
+            border-radius: inherit;
+            z-index: -1;
+            opacity: 0.3;
+            filter: blur(8px);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen flex flex-col">
+<div class="layout-container flex h-full grow flex-col">
+<!-- Top Navigation -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 dark:border-slate-800 px-6 md:px-20 py-4 bg-background-light dark:bg-background-dark/80 backdrop-blur-md sticky top-0 z-50">
+<div class="flex items-center gap-4">
+<div class="size-8 text-primary">
+<svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M36.7273 44C33.9891 44 31.6043 39.8386 30.3636 33.69C29.123 39.8386 26.7382 44 24 44C21.2618 44 18.877 39.8386 17.6364 33.69C16.3957 39.8386 14.0109 44 11.2727 44C7.25611 44 4 35.0457 4 24C4 12.9543 7.25611 4 11.2727 4C14.0109 4 16.3957 8.16144 17.6364 14.31C18.877 8.16144 21.2618 4 24 4C26.7382 4 29.123 8.16144 30.3636 14.31C31.6043 8.16144 33.9891 4 36.7273 4C40.7439 4 44 12.9543 44 24C44 35.0457 40.7439 44 36.7273 44Z" fill="currentColor"></path>
+</svg>
+</div>
+<h2 class="text-slate-900 dark:text-white text-lg font-bold leading-tight tracking-tight uppercase">Google AI Ecosystem 2026</h2>
+</div>
+<div class="hidden md:flex flex-1 justify-end gap-8">
+<nav class="flex items-center gap-9">
+<a class="text-slate-600 dark:text-slate-300 text-sm font-medium hover:text-primary transition-colors" href="#">Chương trình</a>
+<a class="text-slate-600 dark:text-slate-300 text-sm font-medium hover:text-primary transition-colors" href="#">Diễn giả</a>
+<a class="text-slate-600 dark:text-slate-300 text-sm font-medium hover:text-primary transition-colors" href="#">Lộ trình</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="flex min-w-[120px] cursor-pointer items-center justify-center rounded-xl h-10 px-5 bg-primary text-white text-sm font-bold transition-all hover:bg-primary/90">
+                        Dashboard
+                    </button>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border-2 border-primary/20" data-alt="User profile avatar circle" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDFOmRvWHjJt61CHBsR2mqp9WYAmaLEDXtpdOcueSPSzcfy1LmS-bmcEG4VFyTZcWEz6WCkdei806y9Odz-hMf4X2YqXV9ipeNkTObnd14ifOse-fqTG8Q5nDZl7R-V7Ah7i9gJGf1s7Mc9kUNG3xIhRgYredlgQ5R9gITh2XrrjJu2dBpUrwuu1vbJMV6WpA14ocn6My0iefHk3VOrjSLyuvxN8P5LiIZXuNKHPXe76HYMNUSh-uP9qFE1jom9_Hm3PSP_0efGBKM");'></div>
+</div>
+</div>
+</header>
+<!-- Main Content Section -->
+<main class="flex-1 flex flex-col items-center justify-center px-4 py-12 md:py-20">
+<div class="max-w-[1000px] w-full grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+<!-- Success Messaging -->
+<div class="flex flex-col space-y-8 animate-in fade-in slide-in-from-left-4 duration-700">
+<div class="inline-flex items-center gap-2 bg-google-green/10 text-google-green px-4 py-2 rounded-full w-fit">
+<span class="material-symbols-outlined text-xl">check_circle</span>
+<span class="text-sm font-bold tracking-wider uppercase">Success Confirmed</span>
+</div>
+<div class="space-y-4">
+<h1 class="text-4xl md:text-6xl font-bold text-slate-900 dark:text-white leading-tight">
+                            Chào mừng tới <br/>
+<span class="text-transparent bg-clip-text bg-gradient-to-r from-google-blue via-google-red to-google-yellow">Thế hệ AI 2026</span>
+</h1>
+<p class="text-lg md:text-xl text-slate-600 dark:text-slate-400 max-w-lg leading-relaxed">
+                            Chúc mừng! Bạn đã chính thức trở thành thành viên của Google AI Ecosystem Bootcamp 2026. Một hành trình khai phá tiềm năng AI đang chờ đón bạn.
+                        </p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4 pt-4">
+<button class="flex items-center justify-center gap-3 bg-primary text-white px-8 py-4 rounded-xl font-bold text-lg hover:shadow-lg hover:shadow-primary/20 transition-all active:scale-[0.98]">
+<span class="material-symbols-outlined">group</span>
+                            Vào Nhóm Zalo Ngay
+                        </button>
+<a class="flex items-center justify-center gap-2 text-slate-500 dark:text-slate-400 hover:text-primary dark:hover:text-white px-6 py-4 font-medium transition-colors group" href="#">
+                            Quay lại Trang chủ
+                            <span class="material-symbols-outlined text-lg group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</a>
+</div>
+<!-- Steps Timeline -->
+<div class="pt-8 border-t border-slate-200 dark:border-slate-800">
+<p class="text-sm font-bold text-slate-400 uppercase tracking-widest mb-6">Tiếp theo là gì?</p>
+<div class="flex flex-col gap-6">
+<div class="flex gap-4">
+<div class="flex-none size-8 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold">1</div>
+<div>
+<h4 class="font-bold text-slate-900 dark:text-white">Tham gia cộng đồng</h4>
+<p class="text-sm text-slate-500 dark:text-slate-400">Kết nối với hơn 500+ học viên và chuyên gia tại nhóm Zalo chính thức.</p>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="flex-none size-8 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-500 font-bold">2</div>
+<div>
+<h4 class="font-bold text-slate-900 dark:text-white">Kiểm tra Email</h4>
+<p class="text-sm text-slate-500 dark:text-slate-400">Chúng tôi đã gửi bộ tài liệu khởi đầu và lịch trình chi tiết vào hòm thư của bạn.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- QR & Community Card -->
+<div class="relative @container">
+<div class="glow-border bg-white dark:bg-[#1c1f27] rounded-3xl p-8 flex flex-col items-center text-center shadow-2xl relative overflow-hidden">
+<!-- Background Pattern Decor -->
+<div class="absolute top-0 right-0 p-8 opacity-10">
+<span class="material-symbols-outlined text-9xl">qr_code_2</span>
+</div>
+<div class="relative z-10 w-full flex flex-col items-center">
+<div class="mb-6 p-4 bg-slate-50 dark:bg-slate-800/50 rounded-2xl border border-slate-100 dark:border-slate-700">
+<div class="size-64 md:size-72 bg-white p-4 rounded-lg shadow-inner flex items-center justify-center relative group">
+<div class="absolute inset-0 bg-gradient-to-tr from-primary/5 to-transparent rounded-lg"></div>
+<img class="w-full h-full object-contain relative z-10" data-alt="Zalo community group QR code" src="/images/1bbf72338c49b77c6e976b4f172a3424.jpg"/>
+<!-- QR Frame Corners -->
+<div class="absolute -top-2 -left-2 size-6 border-t-4 border-l-4 border-google-blue rounded-tl-lg"></div>
+<div class="absolute -top-2 -right-2 size-6 border-t-4 border-r-4 border-google-red rounded-tr-lg"></div>
+<div class="absolute -bottom-2 -left-2 size-6 border-b-4 border-l-4 border-google-yellow rounded-bl-lg"></div>
+<div class="absolute -bottom-2 -right-2 size-6 border-b-4 border-r-4 border-google-green rounded-br-lg"></div>
+</div>
+</div>
+<h3 class="text-2xl font-bold text-slate-900 dark:text-white mb-2">Quét mã để gia nhập</h3>
+<p class="text-slate-500 dark:text-slate-400 mb-8 max-w-xs">
+                                Tham gia nhóm thảo luận của cohort 2026 để nhận cập nhật tài liệu đào tạo sớm nhất.
+                            </p>
+<div class="w-full space-y-4">
+<div class="flex items-center justify-center gap-4 text-sm font-medium text-slate-400">
+<div class="h-px grow bg-slate-200 dark:bg-slate-800"></div>
+<span>HOẶC</span>
+<div class="h-px grow bg-slate-200 dark:bg-slate-800"></div>
+</div>
+<button class="w-full py-3 px-4 border border-primary/30 text-primary rounded-xl font-bold hover:bg-primary/5 transition-colors">
+                                    Copy Link Tham Gia
+                                </button>
+</div>
+</div>
+</div>
+<!-- Floating Badge -->
+<div class="absolute -bottom-6 -left-6 md:-left-12 bg-white dark:bg-slate-800 p-4 rounded-2xl shadow-xl flex items-center gap-4 border border-slate-100 dark:border-slate-700 animate-bounce">
+<div class="size-12 rounded-full bg-google-blue/10 flex items-center justify-center text-google-blue">
+<span class="material-symbols-outlined">verified</span>
+</div>
+<div class="text-left">
+<p class="text-xs font-bold text-slate-400 uppercase">Trusted by</p>
+<p class="font-bold text-slate-900 dark:text-white line-clamp-1">Google Developers</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="px-6 md:px-20 py-8 border-t border-slate-200 dark:border-slate-800 flex flex-col md:flex-row justify-between items-center gap-6">
+<p class="text-slate-500 dark:text-slate-400 text-sm">
+                © 2026 Google AI Ecosystem Bootcamp. All rights reserved.
+            </p>
+<div class="flex gap-6">
+<a class="text-slate-400 hover:text-primary transition-colors" href="#"><span class="material-symbols-outlined">language</span></a>
+<a class="text-slate-400 hover:text-primary transition-colors" href="#"><span class="material-symbols-outlined">mail</span></a>
+<a class="text-slate-400 hover:text-primary transition-colors" href="#"><span class="material-symbols-outlined">share</span></a>
+</div>
+</footer>
+</div>
+</body></html>

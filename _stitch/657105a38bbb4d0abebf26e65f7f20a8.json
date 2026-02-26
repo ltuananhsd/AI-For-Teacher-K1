@@ -1,0 +1,31 @@
+{
+  "screenshot": {
+    "name": "projects/2610013991513547021/files/b7a1691d433447a6a83e30147d8a7101",
+    "downloadUrl": "https://lh3.googleusercontent.com/aida/AOfcidWKSGYpgeJ5DPzcpL0KlW8P9zuqO9qcdeVFGz8Cr2xXH-HAmeTV_TbNRfgxfqf5bBASan1P7epi_IZx1q79lstGLsC8TUEzrV7VhPpAEaJZMjOgVfST5Z3ME7_w5N1xZCyCD99VsHYo8CmRMt866xciLJotPOUXgayAiCHDSyFU0lX5dXMAnFUVNksolLNJIcwwHxu43yTFIKgUzGDfMjDn5vX5bWFWfZmaa_QlJka9WaWuuuDGY9nUXA"
+  },
+  "htmlCode": {
+    "name": "projects/2610013991513547021/files/857ab8751f354c4980298eb16bae7512",
+    "downloadUrl": "https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ7Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpaCiVodG1sXzcyNjUzM2VlN2YwZDQwOTU4MGNhNzRkOTY4YzkyMmY3EgsSBxDl2_SfoR0YAZIBIwoKcHJvamVjdF9pZBIVQhMyNjEwMDEzOTkxNTEzNTQ3MDIx&filename=&opi=96797242",
+    "mimeType": "text/html"
+  },
+  "id": "657105a38bbb4d0abebf26e65f7f20a8",
+  "generatedBy": "figaro_agent",
+  "width": "2560",
+  "height": "2114",
+  "title": "Registration Form - Dark Mode Step 1",
+  "prompt": "Title: Registration Form - Dark Mode Step 1\nContext: Registration details form for GOOGLE AI ECOSYSTEM BOOTCAMP 2026.\nDescription of the screen: A tech-focused 'Dark Mode' registration form for the AI Bootcamp. \n- PROGRESS BAR: A minimalist glow-effect stepper at the top highlighting 'Bước 1: Thông tin'.\n- CARD: A dark charcoal glassmorphism card with the headline 'Hoàn tất thông tin đăng ký Bootcamp'.\n- INPUTS: High-contrast, dark-themed input fields for Full Name, Phone, Job Title (Dropdown), and Goals (Text area). Labels are crisp white.\n- CTA: A vibrant 'Tiếp tục thanh toán' button that glows with a Google-colored border.\n- SIDEBAR/DECOR: A small sidebar or background element showing 'Lợi ích khóa học' (briefly) to reinforce the value proposition. \n- FEEL: High-end, secure, and futuristic. Variant 2 of 2.\nPlatform: web\nForm factor: desktop",
+  "name": "projects/2610013991513547021/screens/657105a38bbb4d0abebf26e65f7f20a8",
+  "theme": {
+    "colorMode": "DARK",
+    "font": "SPACE_GROTESK",
+    "roundness": "ROUND_EIGHT",
+    "customColor": "#4387f4",
+    "saturation": 2
+  },
+  "deviceType": "DESKTOP",
+  "screenType": "DESIGN",
+  "screenMetadata": {
+    "agentType": "PRO_AGENT",
+    "status": "COMPLETE"
+  }
+}
