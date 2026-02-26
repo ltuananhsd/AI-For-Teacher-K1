@@ -64,7 +64,7 @@ export default function SolutionSection() {
               </motion.div>
               <motion.div whileHover={{ scale: 1.02 }} className="h-64 rounded-[2rem] glass-card p-6 flex flex-col justify-end border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.3)] overflow-hidden relative group">
                 <div className="absolute inset-0 opacity-40 group-hover:opacity-50 transition-opacity duration-500">
-                  <Image fill alt="NotebookLM bg" className="object-cover" src="/images/cc2612848a42030a16721050978784ab.jpg" />
+                  <Image fill alt="NotebookLM bg" className="object-cover" src="/images/notebook_lm_bg.png" />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#0A101E] to-transparent"></div>
                 </div>
                 <span className="material-symbols-outlined text-google-green relative z-10 mb-2 drop-shadow-[0_0_10px_rgba(52,168,83,0.5)]">menu_book</span>
@@ -74,7 +74,7 @@ export default function SolutionSection() {
             <div className="space-y-4 pt-12">
               <motion.div whileHover={{ scale: 1.02 }} className="h-64 rounded-[2rem] glass-card p-6 flex flex-col justify-end border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.3)] overflow-hidden relative group">
                 <div className="absolute inset-0 opacity-40 group-hover:opacity-50 transition-opacity duration-500">
-                  <Image fill alt="Workspace Studio bg" className="object-cover" src="/images/9f495ad211e1cf7467d9901c4510ba68.jpg" />
+                  <Image fill alt="Workspace Studio bg" className="object-cover" src="/images/workspace_studio_bg.png" />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#0A101E] to-transparent"></div>
                 </div>
                 <span className="material-symbols-outlined text-google-red relative z-10 mb-2 drop-shadow-[0_0_10px_rgba(234,67,53,0.5)]">workspaces</span>

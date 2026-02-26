@@ -69,8 +69,8 @@ export default function OutcomesSection() {
              <Image 
                fill 
                alt="Success Team" 
-               className="rounded-2xl shadow-2xl object-cover" 
-               src="/images/06ed1df268641d6ebfcf743e353cc5d6.jpg" 
+               className="rounded-2xl shadow-2xl object-cover glass-card border border-white/10" 
+               src="/images/success_city_bg.png" 
              />
           </motion.div>
         </div>

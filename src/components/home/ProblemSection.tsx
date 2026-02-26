@@ -58,11 +58,11 @@ export default function ProblemSection() {
               transition={{ duration: 0.5, delay: idx * 0.1 }}
               className="glass-card p-8 rounded-[2rem] hover:bg-white/5 border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.3)] transition-all group hover:-translate-y-2 relative overflow-hidden"
             >
-              <div className={`w-12 h-12 rounded-xl bg-${item.color}/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform`}>
-                <span className={`material-symbols-outlined text-${item.color}`}>{item.icon}</span>
+              <div className={`w-12 h-12 rounded-xl bg-${item.color}/10 flex items-center justify-center mb-6 shadow-[0_0_15px_rgba(255,255,255,0.05)] border border-${item.color}/20 group-hover:scale-110 transition-transform`}>
+                <span className={`material-symbols-outlined text-${item.color} drop-shadow-[0_0_8px_currentColor]`}>{item.icon}</span>
               </div>
-              <h3 className="text-lg font-bold mb-3">{item.title}</h3>
-              <p className="text-sm text-slate-500 leading-relaxed">{item.desc}</p>
+              <h3 className="text-xl font-bold mb-3 text-slate-100">{item.title}</h3>
+              <p className="text-sm text-slate-400 leading-relaxed">{item.desc}</p>
             </motion.div>
           ))}
         </div>
