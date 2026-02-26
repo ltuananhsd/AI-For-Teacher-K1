@@ -231,7 +231,7 @@ export default function App() {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.1 }}
-                className="pointer-events-auto cursor-default text-5xl md:text-7xl font-extrabold text-white tracking-tight leading-tight max-w-4xl drop-shadow-[0_0_20px_rgba(0,0,0,0.8)]"
+                className="pointer-events-auto cursor-default text-4xl md:text-6xl xl:text-7xl font-extrabold text-white tracking-tight leading-tight w-full max-w-6xl drop-shadow-[0_0_20px_rgba(0,0,0,0.8)]"
               >
                 CHINH PHỤC HỆ SINH THÁI <br/>
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-blue-500 to-cyan-400">
