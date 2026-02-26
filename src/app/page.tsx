@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useState, useRef } from "react";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { 
   Mail, 
@@ -174,10 +175,10 @@ const Navbar = () => {
         </div>
 
         <div className="hidden md:flex items-center gap-4 pointer-events-auto">
-          <button className="text-sm font-medium text-slate-300 hover:text-white transition-colors">Đăng Nhập</button>
-          <button className="px-5 py-2 text-sm font-semibold text-white bg-blue-600 rounded-full hover:bg-blue-500 transition-all shadow-[0_0_15px_rgba(37,99,235,0.4)]">
+          <Link href="/login" className="text-sm font-medium text-slate-300 hover:text-white transition-colors">Đăng Nhập</Link>
+          <Link href="/register" className="px-5 py-2 text-sm font-semibold text-white bg-transparent backdrop-blur-md border border-white/20 hover:bg-white/5 rounded-full transition-all shadow-[0_0_15px_rgba(37,99,235,0.4)]">
             Đăng Ký Ngay
-          </button>
+          </Link>
         </div>
 
         {/* Mobile Nav Toggle */}
@@ -193,10 +194,10 @@ const Navbar = () => {
           <a href="#van-de" className="text-slate-300" onClick={() => setIsOpen(false)}>Vấn Đề</a>
           <a href="#loi-ich" className="text-slate-300" onClick={() => setIsOpen(false)}>Lợi Ích</a>
           <hr className="border-white/10" />
-          <button className="text-left font-medium text-slate-300">Đăng Nhập</button>
-          <button className="py-3 text-center font-semibold text-white bg-blue-600 rounded-lg shadow-lg">
+          <Link href="/login" className="text-left font-medium text-slate-300">Đăng Nhập</Link>
+          <Link href="/register" className="py-3 text-center font-semibold text-white bg-transparent backdrop-blur-md border border-white/20 hover:bg-white/5 rounded-lg shadow-lg block">
             Đăng Ký Ngay
-          </button>
+          </Link>
         </div>
       )}
     </nav>
@@ -254,9 +255,9 @@ export default function App() {
                 transition={{ duration: 0.5, delay: 0.4 }}
                 className="mt-10 pointer-events-auto"
               >
-                <button className="px-8 py-4 text-lg font-bold text-white bg-blue-600 rounded-full hover:bg-blue-500 transition-all hover:scale-105 active:scale-95 shadow-[0_0_30px_rgba(37,99,235,0.5)]">
+                <Link href="/register" className="inline-block px-8 py-4 text-lg font-bold text-white bg-transparent backdrop-blur-md border border-white/20 hover:bg-white/5 rounded-full transition-all hover:scale-105 active:scale-95 shadow-[0_0_30px_rgba(37,99,235,0.5)]">
                   Đăng Ký Tham Gia Ngay
-                </button>
+                </Link>
               </motion.div>
 
               {/* Hướng dẫn tương tác chuột */}
@@ -457,9 +458,9 @@ export default function App() {
               Đừng để bị thay thế bởi AI, hãy là người điều khiển nó. Số lượng học viên giới hạn 50 người để đảm bảo chất lượng thực chiến tốt nhất.
             </p>
             
-            <button className="relative z-10 px-10 py-5 text-lg font-bold text-white bg-blue-600 rounded-full hover:bg-blue-500 transition-all hover:scale-105 active:scale-95 shadow-[0_0_40px_rgba(37,99,235,0.6)]">
+            <Link href="/register" className="inline-block relative z-10 px-10 py-5 text-lg font-bold text-white bg-transparent backdrop-blur-md border border-white/20 hover:bg-white/5 rounded-full transition-all hover:scale-105 active:scale-95 shadow-[0_0_40px_rgba(37,99,235,0.6)]">
               ĐĂNG KÝ THAM GIA NGAY
-            </button>
+            </Link>
 
             <div className="mt-8 flex justify-center gap-6 text-sm text-slate-400 relative z-10">
               <span className="flex items-center gap-2"><Monitor size={16}/> Cần Laptop</span>
