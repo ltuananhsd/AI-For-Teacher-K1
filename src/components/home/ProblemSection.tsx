@@ -33,17 +33,20 @@ export default function ProblemSection() {
   return (
     <section className="py-24 relative z-10" id="van-de">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="absolute top-10 left-10 w-72 h-72 bg-google-red/10 rounded-full blur-[100px] -z-10 pointer-events-none"></div>
+        <div className="absolute top-40 right-10 w-72 h-72 bg-google-yellow/10 rounded-full blur-[100px] -z-10 pointer-events-none"></div>
+        
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16 space-y-4"
+          className="text-center mb-16 space-y-4 relative"
         >
-          <h2 className="text-3xl md:text-4xl font-black text-white uppercase tracking-tight drop-shadow-lg">
+          <h2 className="text-3xl md:text-5xl font-black text-white uppercase tracking-tight drop-shadow-[0_0_20px_rgba(255,255,255,0.3)]">
             BẠN CÓ ĐANG KIỆT SỨC...?
           </h2>
-          <p className="text-slate-400 max-w-2xl mx-auto drop-shadow-md">
+          <p className="text-slate-400 max-w-2xl mx-auto drop-shadow-md text-lg">
             Thế giới đang thay đổi nhanh chóng, và những phương pháp cũ đang khiến bạn bị bỏ lại phía sau.
           </p>
         </motion.div>
