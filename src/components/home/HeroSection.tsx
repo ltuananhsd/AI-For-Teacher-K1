@@ -1,107 +1,206 @@
 "use client";
 
+import React, { useEffect, useRef, useState, ReactNode } from 'react';
 import Image from "next/image";
-import { motion, Variants } from "framer-motion";
 import Link from "next/link";
 
-export default function HeroSection() {
-  const containerVariants: Variants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.2 },
-    },
-  };
+const randomColors = (count: number) => {
+  return new Array(count)
+    .fill(0)
+    .map(() => "#" + Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0'));
+};
 
-  const itemVariants: Variants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
+function TubesBackground({ 
+  children, 
+  className = "",
+  enableClickInteraction = true 
+}: { children: ReactNode, className?: string, enableClickInteraction?: boolean }) {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const tubesRef = useRef<any>(null);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    let mounted = true;
+
+    const initTubes = async () => {
+      if (!canvasRef.current) return;
+
+      try {
+        // @ts-ignore
+        const module = await import('https://cdn.jsdelivr.net/npm/threejs-components@0.0.19/build/cursors/tubes1.min.js');
+        const TubesCursor = module.default;
+
+        if (!mounted) return;
+
+        const app = TubesCursor(canvasRef.current, {
+          tubes: {
+            colors: ["#f967fb", "#53bc28", "#6958d5"], 
+            lights: {
+              intensity: 200,
+              colors: ["#83f36e", "#fe8a2e", "#ff008a", "#60aed5"] 
+            }
+          }
+        });
+
+        tubesRef.current = app;
+        setIsLoaded(true);
+
+      } catch (err) {
+        console.error("Failed to load TubesCursor script from CDN:", err);
+        if (mounted) {
+          setError("Không thể tải hiệu ứng 3D. Vui lòng kiểm tra kết nối mạng.");
+        }
+      }
+    };
+
+    initTubes();
+
+    return () => {
+      mounted = false;
+      tubesRef.current = null;
+    };
+  }, []);
+
+  const handleClick = () => {
+    if (!enableClickInteraction || !tubesRef.current) return;
+    const newTubesColors = randomColors(3);
+    const newLightsColors = randomColors(4);
+    tubesRef.current.tubes.setColors(newTubesColors);
+    tubesRef.current.tubes.setLightsColors(newLightsColors);
   };
 
   return (
-    <section className="relative pt-20 pb-16 overflow-hidden">
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full -z-10 opacity-20 pointer-events-none">
-        <motion.div
-          animate={{ scale: [1, 1.1, 1], opacity: [0.5, 0.8, 0.5] }}
-          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-0 left-1/4 w-96 h-96 bg-primary rounded-full blur-[120px]"
-        />
-        <motion.div
-          animate={{ scale: [1, 1.2, 1], opacity: [0.5, 0.7, 0.5] }}
-          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-          className="absolute bottom-0 right-1/4 w-96 h-96 bg-google-red rounded-full blur-[120px]"
-        />
+    <div 
+      className={`relative w-full h-full min-h-screen overflow-hidden bg-[#0A101E] ${className}`}
+      onClick={handleClick}
+    >
+      {error && (
+        <div className="absolute inset-0 flex items-center justify-center text-red-400 z-0">
+          <p className="bg-red-950/50 px-4 py-2 rounded border border-red-900/50 backdrop-blur-sm">
+            {error}
+          </p>
+        </div>
+      )}
+
+      <canvas 
+        ref={canvasRef} 
+        className={`absolute inset-0 w-full h-full block transition-opacity duration-1000 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
+        style={{ touchAction: 'none' }}
+      />
+      
+      <div className="relative z-10 w-full h-full min-h-screen pointer-events-none flex flex-col">
+        {children}
       </div>
+    </div>
+  );
+}
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row items-center gap-12">
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="flex-1 space-y-8 text-center lg:text-left"
-        >
-          <motion.div variants={itemVariants} className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-bold tracking-widest uppercase">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
-            </span>
-            Sẵn sàng cho kỷ nguyên 2026
-          </motion.div>
-
-          <motion.h1 variants={itemVariants} className="text-5xl md:text-6xl lg:text-7xl font-black leading-tight tracking-tighter text-slate-900 dark:text-white">
-            CHINH PHỤC HỆ SINH THÁI{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-google-red to-google-green">
-              GOOGLE AI
-            </span>
-          </motion.h1>
-
-          <motion.p variants={itemVariants} className="text-lg md:text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto lg:mx-0">
-            Xây dựng đội ngũ "nhân sự ảo" tối ưu hiệu suất công việc với 5 buổi học thực chiến theo công thức 30/70.
-          </motion.p>
-
-          <motion.div variants={itemVariants} className="flex flex-col sm:flex-row items-center gap-4 justify-center lg:justify-start">
-            <Link href="/register" className="w-full sm:w-auto px-8 py-4 rounded-xl bg-primary text-white font-bold text-lg hover:scale-105 transition-transform shadow-xl shadow-primary/25">
-              Đăng Ký Tham Gia Ngay
-            </Link>
-            <div className="flex -space-x-3 overflow-hidden">
-              <Image alt="Profile picture 1" width={40} height={40} className="inline-block h-10 w-10 rounded-full ring-2 ring-background-dark object-cover" src="/images/215353b3b5c277ae421364418efecf2b.jpg" />
-              <Image alt="Profile picture 2" width={40} height={40} className="inline-block h-10 w-10 rounded-full ring-2 ring-background-dark object-cover" src="/images/9c6d0b40c9c84a12d65eeee86d46b858.jpg" />
-              <Image alt="Profile picture 3" width={40} height={40} className="inline-block h-10 w-10 rounded-full ring-2 ring-background-dark object-cover" src="/images/6b2fa857f6837ef549d4d2a4a571fde0.jpg" />
-              <div className="flex items-center justify-center h-10 w-10 rounded-full ring-2 ring-background-dark bg-slate-800 text-xs text-white font-bold">+1k</div>
-            </div>
-          </motion.div>
-        </motion.div>
-
-        <motion.div
-           initial={{ opacity: 0, x: 50 }}
-           animate={{ opacity: 1, x: 0 }}
-           transition={{ duration: 0.8, delay: 0.4 }}
-           className="flex-1 w-full max-w-xl"
-        >
-          <div className="relative group">
-            <div className="absolute -inset-1 bg-gradient-to-r from-primary via-google-red to-google-yellow rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
-            <div className="relative bg-background-light dark:bg-background-dark rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-2xl">
-              <div className="relative w-full aspect-video">
-                <Image fill alt="AI Bootcamp" className="object-cover" src="/images/54ab56928b277937cbaddb4d90f76606.jpg" />
+export default function HeroSection() {
+  return (
+    <TubesBackground>
+      <section className="flex-grow flex items-center justify-center px-6 lg:px-12 pb-20 pt-10 relative z-10">
+          <div className="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center pointer-events-none">
+            
+            {/* CỘT TRÁI: TEXT & CALL TO ACTION */}
+            <div className="lg:col-span-6 flex flex-col items-start space-y-8 pointer-events-none">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-800/80 border border-slate-700/50 backdrop-blur-sm shadow-[0_4px_20px_rgba(0,0,0,0.5)]">
+                <span className="relative flex h-2.5 w-2.5">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-google-blue opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-google-blue"></span>
+                </span>
+                <span className="text-xs font-semibold uppercase tracking-wider text-slate-300">
+                  Sẵn sàng cho kỷ nguyên 2026
+                </span>
               </div>
-              <div className="p-6 grid grid-cols-3 gap-4">
-                <div className="text-center">
-                  <p className="text-primary text-2xl font-black">5</p>
-                  <p className="text-[10px] uppercase font-bold tracking-widest text-slate-500">Buổi Học</p>
-                </div>
-                <div className="text-center border-x border-slate-200 dark:border-slate-800">
-                  <p className="text-primary text-2xl font-black">30/70</p>
-                  <p className="text-[10px] uppercase font-bold tracking-widest text-slate-500">Thực Chiến</p>
-                </div>
-                <div className="text-center">
-                  <p className="text-primary text-2xl font-black">100%</p>
-                  <p className="text-[10px] uppercase font-bold tracking-widest text-slate-500">Sản Phẩm</p>
+
+              <h1 className="text-5xl md:text-6xl lg:text-[72px] font-black uppercase leading-[1.1] tracking-tight text-white drop-shadow-lg">
+                CHINH PHỤC HỆ
+                <br />
+                SINH THÁI
+                <br />
+                <span className="bg-clip-text text-transparent bg-[linear-gradient(90deg,#4285F4_0%,#EA4335_33%,#FBBC05_66%,#34A853_100%)] drop-shadow-none">
+                  GOOGLE AI
+                </span>
+              </h1>
+
+              <p className="text-lg md:text-xl text-slate-400 max-w-lg leading-relaxed font-light drop-shadow-md">
+                Xây dựng đội ngũ "nhân sự ảo" tối ưu hiệu suất công việc với 5 buổi học thực chiến theo công thức 30/70.
+              </p>
+
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6 mt-4">
+                <Link href="/register" className="pointer-events-auto px-8 py-4 rounded-xl bg-google-blue hover:bg-google-blue/80 text-white font-bold text-lg transition-all duration-300 shadow-[0_0_30px_rgba(66,133,244,0.4)] hover:shadow-[0_0_40px_rgba(66,133,244,0.6)] hover:-translate-y-1">
+                  Đăng Ký Tham Gia Ngay
+                </Link>
+                
+                <div className="flex items-center gap-3">
+                  <div className="flex -space-x-3">
+                    <Image width={40} height={40} className="w-10 h-10 rounded-full border-2 border-[#0A101E] object-cover" src="/images/215353b3b5c277ae421364418efecf2b.jpg" alt="Học viên" />
+                    <Image width={40} height={40} className="w-10 h-10 rounded-full border-2 border-[#0A101E] object-cover" src="/images/9c6d0b40c9c84a12d65eeee86d46b858.jpg" alt="Học viên" />
+                    <Image width={40} height={40} className="w-10 h-10 rounded-full border-2 border-[#0A101E] object-cover" src="/images/6b2fa857f6837ef549d4d2a4a571fde0.jpg" alt="Học viên" />
+                    <div className="w-10 h-10 rounded-full border-2 border-[#0A101E] bg-slate-800 flex items-center justify-center text-xs font-medium text-slate-300 z-10">
+                      +1k
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
+
+            {/* CỘT PHẢI: GLASSMORPHISM FEATURE CARD */}
+            <div className="lg:col-span-6 w-full pointer-events-none relative">
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-gradient-to-tr from-google-blue/10 via-transparent to-purple-500/10 rounded-full blur-3xl opacity-70"></div>
+              
+              <div className="relative bg-white/[0.03] backdrop-blur-2xl border border-white/10 rounded-[2.5rem] overflow-hidden shadow-[0_16px_40px_-10px_rgba(0,0,0,0.5),inset_0_0_20px_rgba(255,255,255,0.03)] flex flex-col group">
+                <div className="relative h-[300px] sm:h-[400px] w-full flex items-center justify-center overflow-hidden">
+                  <div className="absolute w-48 h-48 bg-google-blue/20 rounded-full blur-[60px] opacity-80 group-hover:opacity-100 transition-opacity duration-700"></div>
+
+                  <div className="relative z-10 flex items-center justify-center w-48 h-56 bg-white/[0.05] backdrop-blur-md rounded-[2.5rem] shadow-[0_8px_32px_rgba(0,0,0,0.3),inset_0_2px_10px_rgba(255,255,255,0.1)] border border-white/20 transition-transform duration-500 group-hover:scale-105">
+                    <span className="text-[80px] font-medium text-white drop-shadow-[0_0_25px_rgba(255,255,255,0.7)] tracking-tighter ml-2 font-serif">
+                      AI
+                    </span>
+                    <div className="absolute top-1/2 -translate-y-1/2 -left-5 w-5 h-24 bg-white/[0.02] backdrop-blur-sm border-y border-l border-white/10 rounded-l-xl shadow-[inset_2px_0_5px_rgba(255,255,255,0.05)]"></div>
+                    <div className="absolute top-1/2 -translate-y-1/2 -right-5 w-5 h-24 bg-white/[0.02] backdrop-blur-sm border-y border-r border-white/10 rounded-r-xl shadow-[inset_-2px_0_5px_rgba(255,255,255,0.05)]"></div>
+                  </div>
+                  
+                  <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
+                </div>
+
+                <div className="bg-black/20 p-6 sm:p-8 relative z-20">
+                  <div className="grid grid-cols-3 divide-x divide-white/10">
+                    <div className="flex flex-col items-center justify-center text-center px-2">
+                      <span className="text-4xl sm:text-5xl font-bold text-google-blue drop-shadow-[0_0_15px_rgba(96,165,250,0.6)]">
+                        5
+                      </span>
+                      <span className="text-xs sm:text-sm uppercase tracking-widest text-slate-300 mt-2 font-medium drop-shadow-md">
+                        Buổi học
+                      </span>
+                    </div>
+
+                    <div className="flex flex-col items-center justify-center text-center px-2">
+                      <span className="text-4xl sm:text-5xl font-bold text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.4)]">
+                        30/70
+                      </span>
+                      <span className="text-xs sm:text-sm uppercase tracking-widest text-slate-300 mt-2 font-medium drop-shadow-md">
+                        Thực chiến
+                      </span>
+                    </div>
+
+                    <div className="flex flex-col items-center justify-center text-center px-2">
+                      <span className="text-4xl sm:text-5xl font-bold text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.4)]">
+                        100%
+                      </span>
+                      <span className="text-xs sm:text-sm uppercase tracking-widest text-slate-300 mt-2 font-medium drop-shadow-md">
+                        Sản phẩm
+                      </span>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </div>
-        </motion.div>
-      </div>
-    </section>
+      </section>
+    </TubesBackground>
   );
 }
