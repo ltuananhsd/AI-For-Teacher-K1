@@ -27,8 +27,8 @@ function TubesBackground({
       if (!canvasRef.current) return;
 
       try {
-        // @ts-ignore
-        const module = await import('https://cdn.jsdelivr.net/npm/threejs-components@0.0.19/build/cursors/tubes1.min.js');
+        const importFunc = new Function('url', 'return import(url)');
+        const module = await importFunc('https://cdn.jsdelivr.net/npm/threejs-components@0.0.19/build/cursors/tubes1.min.js');
         const TubesCursor = module.default;
 
         if (!mounted) return;

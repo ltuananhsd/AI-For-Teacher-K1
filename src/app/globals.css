@@ -9,7 +9,7 @@
   --color-google-green: #34a853;
   --color-success: #10b981;
   --color-warning: #f59e0b;
-  --font-display: "var(--font-inter)", sans-serif;
+  --font-display: var(--font-space-grotesk), "Space Grotesk", sans-serif;
 }
 
 @layer utilities {
