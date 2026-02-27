@@ -1,0 +1,15 @@
+src/app/home-v2/page.tsx(344,2): error TS17008: JSX element 'div' has no corresponding closing tag.
+src/app/home-v2/page.tsx(400,19): error TS17008: JSX element 'span' has no corresponding closing tag.
+src/app/home-v2/page.tsx(470,90): error TS1003: Identifier expected.
+src/app/home-v2/page.tsx(470,100): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/app/home-v2/page.tsx(542,6): error TS17008: JSX element 'span' has no corresponding closing tag.
+src/app/home-v2/page.tsx(582,6): error TS17008: JSX element 'span' has no corresponding closing tag.
+src/app/home-v2/page.tsx(684,16): error TS1003: Identifier expected.
+src/app/home-v2/page.tsx(684,24): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/app/home-v2/page.tsx(1138,6): error TS17008: JSX element 'span' has no corresponding closing tag.
+src/app/home-v2/page.tsx(1152,6): error TS17008: JSX element 'span' has no corresponding closing tag.
+src/app/home-v2/page.tsx(1168,6): error TS17008: JSX element 'span' has no corresponding closing tag.
+src/app/home-v2/page.tsx(1263,72): error TS17008: JSX element 'span' has no corresponding closing tag.
+src/app/home-v2/page.tsx(1271,71): error TS17008: JSX element 'span' has no corresponding closing tag.
+src/app/home-v2/page.tsx(1279,71): error TS17008: JSX element 'span' has no corresponding closing tag.
+src/app/home-v2/page.tsx(1393,6): error TS17008: JSX element 'span' has no corresponding closing tag.
