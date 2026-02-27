@@ -109,10 +109,9 @@ const TubesBackground = ({
       className={cn("relative w-full h-full overflow-hidden bg-[#020617]", className)}
       onClick={handleClick}
     >
-      {/* Thẻ canvas chứa bối cảnh WebGL 3D */}
       <canvas 
         ref={canvasRef} 
-        className="absolute inset-0 w-full h-full block cursor-crosshair"
+        className="absolute inset-0 w-full h-full block cursor-crosshair pointer-events-none md:pointer-events-auto"
         style={{ touchAction: 'none' }}
       />
       

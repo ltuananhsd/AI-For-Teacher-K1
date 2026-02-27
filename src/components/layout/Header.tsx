@@ -12,7 +12,7 @@ export default function Header() {
             </div>
           </Link>
           <nav className="hidden md:flex items-center gap-8">
-            <Link className="text-sm font-medium text-slate-300 hover:text-white transition-colors" href="/#chuong-trinh">
+            <Link className="text-sm font-medium text-slate-300 hover:text-white transition-colors" href="/chuong-trinh">
               Chương Trình
             </Link>
             <Link className="text-sm font-medium text-slate-300 hover:text-white transition-colors" href="/#van-de">
