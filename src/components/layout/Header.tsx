@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 export default function Header() {
@@ -6,12 +7,9 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <Link href="/" className="flex items-center gap-2 group">
-            <div className="w-8 h-8 flex items-center justify-center rounded-lg bg-white/5 border border-white/10 group-hover:bg-primary/20 transition-colors shadow-[0_0_15px_rgba(255,255,255,0.05)]">
-              <span className="material-symbols-outlined text-primary text-xl drop-shadow-[0_0_8px_currentColor]">smart_toy</span>
+            <div className="relative h-8 w-[120px] sm:w-[150px]">
+              <Image src="/images/logo-xanh.png" alt="Google AI 2026 Logo" fill className="object-contain" />
             </div>
-            <span className="text-lg font-bold tracking-tight text-white uppercase drop-shadow-md">
-              Google AI 2026
-            </span>
           </Link>
           <nav className="hidden md:flex items-center gap-8">
             <Link className="text-sm font-medium text-slate-300 hover:text-white transition-colors" href="/#chuong-trinh">
@@ -22,9 +20,6 @@ export default function Header() {
             </Link>
             <Link className="text-sm font-medium text-slate-300 hover:text-white transition-colors" href="/#loi-ich">
               Lợi Ích
-            </Link>
-            <Link className="text-sm font-medium text-slate-300 hover:text-white transition-colors" href="/login">
-              Đăng Nhập
             </Link>
             <Link
               className="inline-flex items-center justify-center px-5 py-2 rounded-full glass-card hover:bg-white/10 border border-white/20 text-white text-sm font-bold transition-all shadow-[0_8px_32px_rgba(0,0,0,0.3)] hover:shadow-[0_0_20px_rgba(255,255,255,0.1)] relative overflow-hidden group"

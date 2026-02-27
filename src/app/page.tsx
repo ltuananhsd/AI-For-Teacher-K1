@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState, useRef } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { 
   Mail, 
@@ -163,8 +164,9 @@ const Navbar = () => {
     <nav className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? "bg-[#020617]/80 backdrop-blur-md border-b border-blue-500/20 py-3" : "bg-transparent py-5"}`}>
       <div className="container mx-auto px-6 md:px-12 flex justify-between items-center">
         <div className="flex items-center gap-2 pointer-events-auto cursor-pointer">
-          <Sparkles className="text-blue-500" size={28} />
-          <span className="text-xl font-bold text-white tracking-tight">Google AI <span className="text-blue-500">2026</span></span>
+          <div className="relative h-8 w-[120px] sm:w-[150px]">
+             <Image src="/images/logo-xanh.png" alt="Google AI 2026 Logo" fill className="object-contain" />
+          </div>
         </div>
         
         {/* Desktop Nav */}
@@ -175,7 +177,6 @@ const Navbar = () => {
         </div>
 
         <div className="hidden md:flex items-center gap-4 pointer-events-auto">
-          <Link href="/login" className="text-sm font-medium text-slate-300 hover:text-white transition-colors">Đăng Nhập</Link>
           <Link href="/register" className="px-5 py-2 text-sm font-semibold text-white bg-transparent backdrop-blur-md border border-white/20 hover:bg-white/5 rounded-full transition-all shadow-[0_0_15px_rgba(37,99,235,0.4)]">
             Đăng Ký Ngay
           </Link>
@@ -194,7 +195,6 @@ const Navbar = () => {
           <a href="#van-de" className="text-slate-300" onClick={() => setIsOpen(false)}>Vấn Đề</a>
           <a href="#loi-ich" className="text-slate-300" onClick={() => setIsOpen(false)}>Lợi Ích</a>
           <hr className="border-white/10" />
-          <Link href="/login" className="text-left font-medium text-slate-300">Đăng Nhập</Link>
           <Link href="/register" className="py-3 text-center font-semibold text-white bg-transparent backdrop-blur-md border border-white/20 hover:bg-white/5 rounded-lg shadow-lg block">
             Đăng Ký Ngay
           </Link>

@@ -3,10 +3,12 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function PaymentPage() {
   const [timeLeft, setTimeLeft] = useState(594); // 9:54
+  const router = useRouter();
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -14,6 +16,14 @@ export default function PaymentPage() {
     }, 1000);
     return () => clearInterval(timer);
   }, []);
+
+  // Simulate automatic payment verification after 10 seconds
+  useEffect(() => {
+    const autoRedirect = setTimeout(() => {
+      router.push("/success");
+    }, 10000);
+    return () => clearTimeout(autoRedirect);
+  }, [router]);
 
   const formatTime = (seconds: number) => {
     const m = Math.floor(seconds / 60);
@@ -57,15 +67,15 @@ export default function PaymentPage() {
            initial={{ opacity: 0, scale: 0.95 }}
            animate={{ opacity: 1, scale: 1 }}
            transition={{ duration: 0.6, delay: 0.2 }}
-           className="relative overflow-hidden rounded-xl border border-slate-200 dark:border-slate-800 bg-white/50 dark:bg-slate-900/50 backdrop-blur-xl shadow-2xl p-6 md:p-10 flex flex-col items-center gap-8"
+           className="relative overflow-hidden rounded-xl border border-white/10 bg-[#101722]/60 backdrop-blur-xl shadow-2xl p-6 md:p-10 flex flex-col items-center gap-8"
         >
           {/* Amount Highlight */}
           <motion.div 
              animate={{ scale: [1, 1.05, 1], opacity: [0.8, 1, 0.8] }}
              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-             className="bg-success/10 border border-success/30 px-6 py-2 rounded-full"
+             className="bg-green-500/20 border border-green-500/50 px-6 py-2 rounded-full"
           >
-            <p className="text-success text-2xl font-bold tracking-wider">5.000.000 VNĐ</p>
+            <p className="text-green-400 text-2xl font-bold tracking-wider">899.000 VNĐ</p>
           </motion.div>
 
           {/* QR Code Container */}
@@ -76,15 +86,19 @@ export default function PaymentPage() {
                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
                className="absolute -inset-4 rounded-xl border-2 border-dashed border-primary/30"
             />
-            <div className="relative bg-white p-4 rounded-lg shadow-[0_0_30px_rgba(67,135,244,0.2)]">
-              <div className="relative size-56 md:size-64">
-                <Image src="/images/qr-code.png" alt="QR Code" fill className="object-contain" />
+            <div className="relative bg-white/10 p-4 rounded-lg shadow-[0_0_30px_rgba(67,135,244,0.2)]">
+              <div className="relative size-56 md:size-64 bg-white rounded-xl overflow-hidden p-2">
+                <img 
+                  src="https://img.vietqr.io/image/MB-94996681331-compact.jpg?amount=899000&addInfo=AI2026%20USER8829&accountName=VU%20THI%20VINH" 
+                  alt="QR Code" 
+                  className="w-full h-full object-cover" 
+                />
               </div>
             </div>
           </div>
 
           {/* Countdown Timer */}
-          <div className="flex items-center gap-2 text-slate-600 dark:text-slate-300">
+          <div className="flex items-center gap-2 text-slate-300">
             <span className="material-symbols-outlined text-primary">schedule</span>
             <p className="text-sm font-medium">Mã QR hết hạn trong: <span className="text-primary font-bold">{formatTime(timeLeft)}</span></p>
           </div>
@@ -92,16 +106,17 @@ export default function PaymentPage() {
           {/* Bank Details */}
           <div className="w-full space-y-3">
             {[
-              { label: "Ngân hàng", value: "VIETCOMBANK (VCB)" },
-              { label: "Số tài khoản", value: "1023948576" },
+              { label: "Ngân hàng", value: "MB Bank" },
+              { label: "Chủ tài khoản", value: "VU THI VINH" },
+              { label: "Số tài khoản", value: "94996681331" },
               { label: "Nội dung", value: "AI2026 USER8829" }
             ].map((detail, idx) => (
-              <div key={idx} className="flex items-center justify-between p-4 rounded-lg bg-slate-100 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700/50">
+              <div key={idx} className="flex items-center justify-between p-4 rounded-lg bg-slate-900/50 border border-white/10">
                 <div>
-                  <p className="text-xs uppercase text-slate-500 tracking-widest font-bold">{detail.label}</p>
-                  <p className="font-semibold text-sm md:text-base">{detail.value}</p>
+                  <p className="text-xs uppercase text-slate-400 tracking-widest font-bold">{detail.label}</p>
+                  <p className="font-semibold text-white text-sm md:text-base mt-0.5">{detail.value}</p>
                 </div>
-                <button className="p-2 hover:bg-primary/10 rounded-lg transition-colors group">
+                <button className="p-2 hover:bg-primary/20 rounded-lg transition-colors group">
                   <span className="material-symbols-outlined text-slate-400 group-hover:text-primary">content_copy</span>
                 </button>
               </div>
@@ -109,20 +124,16 @@ export default function PaymentPage() {
           </div>
 
           {/* Auto Confirm Note */}
-          <div className="w-full flex items-start gap-3 p-4 bg-warning/10 border border-warning/20 rounded-lg">
-            <span className="material-symbols-outlined text-warning shrink-0">info</span>
-            <p className="text-xs md:text-sm text-warning/90 leading-relaxed font-medium">
+          <div className="w-full flex items-start gap-3 p-4 bg-yellow-500/10 border border-yellow-500/30 rounded-lg">
+            <span className="material-symbols-outlined text-yellow-500 shrink-0">info</span>
+            <p className="text-xs md:text-sm text-yellow-200 leading-relaxed font-medium">
               Hệ thống sẽ tự động xác nhận giao dịch trong vòng 1-5 phút sau khi chuyển tiền thành công. Vui lòng không đóng cửa sổ này.
             </p>
           </div>
 
           {/* Action Buttons */}
           <div className="w-full flex flex-col gap-3">
-            <Link href="/success" className="shadow-[0_0_15px_rgba(67,135,244,0.4)] w-full py-4 bg-primary hover:bg-primary/90 text-white rounded-xl font-bold transition-all flex items-center justify-center gap-2">
-              <span className="material-symbols-outlined">check_circle</span>
-              Xác nhận đã chuyển
-            </Link>
-            <Link href="/register" className="w-full py-4 bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 rounded-xl font-bold transition-all flex items-center justify-center gap-2">
+            <Link href="/register" className="w-full py-4 bg-slate-800/80 hover:bg-slate-700 border border-white/5 text-white rounded-xl font-bold transition-all flex items-center justify-center gap-2">
               <span className="material-symbols-outlined">arrow_back</span>
               Quay lại
             </Link>
