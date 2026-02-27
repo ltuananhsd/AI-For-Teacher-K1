@@ -77,13 +77,21 @@ function PaymentContent() {
         // Stop polling
         if (pollIntervalRef.current) clearInterval(pollIntervalRef.current);
         if (countdownIntervalRef.current) clearInterval(countdownIntervalRef.current);
-        // Redirect to success
-        router.push(`/success?id=${registrationId}`);
+        // Replace so user can't navigate back to payment page
+        router.replace(`/success?id=${registrationId}`);
         return;
       }
 
-      // Handle expired payment
-      if (result.payment_status === 'expired' || result.registration_status === 'cancelled') {
+      // Handle cancelled by user
+      if (result.registration_status === 'cancelled') {
+        if (pollIntervalRef.current) clearInterval(pollIntervalRef.current);
+        if (countdownIntervalRef.current) clearInterval(countdownIntervalRef.current);
+        setPaymentStatus('cancelled');
+        return;
+      }
+
+      // Handle expired payment (timeout)
+      if (result.payment_status === 'expired') {
         if (pollIntervalRef.current) clearInterval(pollIntervalRef.current);
         if (countdownIntervalRef.current) clearInterval(countdownIntervalRef.current);
         setPaymentStatus('expired');
@@ -106,7 +114,7 @@ function PaymentContent() {
   // Initial fetch + setup polling
   useEffect(() => {
     if (!registrationId) {
-      router.push('/register');
+      router.replace('/register');
       return;
     }
 
@@ -152,15 +160,15 @@ function PaymentContent() {
     }
   };
 
-  // Handle retry (create new registration)
+  // Handle retry (create new registration) — replace so payment page is removed from history
   const handleRetry = () => {
-    router.push('/register');
+    router.replace('/register');
   };
 
   // Handle user-initiated cancellation
   const handleCancel = async () => {
     if (!registrationId) {
-      router.push('/register');
+      router.replace('/register');
       return;
     }
 
@@ -176,7 +184,8 @@ function PaymentContent() {
       // Ignore errors — navigate anyway
     }
 
-    router.push('/register');
+    // Replace (not push) so user can't press Back to see stale QR
+    router.replace('/register');
   };
 
   // Loading state
@@ -218,7 +227,35 @@ function PaymentContent() {
     );
   }
 
-  // Expired state
+  // Cancelled state (user-initiated)
+  if (paymentStatus === 'cancelled') {
+    return (
+      <div className="flex-1 flex items-center justify-center px-4">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="bg-[#101722]/60 border border-red-500/20 rounded-2xl p-8 max-w-md w-full text-center"
+        >
+          <div className="w-16 h-16 bg-red-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+            <span className="material-symbols-outlined text-red-400 text-4xl">cancel</span>
+          </div>
+          <h2 className="text-white text-xl font-bold mb-2">Đã hủy đăng ký</h2>
+          <p className="text-slate-400 text-sm mb-6">
+            Phiên đăng ký đã được hủy. Mã QR thanh toán không còn hiệu lực.
+          </p>
+          <button
+            onClick={handleRetry}
+            className="w-full py-3.5 bg-primary hover:bg-primary/90 text-white font-bold rounded-xl transition-colors shadow-[0_0_15px_rgba(67,135,244,0.4)] flex items-center justify-center gap-2"
+          >
+            <span className="material-symbols-outlined">person_add</span>
+            Đăng ký lại
+          </button>
+        </motion.div>
+      </div>
+    );
+  }
+
+  // Expired state (timeout)
   if (paymentStatus === 'expired') {
     return (
       <div className="flex-1 flex items-center justify-center px-4">
