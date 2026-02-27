@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CES Global - Wireframes</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0a1a;
+            color: #e0e0f0;
+            min-height: 100vh
+        }
+
+        .header {
+            text-align: center;
+            padding: 50px 20px 30px
+        }
+
+        .header h1 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #6366f1, #a855f7, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px
+        }
+
+        .header p {
+            color: #8888aa;
+            font-size: 1rem
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px 20px;
+            flex-wrap: wrap;
+            position: sticky;
+            top: 0;
+            background: #0a0a1aee;
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            border-bottom: 1px solid #1a1a30
+        }
+
+        .tab {
+            padding: 8px 18px;
+            border-radius: 8px;
+            border: 1px solid #2a2a45;
+            background: #12122a;
+            color: #aaa;
+            cursor: pointer;
+            font-size: .82rem;
+            font-weight: 500;
+            transition: all .3s
+        }
+
+        .tab:hover,
+        .tab.active {
+            background: linear-gradient(135deg, #6366f1, #a855f7);
+            color: #fff;
+            border-color: transparent
+        }
+
+        .screens {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 30px 20px 80px
+        }
+
+        .screen {
+            display: none;
+            animation: fadeIn .4s
+        }
+
+        .screen.active {
+            display: block
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px)
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0)
+            }
+        }
+
+        .screen-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #a5b4fc;
+            margin-bottom: 6px
+        }
+
+        .screen-desc {
+            color: #888;
+            font-size: .85rem;
+            margin-bottom: 24px
+        }
+
+        .wireframe {
+            background: #111125;
+            border: 1px solid #2a2a45;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 40px rgba(0, 0, 0, .3)
+        }
+
+        /* Wireframe internal styles */
+        .wf-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 24px;
+            background: #0d0d20;
+            border-bottom: 1px solid #222240
+        }
+
+        .wf-logo {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #a5b4fc
+        }
+
+        .wf-nav-links {
+            display: flex;
+            gap: 16px;
+            align-items: center
+        }
+
+        .wf-nav-links span {
+            font-size: .8rem;
+            color: #888;
+            cursor: pointer
+        }
+
+        .wf-nav-links span:hover {
+            color: #a5b4fc
+        }
+
+        .wf-btn {
+            padding: 7px 16px;
+            border-radius: 8px;
+            font-size: .78rem;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all .3s
+        }
+
+        .wf-btn-primary {
+            background: linear-gradient(135deg, #6366f1, #a855f7);
+            color: #fff
+        }
+
+        .wf-btn-outline {
+            background: transparent;
+            border: 1px solid #6366f1;
+            color: #a5b4fc
+        }
+
+        .wf-btn-google {
+            background: #fff;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: .85rem;
+            border: none;
+            cursor: pointer
+        }
+
+        .wf-btn-success {
+            background: linear-gradient(135deg, #22c55e, #10b981);
+            color: #fff
+        }
+
+        .wf-btn-danger {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: #fff
+        }
+
+        /* Hero */
+        .wf-hero {
+            padding: 60px 40px;
+            text-align: center;
+            background: linear-gradient(180deg, #0d0d20, #111125)
+        }
+
+        .wf-hero h2 {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, #6366f1, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent
+        }
+
+        .wf-hero p {
+            color: #888;
+            max-width: 500px;
+            margin: 0 auto 24px;
+            font-size: .9rem
+        }
+
+        /* Cards */
+        .wf-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 16px;
+            padding: 24px
+        }
+
+        .wf-card {
+            background: #0d0d20;
+            border: 1px solid #2a2a45;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all .3s
+        }
+
+        .wf-card:hover {
+            border-color: #6366f1;
+            transform: translateY(-4px)
+        }
+
+        .wf-card-img {
+            height: 120px;
+            background: linear-gradient(135deg, #1e1b4b, #312e81);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem
+        }
+
+        .wf-card-body {
+            padding: 14px
+        }
+
+        .wf-card-body h4 {
+            font-size: .9rem;
+            font-weight: 600;
+            margin-bottom: 4px
+        }
+
+        .wf-card-body p {
+            font-size: .75rem;
+            color: #888;
+            margin-bottom: 8px
+        }
+
+        .wf-card-body .price {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #a855f7
+        }
+
+        .wf-badge {
+            display: inline-block;
+            font-size: .65rem;
+            padding: 2px 8px;
+            border-radius: 20px;
+            font-weight: 600;
+            background: #22c55e20;
+            color: #22c55e
+        }
+
+        /* Sections */
+        .wf-section {
+            padding: 30px 24px
+        }
+
+        .wf-section h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: #a5b4fc
+        }
+
+        /* Form */
+        .wf-form {
+            max-width: 500px;
+            margin: 0 auto
+        }
+
+        .wf-input-group {
+            margin-bottom: 14px
+        }
+
+        .wf-input-group label {
+            display: block;
+            font-size: .78rem;
+            color: #999;
+            margin-bottom: 4px;
+            font-weight: 500
+        }
+
+        .wf-input {
+            width: 100%;
+            padding: 10px 14px;
+            border-radius: 8px;
+            border: 1px solid #2a2a45;
+            background: #0d0d20;
+            color: #ddd;
+            font-size: .85rem
+        }
+
+        .wf-input:focus {
+            outline: none;
+            border-color: #6366f1
+        }
+
+        /* Detail page */
+        .wf-detail-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 24px;
+            padding: 24px
+        }
+
+        .wf-detail-info h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 8px
+        }
+
+        .wf-detail-info p {
+            font-size: .85rem;
+            color: #888;
+            line-height: 1.6;
+            margin-bottom: 16px
+        }
+
+        .wf-detail-sidebar {
+            background: #0d0d20;
+            border: 1px solid #2a2a45;
+            border-radius: 12px;
+            padding: 20px
+        }
+
+        .wf-detail-sidebar .price {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #a855f7;
+            margin-bottom: 12px
+        }
+
+        .wf-info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #1a1a30;
+            font-size: .82rem
+        }
+
+        .wf-info-row .label {
+            color: #888
+        }
+
+        /* Payment */
+        .wf-payment-box {
+            max-width: 460px;
+            margin: 0 auto;
+            padding: 30px;
+            text-align: center
+        }
+
+        .wf-qr-placeholder {
+            width: 200px;
+            height: 200px;
+            border: 2px dashed #6366f1;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 16px auto;
+            font-size: .85rem;
+            color: #6366f1
+        }
+
+        /* Success / Error */
+        .wf-result {
+            text-align: center;
+            padding: 60px 40px
+        }
+
+        .wf-result .icon {
+            font-size: 4rem;
+            margin-bottom: 16px
+        }
+
+        .wf-result h2 {
+            font-size: 1.5rem;
+            margin-bottom: 8px
+        }
+
+        .wf-result p {
+            color: #888;
+            font-size: .9rem;
+            max-width: 400px;
+            margin: 0 auto 20px
+        }
+
+        /* Dashboard */
+        .wf-dash-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+            padding: 24px
+        }
+
+        .wf-stat {
+            background: #0d0d20;
+            border: 1px solid #2a2a45;
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center
+        }
+
+        .wf-stat .num {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #a855f7
+        }
+
+        .wf-stat .lbl {
+            font-size: .75rem;
+            color: #888;
+            margin-top: 4px
+        }
+
+        .wf-course-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 24px;
+            border-bottom: 1px solid #1a1a30
+        }
+
+        .wf-course-row:hover {
+            background: #0d0d2050
+        }
+
+        /* Admin table */
+        .wf-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: .8rem
+        }
+
+        .wf-table th {
+            text-align: left;
+            padding: 10px 14px;
+            background: #0d0d20;
+            color: #888;
+            font-weight: 600;
+            border-bottom: 1px solid #2a2a45
+        }
+
+        .wf-table td {
+            padding: 10px 14px;
+            border-bottom: 1px solid #1a1a30
+        }
+
+        /* Email preview */
+        .wf-email {
+            max-width: 500px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            color: #333
+        }
+
+        .wf-email-header {
+            background: linear-gradient(135deg, #6366f1, #a855f7);
+            padding: 24px;
+            text-align: center;
+            color: #fff
+        }
+
+        .wf-email-body {
+            padding: 24px;
+            font-size: .85rem;
+            line-height: 1.7
+        }
+
+        .wf-email-body h3 {
+            margin-bottom: 8px;
+            color: #1a1a30
+        }
+
+        .wf-email-footer {
+            background: #f5f5f5;
+            padding: 14px;
+            text-align: center;
+            font-size: .75rem;
+            color: #999
+        }
+
+        .wf-links-box {
+            background: #f0f0ff;
+            border-radius: 8px;
+            padding: 12px;
+            margin: 12px 0
+        }
+
+        .wf-links-box a {
+            display: block;
+            color: #6366f1;
+            font-weight: 600;
+            margin: 4px 0;
+            text-decoration: none
+        }
+
+        @media(max-width:768px) {
+            .wf-detail-grid {
+                grid-template-columns: 1fr
+            }
+
+            .wf-dash-grid {
+                grid-template-columns: 1fr
+            }
+
+            .tabs {
+                gap: 4px
+            }
+
+            .tab {
+                font-size: .75rem;
+                padding: 6px 12px
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h1>📐 CES Global - Wireframes</h1>
+        <p>Bản thiết kế giao diện các trang chính</p>
+    </div>
+    <div class="tabs">
+        <div class="tab active" onclick="show('home')">🏠 Trang Chủ</div>
+        <div class="tab" onclick="show('courses')">📋 Khóa Học</div>
+        <div class="tab" onclick="show('detail')">📖 Chi Tiết</div>
+        <div class="tab" onclick="show('login')">🔑 Đăng Nhập</div>
+        <div class="tab" onclick="show('enroll')">📝 Đăng Ký</div>
+        <div class="tab" onclick="show('payment')">💳 Thanh Toán</div>
+        <div class="tab" onclick="show('success')">✅ Thành Công</div>
+        <div class="tab" onclick="show('dashboard')">🎓 Dashboard</div>
+        <div class="tab" onclick="show('admin')">⚙️ Admin</div>
+        <div class="tab" onclick="show('email')">📧 Email</div>
+    </div>
+    <div class="screens">
+
+        <!-- 1. HOME -->
+        <div class="screen active" id="home">
+            <div class="screen-title">Trang Chủ (Landing Page)</div>
+            <div class="screen-desc">Trang đầu tiên khách truy cập — giới thiệu CES Global và các khóa học nổi bật</div>
+            <div class="wireframe">
+                <div class="wf-nav">
+                    <div class="wf-logo">CES Global</div>
+                    <div class="wf-nav-links">
+                        <span>Khóa Học</span><span>Giới Thiệu</span><span>Liên Hệ</span>
+                        <button class="wf-btn wf-btn-primary">Đăng Nhập</button>
+                    </div>
+                </div>
+                <div class="wf-hero">
+                    <h2>Nâng Tầm Năng Lực<br>Cùng CES Global</h2>
+                    <p>Khám phá các khóa học chất lượng cao, giảng viên hàng đầu. Đăng ký ngay hôm nay!</p>
+                    <button class="wf-btn wf-btn-primary" style="padding:12px 32px;font-size:.9rem">Xem Khóa Học
+                        →</button>
+                </div>
+                <div class="wf-section">
+                    <h3>⭐ Khóa Học Nổi Bật</h3>
+                    <div class="wf-grid">
+                        <div class="wf-card">
+                            <div class="wf-card-img">🎯</div>
+                            <div class="wf-card-body"><span class="wf-badge">Mở đăng ký</span>
+                                <h4>Digital Marketing Pro</h4>
+                                <p>12 buổi • Giảng viên: Nguyễn Văn A</p>
+                                <div class="price">2,500,000₫</div>
+                            </div>
+                        </div>
+                        <div class="wf-card">
+                            <div class="wf-card-img">💻</div>
+                            <div class="wf-card-body"><span class="wf-badge">Sắp khai giảng</span>
+                                <h4>Web Development</h4>
+                                <p>16 buổi • Giảng viên: Trần Thị B</p>
+                                <div class="price">3,200,000₫</div>
+                            </div>
+                        </div>
+                        <div class="wf-card">
+                            <div class="wf-card-img">📊</div>
+                            <div class="wf-card-body"><span class="wf-badge">Mở đăng ký</span>
+                                <h4>Data Analytics</h4>
+                                <p>10 buổi • Giảng viên: Lê Văn C</p>
+                                <div class="price">2,800,000₫</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. COURSES -->
+        <div class="screen" id="courses">
+            <div class="screen-title">Danh Sách Khóa Học</div>
+            <div class="screen-desc">/courses — Hiển thị toàn bộ khóa học, có filter và search</div>
+            <div class="wireframe">
+                <div class="wf-nav">
+                    <div class="wf-logo">CES Global</div>
+                    <div class="wf-nav-links"><span>Khóa Học</span><span>Giới Thiệu</span><span>Liên Hệ</span><button
+                            class="wf-btn wf-btn-primary">Đăng Nhập</button></div>
+                </div>
+                <div class="wf-section">
+                    <div
+                        style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:10px">
+                        <h3 style="margin:0">📚 Tất Cả Khóa Học</h3>
+                        <div style="display:flex;gap:8px"><input class="wf-input" placeholder="🔍 Tìm khóa học..."
+                                style="width:220px"><button class="wf-btn wf-btn-outline">Lọc</button></div>
+                    </div>
+                    <div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap">
+                        <button class="wf-btn wf-btn-primary" style="font-size:.72rem">Tất cả</button>
+                        <button class="wf-btn wf-btn-outline" style="font-size:.72rem">Marketing</button>
+                        <button class="wf-btn wf-btn-outline" style="font-size:.72rem">IT</button>
+                        <button class="wf-btn wf-btn-outline" style="font-size:.72rem">Kinh Doanh</button>
+                        <button class="wf-btn wf-btn-outline" style="font-size:.72rem">Ngoại Ngữ</button>
+                    </div>
+                    <div class="wf-grid">
+                        <div class="wf-card">
+                            <div class="wf-card-img">🎯</div>
+                            <div class="wf-card-body"><span class="wf-badge">Mở đăng ký</span>
+                                <h4>Digital Marketing Pro</h4>
+                                <p>12 buổi • Bắt đầu: 15/03/2026</p>
+                                <div class="price">2,500,000₫</div>
+                            </div>
+                        </div>
+                        <div class="wf-card">
+                            <div class="wf-card-img">💻</div>
+                            <div class="wf-card-body"><span class="wf-badge">Sắp khai giảng</span>
+                                <h4>Web Development</h4>
+                                <p>16 buổi • Bắt đầu: 20/03/2026</p>
+                                <div class="price">3,200,000₫</div>
+                            </div>
+                        </div>
+                        <div class="wf-card">
+                            <div class="wf-card-img">📊</div>
+                            <div class="wf-card-body"><span class="wf-badge">Mở đăng ký</span>
+                                <h4>Data Analytics</h4>
+                                <p>10 buổi • Bắt đầu: 01/04/2026</p>
+                                <div class="price">2,800,000₫</div>
+                            </div>
+                        </div>
+                        <div class="wf-card">
+                            <div class="wf-card-img">🗣️</div>
+                            <div class="wf-card-body"><span style="background:#f59e0b20;color:#f59e0b"
+                                    class="wf-badge">Còn 5 slot</span>
+                                <h4>IELTS Intensive</h4>
+                                <p>20 buổi • Bắt đầu: 10/03/2026</p>
+                                <div class="price">4,500,000₫</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. DETAIL -->
+        <div class="screen" id="detail">
+            <div class="screen-title">Chi Tiết Khóa Học</div>
+            <div class="screen-desc">/courses/:slug — Xem chi tiết, nội dung, giảng viên, giá và CTA đăng ký</div>
+            <div class="wireframe">
+                <div class="wf-nav">
+                    <div class="wf-logo">CES Global</div>
+                    <div class="wf-nav-links"><span>Khóa Học</span><span>Giới Thiệu</span><button
+                            class="wf-btn wf-btn-primary">Đăng Nhập</button></div>
+                </div>
+                <div class="wf-detail-grid">
+                    <div class="wf-detail-info">
+                        <span class="wf-badge" style="margin-bottom:8px">Mở đăng ký</span>
+                        <h2>Digital Marketing Pro</h2>
+                        <p>Khóa học chuyên sâu về Digital Marketing, từ cơ bản đến nâng cao. Bao gồm SEO, Google Ads,
+                            Facebook Ads, Content Marketing, Analytics.</p>
+                        <h3 style="font-size:.95rem;color:#a5b4fc;margin:16px 0 8px">📋 Nội Dung Khóa Học</h3>
+                        <div style="font-size:.82rem;color:#999;line-height:1.8">
+                            ✅ Buổi 1-3: Tổng quan Digital Marketing<br>
+                            ✅ Buổi 4-6: SEO & Content Marketing<br>
+                            ✅ Buổi 7-9: Google Ads & Facebook Ads<br>
+                            ✅ Buổi 10-12: Analytics & Báo cáo
+                        </div>
+                        <h3 style="font-size:.95rem;color:#a5b4fc;margin:16px 0 8px">👨‍🏫 Giảng Viên</h3>
+                        <div style="display:flex;align-items:center;gap:10px">
+                            <div
+                                style="width:40px;height:40px;border-radius:50%;background:#312e81;display:flex;align-items:center;justify-content:center">
+                                👤</div>
+                            <div>
+                                <div style="font-weight:600;font-size:.85rem">Nguyễn Văn A</div>
+                                <div style="font-size:.75rem;color:#888">10+ năm kinh nghiệm Digital Marketing</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="wf-detail-sidebar">
+                        <div class="price">2,500,000₫</div>
+                        <div class="wf-info-row"><span class="label">Thời lượng</span><span>12 buổi</span></div>
+                        <div class="wf-info-row"><span class="label">Khai giảng</span><span>15/03/2026</span></div>
+                        <div class="wf-info-row"><span class="label">Lịch học</span><span>T3, T5 • 19:00-21:00</span>
+                        </div>
+                        <div class="wf-info-row"><span class="label">Hình thức</span><span>Online (Zoom)</span></div>
+                        <div class="wf-info-row"><span class="label">Còn trống</span><span style="color:#22c55e">12 / 30
+                                slot</span></div>
+                        <button class="wf-btn wf-btn-primary"
+                            style="width:100%;margin-top:16px;padding:12px;font-size:.9rem">🎓 Đăng Ký Ngay</button>
+                        <button class="wf-btn wf-btn-outline"
+                            style="width:100%;margin-top:8px;padding:10px;font-size:.82rem">💬 Tư Vấn Thêm</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. LOGIN -->
+        <div class="screen" id="login">
+            <div class="screen-title">Đăng Nhập</div>
+            <div class="screen-desc">/auth/google — Modal hoặc trang đăng nhập qua Google OAuth</div>
+            <div class="wireframe">
+                <div class="wf-nav">
+                    <div class="wf-logo">CES Global</div>
+                    <div class="wf-nav-links"><span>Khóa Học</span></div>
+                </div>
+                <div style="padding:60px 20px;text-align:center">
+                    <div
+                        style="max-width:380px;margin:0 auto;background:#0d0d20;border:1px solid #2a2a45;border-radius:16px;padding:40px 30px">
+                        <div style="font-size:3rem;margin-bottom:12px">🔐</div>
+                        <h2 style="font-size:1.3rem;margin-bottom:6px">Đăng Nhập</h2>
+                        <p style="color:#888;font-size:.82rem;margin-bottom:24px">Sử dụng tài khoản Google để đăng nhập
+                            nhanh chóng</p>
+                        <button class="wf-btn-google" style="width:100%;justify-content:center">
+                            <span style="font-size:1.2rem">🔷</span> Đăng nhập bằng Google
+                        </button>
+                        <p style="font-size:.72rem;color:#666;margin-top:16px">Bằng việc đăng nhập, bạn đồng ý với<br><a
+                                href="#" style="color:#6366f1">Điều khoản sử dụng</a> và <a href="#"
+                                style="color:#6366f1">Chính sách bảo mật</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. ENROLL -->
+        <div class="screen" id="enroll">
+            <div class="screen-title">Form Đăng Ký Khóa Học</div>
+            <div class="screen-desc">/enroll/:courseId — Xác nhận thông tin cá nhân trước khi thanh toán</div>
+            <div class="wireframe">
+                <div class="wf-nav">
+                    <div class="wf-logo">CES Global</div>
+                    <div class="wf-nav-links"><span>👤 Nguyễn Văn B</span></div>
+                </div>
+                <div class="wf-section">
+                    <div class="wf-form">
+                        <h3 style="text-align:center;margin-bottom:4px">📝 Đăng Ký Khóa Học</h3>
+                        <p style="text-align:center;color:#888;font-size:.82rem;margin-bottom:20px">Digital Marketing
+                            Pro — 2,500,000₫</p>
+                        <div class="wf-input-group"><label>Họ và Tên *</label><input class="wf-input"
+                                value="Nguyễn Văn B" disabled></div>
+                        <div class="wf-input-group"><label>Email *</label><input class="wf-input"
+                                value="nguyenvanb@gmail.com" disabled></div>
+                        <div class="wf-input-group"><label>Số Điện Thoại *</label><input class="wf-input"
+                                placeholder="0912 345 678"></div>
+                        <div class="wf-input-group"><label>Ghi chú</label><input class="wf-input"
+                                placeholder="Thông tin thêm (nếu có)"></div>
+                        <div
+                            style="background:#0d0d20;border:1px solid #2a2a45;border-radius:8px;padding:14px;margin:16px 0">
+                            <div style="font-size:.82rem;font-weight:600;margin-bottom:8px">📦 Tóm tắt đơn hàng</div>
+                            <div class="wf-info-row"><span class="label">Khóa học</span><span>Digital Marketing
+                                    Pro</span></div>
+                            <div class="wf-info-row"><span class="label">Thời lượng</span><span>12 buổi</span></div>
+                            <div class="wf-info-row" style="border:none"><span class="label"
+                                    style="font-weight:700;color:#fff">Tổng tiền</span><span
+                                    style="font-weight:700;color:#a855f7;font-size:1.1rem">2,500,000₫</span></div>
+                        </div>
+                        <button class="wf-btn wf-btn-primary" style="width:100%;padding:12px;font-size:.9rem">💳 Tiến
+                            Hành Thanh Toán</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 6. PAYMENT -->
+        <div class="screen" id="payment">
+            <div class="screen-title">Trang Thanh Toán (Sepay)</div>
+            <div class="screen-desc">/payment/checkout — Quét QR VietQR hoặc thanh toán thẻ qua Sepay</div>
+            <div class="wireframe">
+                <div class="wf-nav">
+                    <div class="wf-logo">CES Global</div>
+                    <div class="wf-nav-links"><span style="color:#f59e0b">⏳ Đang chờ thanh toán</span></div>
+                </div>
+                <div class="wf-payment-box">
+                    <h3 style="margin-bottom:4px">💳 Thanh Toán Qua Sepay</h3>
+                    <p style="color:#888;font-size:.82rem;margin-bottom:16px">Quét mã QR bằng ứng dụng ngân hàng</p>
+                    <div style="display:flex;gap:8px;justify-content:center;margin-bottom:16px">
+                        <button class="wf-btn wf-btn-primary" style="font-size:.75rem">📱 QR Code</button>
+                        <button class="wf-btn wf-btn-outline" style="font-size:.75rem">💳 Thẻ quốc tế</button>
+                    </div>
+                    <div class="wf-qr-placeholder">QR Code<br>VietQR<br>(Sepay)</div>
+                    <div style="font-size:.78rem;color:#888;margin-bottom:8px">Số tiền: <span
+                            style="color:#a855f7;font-weight:700">2,500,000₫</span></div>
+                    <div style="font-size:.72rem;color:#666;margin-bottom:16px">Nội dung CK: <span
+                            style="color:#f59e0b">CESGLOBAL 12345</span></div>
+                    <div
+                        style="background:#f59e0b15;border:1px solid #f59e0b30;border-radius:8px;padding:10px;font-size:.75rem;color:#f59e0b">
+                        ⏱️ Giao dịch sẽ tự động xác nhận sau khi chuyển khoản thành công
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 7. SUCCESS -->
+        <div class="screen" id="success">
+            <div class="screen-title">Thanh Toán Thành Công</div>
+            <div class="screen-desc">/payment/success — Xác nhận đăng ký thành công, trigger gửi email</div>
+            <div class="wireframe">
+                <div class="wf-nav">
+                    <div class="wf-logo">CES Global</div>
+                    <div class="wf-nav-links"><span>👤 Nguyễn Văn B</span></div>
+                </div>
+                <div class="wf-result">
+                    <div class="icon">🎉</div>
+                    <h2 style="color:#22c55e">Đăng Ký Thành Công!</h2>
+                    <p>Cảm ơn bạn đã đăng ký khóa <strong>Digital Marketing Pro</strong>. Email xác nhận và thông tin
+                        khóa học đã được gửi đến <strong>nguyenvanb@gmail.com</strong></p>
+                    <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+                        <button class="wf-btn wf-btn-success">📚 Xem Khóa Học Của Tôi</button>
+                        <button class="wf-btn wf-btn-outline">🏠 Về Trang Chủ</button>
+                    </div>
+                    <div
+                        style="background:#22c55e10;border:1px solid #22c55e30;border-radius:8px;padding:14px;margin-top:20px;max-width:400px;margin-left:auto;margin-right:auto;font-size:.8rem;text-align:left">
+                        <div style="font-weight:600;color:#22c55e;margin-bottom:6px">📧 Email đã gửi:</div>
+                        <div style="color:#888">✅ Email xác nhận thanh toán</div>
+                        <div style="color:#888">✅ Email thông tin khóa học (link Zoom, Zalo, Facebook)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 8. DASHBOARD -->
+        <div class="screen" id="dashboard">
+            <div class="screen-title">Dashboard Học Viên</div>
+            <div class="screen-desc">/dashboard — Quản lý khóa học đã đăng ký, link truy cập</div>
+            <div class="wireframe">
+                <div class="wf-nav">
+                    <div class="wf-logo">CES Global</div>
+                    <div class="wf-nav-links"><span>Dashboard</span><span>Khóa Học</span><span>👤 Nguyễn Văn B</span>
+                    </div>
+                </div>
+                <div class="wf-section" style="padding-bottom:0">
+                    <h3>👋 Xin chào, Nguyễn Văn B!</h3>
+                </div>
+                <div class="wf-dash-grid">
+                    <div class="wf-stat">
+                        <div class="num">2</div>
+                        <div class="lbl">Khóa học đang học</div>
+                    </div>
+                    <div class="wf-stat">
+                        <div class="num">1</div>
+                        <div class="lbl">Khóa sắp khai giảng</div>
+                    </div>
+                    <div class="wf-stat">
+                        <div class="num">5,300,000₫</div>
+                        <div class="lbl">Tổng đã thanh toán</div>
+                    </div>
+                </div>
+                <div class="wf-section">
+                    <h3>📚 Khóa Học Của Tôi</h3>
+                </div>
+                <div class="wf-course-row">
+                    <div>
+                        <div style="font-weight:600;font-size:.88rem">🎯 Digital Marketing Pro</div>
+                        <div style="font-size:.75rem;color:#888">Bắt đầu: 15/03/2026 • T3, T5 19:00</div>
+                    </div>
+                    <div style="display:flex;gap:6px"><button class="wf-btn wf-btn-primary" style="font-size:.72rem">🔗
+                            Vào Lớp Học</button><button class="wf-btn wf-btn-outline" style="font-size:.72rem">💬
+                            Zalo</button></div>
+                </div>
+                <div class="wf-course-row">
+                    <div>
+                        <div style="font-weight:600;font-size:.88rem">📊 Data Analytics</div>
+                        <div style="font-size:.75rem;color:#888">Bắt đầu: 01/04/2026 • T2, T4 20:00</div>
+                    </div>
+                    <div style="display:flex;gap:6px"><button class="wf-btn wf-btn-outline"
+                            style="font-size:.72rem;color:#f59e0b;border-color:#f59e0b">⏳ Chưa bắt đầu</button></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 9. ADMIN -->
+        <div class="screen" id="admin">
+            <div class="screen-title">Admin Dashboard</div>
+            <div class="screen-desc">/admin — Quản trị viên CES Global - quản lý khóa học, học viên, thanh toán</div>
+            <div class="wireframe">
+                <div class="wf-nav" style="background:#1a0000">
+                    <div class="wf-logo" style="color:#f87171">⚙️ CES Admin</div>
+                    <div class="wf-nav-links"><span>Khóa học</span><span>Học viên</span><span>Thanh
+                            toán</span><span>Email</span><span>👤 Admin</span></div>
+                </div>
+                <div class="wf-dash-grid">
+                    <div class="wf-stat">
+                        <div class="num" style="color:#22c55e">156</div>
+                        <div class="lbl">Tổng học viên</div>
+                    </div>
+                    <div class="wf-stat">
+                        <div class="num" style="color:#6366f1">8</div>
+                        <div class="lbl">Khóa học hoạt động</div>
+                    </div>
+                    <div class="wf-stat">
+                        <div class="num" style="color:#f59e0b">42,500,000₫</div>
+                        <div class="lbl">Doanh thu tháng</div>
+                    </div>
+                </div>
+                <div class="wf-section">
+                    <h3>📋 Đăng Ký Gần Đây</h3>
+                    <table class="wf-table">
+                        <tr>
+                            <th>Học viên</th>
+                            <th>Khóa học</th>
+                            <th>Thanh toán</th>
+                            <th>Trạng thái</th>
+                            <th>Thao tác</th>
+                        </tr>
+                        <tr>
+                            <td>Nguyễn Văn B</td>
+                            <td>Digital Marketing</td>
+                            <td>2,500,000₫</td>
+                            <td><span class="wf-badge">Đã TT</span></td>
+                            <td><button class="wf-btn wf-btn-outline" style="font-size:.68rem">Xem</button></td>
+                        </tr>
+                        <tr>
+                            <td>Trần Thị C</td>
+                            <td>Data Analytics</td>
+                            <td>2,800,000₫</td>
+                            <td><span class="wf-badge" style="background:#f59e0b20;color:#f59e0b">Chờ TT</span></td>
+                            <td><button class="wf-btn wf-btn-outline" style="font-size:.68rem">Xem</button></td>
+                        </tr>
+                        <tr>
+                            <td>Lê Văn D</td>
+                            <td>IELTS Intensive</td>
+                            <td>4,500,000₫</td>
+                            <td><span class="wf-badge">Đã TT</span></td>
+                            <td><button class="wf-btn wf-btn-outline" style="font-size:.68rem">Xem</button></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- 10. EMAIL -->
+        <div class="screen" id="email">
+            <div class="screen-title">Email Template Preview</div>
+            <div class="screen-desc">Mẫu email tự động gửi sau thanh toán thành công</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+                <div>
+                    <h4 style="font-size:.9rem;color:#06b6d4;margin-bottom:10px">📧 Email #1: Xác Nhận Thanh Toán</h4>
+                    <div class="wf-email">
+                        <div class="wf-email-header">
+                            <div style="font-size:1.5rem;margin-bottom:6px">✅</div>
+                            <h3 style="margin:0">Thanh Toán Thành Công!</h3>
+                        </div>
+                        <div class="wf-email-body">
+                            <p>Xin chào <strong>Nguyễn Văn B</strong>,</p>
+                            <p>Chúng tôi xác nhận bạn đã thanh toán thành công cho khóa học:</p>
+                            <div style="background:#f0f0ff;border-radius:8px;padding:12px;margin:10px 0">
+                                <strong>Digital Marketing Pro</strong><br>
+                                <span style="font-size:.82rem;color:#666">Mã GD: #SP12345 • 2,500,000₫</span>
+                            </div>
+                            <p style="font-size:.82rem">Thông tin chi tiết khóa học sẽ được gửi trong email tiếp theo.
+                            </p>
+                        </div>
+                        <div class="wf-email-footer">© 2026 CES Global</div>
+                    </div>
+                </div>
+                <div>
+                    <h4 style="font-size:.9rem;color:#06b6d4;margin-bottom:10px">📨 Email #2: Thông Tin Khóa Học</h4>
+                    <div class="wf-email">
+                        <div class="wf-email-header" style="background:linear-gradient(135deg,#22c55e,#10b981)">
+                            <div style="font-size:1.5rem;margin-bottom:6px">🎓</div>
+                            <h3 style="margin:0">Thông Tin Khóa Học</h3>
+                        </div>
+                        <div class="wf-email-body">
+                            <p>Chào <strong>Nguyễn Văn B</strong>,</p>
+                            <p>Dưới đây là thông tin tham gia khóa <strong>Digital Marketing Pro</strong>:</p>
+                            <div class="wf-links-box">
+                                <a href="#">🔗 Link lớp học Zoom</a>
+                                <a href="#">💬 Nhóm Zalo khóa học</a>
+                                <a href="#">📘 Nhóm Facebook</a>
+                                <a href="#">📂 Tài liệu học tập</a>
+                            </div>
+                            <div style="background:#fff8e1;border-radius:8px;padding:10px;font-size:.82rem">
+                                📅 <strong>Khai giảng:</strong> 15/03/2026 lúc 19:00<br>
+                                📍 <strong>Hình thức:</strong> Online - Zoom Meeting
+                            </div>
+                        </div>
+                        <div class="wf-email-footer">© 2026 CES Global</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function show(id) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            event.target.classList.add('active');
+        }
+    </script>
+</body>
+
+</html>

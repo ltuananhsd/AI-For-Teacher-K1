@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CES Global - Sitemap</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0a1a;
+            color: #e0e0f0;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 60px 20px 40px;
+            position: relative;
+        }
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #6366f1, transparent);
+        }
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #6366f1, #a855f7, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 12px;
+        }
+        .header p {
+            font-size: 1.1rem;
+            color: #8888aa;
+            font-weight: 300;
+        }
+
+        /* Legend */
+        .legend {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            padding: 20px;
+            flex-wrap: wrap;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+            color: #aaa;
+        }
+        .legend-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 4px;
+        }
+        .dot-public { background: #22c55e; }
+        .dot-auth { background: #6366f1; }
+        .dot-payment { background: #f59e0b; }
+        .dot-admin { background: #ef4444; }
+        .dot-email { background: #06b6d4; }
+
+        /* Sitemap Tree */
+        .sitemap-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px 80px;
+        }
+
+        .tree {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Root node */
+        .root-node {
+            background: linear-gradient(135deg, #1e1b4b, #312e81);
+            border: 2px solid #6366f1;
+            border-radius: 16px;
+            padding: 20px 40px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 0 40px rgba(99,102,241,0.2);
+            margin-bottom: 40px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .root-node:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 0 60px rgba(99,102,241,0.3);
+        }
+        .root-node h2 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #a5b4fc;
+        }
+        .root-node .url {
+            font-size: 0.8rem;
+            color: #6366f1;
+            margin-top: 4px;
+        }
+
+        /* Connector line from root */
+        .connector-vertical {
+            width: 2px;
+            height: 40px;
+            background: linear-gradient(180deg, #6366f1, #4b5563);
+            margin-bottom: 0;
+        }
+
+        /* Branch levels */
+        .branch-level {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            position: relative;
+            margin-bottom: 30px;
+            width: 100%;
+        }
+        .branch-level::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: 10%;
+            right: 10%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #4b5563, transparent);
+        }
+
+        /* Section */
+        .section {
+            flex: 1;
+            min-width: 200px;
+            max-width: 280px;
+        }
+        .section-header {
+            border-radius: 12px;
+            padding: 16px 20px;
+            text-align: center;
+            margin-bottom: 12px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .section-header:hover {
+            transform: translateY(-3px);
+        }
+        .section-header h3 {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+        .section-header .route {
+            font-size: 0.75rem;
+            opacity: 0.7;
+            margin-top: 4px;
+        }
+
+        .section-public .section-header {
+            background: linear-gradient(135deg, #064e3b, #065f46);
+            border: 1px solid #22c55e40;
+            box-shadow: 0 0 20px rgba(34,197,94,0.1);
+        }
+        .section-auth .section-header {
+            background: linear-gradient(135deg, #1e1b4b, #312e81);
+            border: 1px solid #6366f140;
+            box-shadow: 0 0 20px rgba(99,102,241,0.1);
+        }
+        .section-payment .section-header {
+            background: linear-gradient(135deg, #78350f, #92400e);
+            border: 1px solid #f59e0b40;
+            box-shadow: 0 0 20px rgba(245,158,11,0.1);
+        }
+        .section-admin .section-header {
+            background: linear-gradient(135deg, #7f1d1d, #991b1b);
+            border: 1px solid #ef444440;
+            box-shadow: 0 0 20px rgba(239,68,68,0.1);
+        }
+        .section-email .section-header {
+            background: linear-gradient(135deg, #083344, #164e63);
+            border: 1px solid #06b6d440;
+            box-shadow: 0 0 20px rgba(6,182,212,0.1);
+        }
+
+        /* Sub pages */
+        .sub-pages {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            padding-left: 20px;
+            border-left: 2px solid #333;
+            margin-left: 20px;
+        }
+        .sub-page {
+            background: #151525;
+            border: 1px solid #2a2a40;
+            border-radius: 8px;
+            padding: 10px 14px;
+            font-size: 0.82rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+        .sub-page::before {
+            content: '';
+            position: absolute;
+            left: -22px;
+            top: 50%;
+            width: 20px;
+            height: 2px;
+            background: #333;
+        }
+        .sub-page:hover {
+            background: #1a1a35;
+            border-color: #6366f1;
+            transform: translateX(4px);
+        }
+        .sub-page .page-name {
+            font-weight: 500;
+            color: #d0d0e0;
+        }
+        .sub-page .page-route {
+            font-size: 0.7rem;
+            color: #666;
+            margin-top: 2px;
+        }
+        .sub-page .page-desc {
+            font-size: 0.7rem;
+            color: #888;
+            margin-top: 4px;
+            font-style: italic;
+        }
+
+        /* Flow diagram section */
+        .flow-section {
+            max-width: 1200px;
+            margin: 60px auto 0;
+            padding: 0 20px 80px;
+        }
+        .flow-section h2 {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #22c55e, #06b6d4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 40px;
+        }
+
+        .flow-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .flow-step {
+            background: #151525;
+            border: 1px solid #2a2a40;
+            border-radius: 12px;
+            padding: 20px;
+            width: 180px;
+            text-align: center;
+            position: relative;
+            transition: all 0.3s;
+        }
+        .flow-step:hover {
+            border-color: #6366f1;
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px rgba(99,102,241,0.15);
+        }
+        .flow-step .step-num {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #6366f1, #a855f7);
+            color: white;
+            font-weight: 700;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+        }
+        .flow-step .step-icon {
+            font-size: 2rem;
+            margin-bottom: 8px;
+        }
+        .flow-step .step-title {
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 4px;
+        }
+        .flow-step .step-desc {
+            font-size: 0.75rem;
+            color: #888;
+        }
+
+        .flow-arrow {
+            display: flex;
+            align-items: center;
+            color: #4b5563;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header h1 { font-size: 1.8rem; }
+            .branch-level { flex-direction: column; align-items: center; }
+            .section { max-width: 100%; }
+            .flow-arrow { transform: rotate(90deg); }
+            .flow-container { flex-direction: column; align-items: center; }
+        }
+
+        /* Tooltip */
+        .tooltip {
+            display: none;
+            position: absolute;
+            bottom: calc(100% + 10px);
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1a1a30;
+            border: 1px solid #6366f1;
+            border-radius: 8px;
+            padding: 12px 16px;
+            font-size: 0.8rem;
+            color: #ccc;
+            z-index: 100;
+            white-space: nowrap;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+        }
+        .root-node:hover .tooltip,
+        .section-header:hover .tooltip {
+            display: block;
+        }
+
+        /* Badge */
+        .badge {
+            display: inline-block;
+            font-size: 0.65rem;
+            padding: 2px 8px;
+            border-radius: 20px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .badge-public { background: #22c55e20; color: #22c55e; }
+        .badge-auth { background: #6366f120; color: #a5b4fc; }
+        .badge-api { background: #f59e0b20; color: #f59e0b; }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <div class="header">
+        <h1>🗺️ CES Global - Sitemap</h1>
+        <p>Cấu trúc trang web nền tảng đăng ký khóa học</p>
+    </div>
+
+    <!-- Legend -->
+    <div class="legend">
+        <div class="legend-item"><div class="legend-dot dot-public"></div> Trang công khai</div>
+        <div class="legend-item"><div class="legend-dot dot-auth"></div> Yêu cầu đăng nhập</div>
+        <div class="legend-item"><div class="legend-dot dot-payment"></div> Thanh toán</div>
+        <div class="legend-item"><div class="legend-dot dot-admin"></div> Quản trị</div>
+        <div class="legend-item"><div class="legend-dot dot-email"></div> Email tự động</div>
+    </div>
+
+    <!-- Sitemap Tree -->
+    <div class="sitemap-container">
+        <div class="tree">
+            <!-- Root -->
+            <div class="root-node">
+                <div class="tooltip">Trang chủ - Điểm vào chính của tất cả người dùng</div>
+                <h2>🏠 Trang Chủ (Landing Page)</h2>
+                <div class="url">cesglobal.vn</div>
+            </div>
+
+            <div class="connector-vertical"></div>
+
+            <!-- Level 1: Main Sections -->
+            <div class="branch-level">
+
+                <!-- Public Pages -->
+                <div class="section section-public">
+                    <div class="section-header">
+                        <div class="tooltip">Các trang ai cũng truy cập được, không cần đăng nhập</div>
+                        <h3>🌐 Trang Công Khai</h3>
+                        <div class="route">Không cần đăng nhập</div>
+                    </div>
+                    <div class="sub-pages">
+                        <div class="sub-page">
+                            <div class="page-name">📋 Danh Sách Khóa Học</div>
+                            <div class="page-route">/courses</div>
+                            <div class="page-desc">Grid/List hiển thị tất cả khóa học</div>
+                        </div>
+                        <div class="sub-page">
+                            <div class="page-name">📖 Chi Tiết Khóa Học</div>
+                            <div class="page-route">/courses/:slug</div>
+                            <div class="page-desc">Mô tả, lịch học, giảng viên, giá, CTA đăng ký</div>
+                        </div>
+                        <div class="sub-page">
+                            <div class="page-name">ℹ️ Giới Thiệu</div>
+                            <div class="page-route">/about</div>
+                            <div class="page-desc">Thông tin về CES Global</div>
+                        </div>
+                        <div class="sub-page">
+                            <div class="page-name">📞 Liên Hệ</div>
+                            <div class="page-route">/contact</div>
+                            <div class="page-desc">Form liên hệ, hotline, địa chỉ</div>
+                        </div>
+                        <div class="sub-page">
+                            <div class="page-name">❓ FAQ</div>
+                            <div class="page-route">/faq</div>
+                            <div class="page-desc">Câu hỏi thường gặp</div>
+                        </div>
+                        <div class="sub-page">
+                            <div class="page-name">📜 Chính Sách</div>
+                            <div class="page-route">/policy</div>
+                            <div class="page-desc">Điều khoản sử dụng, hoàn tiền</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Auth Pages -->
+                <div class="section section-auth">
+                    <div class="section-header">
+                        <div class="tooltip">Khu vực yêu cầu đăng nhập Google</div>
+                        <h3>🔐 Xác Thực</h3>
+                        <div class="route">Google OAuth 2.0</div>
+                    </div>
+                    <div class="sub-pages">
+                        <div class="sub-page">
+                            <div class="page-name">🔑 Đăng Nhập Google</div>
+                            <div class="page-route">/auth/google</div>
+                            <div class="page-desc">Popup hoặc redirect sang Google</div>
+                        </div>
+                        <div class="sub-page">
+                            <div class="page-name">🔄 Callback</div>
+                            <div class="page-route">/auth/callback</div>
+                            <div class="page-desc">Xử lý token từ Google</div>
+                        </div>
+                        <div class="sub-page">
+                            <div class="page-name">👤 Hồ Sơ Cá Nhân</div>
+                            <div class="page-route">/profile</div>
+                            <div class="page-desc">Cập nhật SĐT, thông tin bổ sung</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Student Dashboard -->
+                <div class="section section-auth">
+                    <div class="section-header">
+                        <div class="tooltip">Khu vực quản lý của học viên sau đăng nhập</div>
+                        <h3>🎓 Dashboard Học Viên</h3>
+                        <div class="route">Yêu cầu đăng nhập</div>
+                    </div>
+                    <div class="sub-pages">
+                        <div class="sub-page">
+                            <div class="page-name">📊 Tổng Quan</div>
+                            <div class="page-route">/dashboard</div>
+                            <div class="page-desc">Khóa học đã đăng ký, trạng thái</div>
+                        </div>
+                        <div class="sub-page">
+                            <div class="page-name">📚 Khóa Học Của Tôi</div>
+                            <div class="page-route">/dashboard/my-courses</div>
+                            <div class="page-desc">Danh sách khóa đã đăng ký + link truy cập</div>
+                        </div>
+                        <div class="sub-page">
+                            <div class="page-name">💳 Lịch Sử Thanh Toán</div>
+                            <div class="page-route">/dashboard/payments</div>
+                            <div class="page-desc">Lịch sử giao dịch, hóa đơn</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Payment Pages -->
+                <div class="section section-payment">
+                    <div class="section-header">
+                        <div class="tooltip">Luồng thanh toán qua Sepay Payment Gateway</div>
+                        <h3>💰 Thanh Toán</h3>
+                        <div class="route">Sepay Gateway</div>
+                    </div>
+                    <div class="sub-pages">
+                        <div class="sub-page">
+                            <div class="page-name">📝 Form Đăng Ký</div>
+                            <div class="page-route">/enroll/:courseId</div>
+                            <div class="page-desc">Xác nhận thông tin + chọn phương thức</div>
+                        </div>
+                        <div class="sub-page">
+                            <div class="page-name">📱 Trang Thanh Toán</div>
+                            <div class="page-route">/payment/checkout</div>
+                            <div class="page-desc">QR Code VietQR hoặc nhập thẻ</div>
+                        </div>
+                        <div class="sub-page">
+                            <div class="page-name">✅ Thành Công</div>
+                            <div class="page-route">/payment/success</div>
+                            <div class="page-desc">Xác nhận đăng ký thành công</div>
+                        </div>
+                        <div class="sub-page">
+                            <div class="page-name">❌ Thất Bại</div>
+                            <div class="page-route">/payment/error</div>
+                            <div class="page-desc">Thông báo lỗi, thử lại</div>
+                        </div>
+                        <div class="sub-page">
+                            <div class="page-name">🔔 IPN Webhook</div>
+                            <div class="page-route">/api/payment/ipn</div>
+                            <div class="page-desc">Nhận callback từ Sepay (backend)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Admin -->
+                <div class="section section-admin">
+                    <div class="section-header">
+                        <div class="tooltip">Bảng quản trị dành cho Admin CES Global</div>
+                        <h3>⚙️ Quản Trị (Admin)</h3>
+                        <div class="route">Role: Admin</div>
+                    </div>
+                    <div class="sub-pages">
+                        <div class="sub-page">
+                            <div class="page-name">📊 Dashboard Admin</div>
+                            <div class="page-route">/admin</div>
+                            <div class="page-desc">Thống kê tổng quan, doanh thu</div>
+                        </div>
+                        <div class="sub-page">
+                            <div class="page-name">📚 Quản Lý Khóa Học</div>
+                            <div class="page-route">/admin/courses</div>
+                            <div class="page-desc">CRUD khóa học, link, lịch trình</div>
+                        </div>
+                        <div class="sub-page">
+                            <div class="page-name">👥 Quản Lý Học Viên</div>
+                            <div class="page-route">/admin/students</div>
+                            <div class="page-desc">CRM: thông tin, khóa học, thanh toán</div>
+                        </div>
+                        <div class="sub-page">
+                            <div class="page-name">💰 Quản Lý Thanh Toán</div>
+                            <div class="page-route">/admin/payments</div>
+                            <div class="page-desc">Danh sách giao dịch, xác nhận thủ công</div>
+                        </div>
+                        <div class="sub-page">
+                            <div class="page-name">📧 Quản Lý Email</div>
+                            <div class="page-route">/admin/emails</div>
+                            <div class="page-desc">Template email, lịch sử gửi</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <!-- User Flow Diagram -->
+    <div class="flow-section">
+        <h2>🔄 Luồng Người Dùng Chính</h2>
+        <div class="flow-container">
+            <div class="flow-step">
+                <div class="step-num">1</div>
+                <div class="step-icon">🌐</div>
+                <div class="step-title">Truy Cập</div>
+                <div class="step-desc">Khách vào Landing Page</div>
+            </div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step">
+                <div class="step-num">2</div>
+                <div class="step-icon">👀</div>
+                <div class="step-title">Xem Khóa Học</div>
+                <div class="step-desc">Duyệt danh sách & chi tiết</div>
+            </div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step">
+                <div class="step-num">3</div>
+                <div class="step-icon">🔑</div>
+                <div class="step-title">Đăng Nhập</div>
+                <div class="step-desc">Google OAuth khi bấm đăng ký</div>
+            </div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step">
+                <div class="step-num">4</div>
+                <div class="step-icon">📝</div>
+                <div class="step-title">Đăng Ký</div>
+                <div class="step-desc">Điền thông tin bổ sung</div>
+            </div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step">
+                <div class="step-num">5</div>
+                <div class="step-icon">💳</div>
+                <div class="step-title">Thanh Toán</div>
+                <div class="step-desc">Sepay QR / Thẻ quốc tế</div>
+            </div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step">
+                <div class="step-num">6</div>
+                <div class="step-icon">✅</div>
+                <div class="step-title">Xác Nhận</div>
+                <div class="step-desc">IPN → Email tự động</div>
+            </div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step">
+                <div class="step-num">7</div>
+                <div class="step-icon">🎓</div>
+                <div class="step-title">Học Tập</div>
+                <div class="step-desc">Nhận link học + Zalo/FB</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Email Flow -->
+    <div class="flow-section" style="margin-top: 0;">
+        <h2>📧 Luồng Email Tự Động</h2>
+        <div class="flow-container">
+            <div class="flow-step" style="border-color: #f59e0b30;">
+                <div class="step-num" style="background: linear-gradient(135deg, #f59e0b, #ef4444);">1</div>
+                <div class="step-icon">🔔</div>
+                <div class="step-title">IPN Callback</div>
+                <div class="step-desc">Sepay xác nhận thanh toán</div>
+            </div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step" style="border-color: #06b6d430;">
+                <div class="step-num" style="background: linear-gradient(135deg, #06b6d4, #22c55e);">2</div>
+                <div class="step-icon">📧</div>
+                <div class="step-title">Email #1</div>
+                <div class="step-desc">Xác nhận thanh toán OK</div>
+            </div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step" style="border-color: #06b6d430;">
+                <div class="step-num" style="background: linear-gradient(135deg, #06b6d4, #22c55e);">3</div>
+                <div class="step-icon">📨</div>
+                <div class="step-title">Email #2</div>
+                <div class="step-desc">Thông tin khóa học, link join Zalo/FB</div>
+            </div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step" style="border-color: #22c55e30;">
+                <div class="step-num" style="background: linear-gradient(135deg, #22c55e, #10b981);">4</div>
+                <div class="step-icon">✔️</div>
+                <div class="step-title">Hoàn Tất</div>
+                <div class="step-desc">Cập nhật trạng thái CRM</div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
