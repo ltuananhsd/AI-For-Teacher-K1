@@ -31,9 +31,14 @@
     @apply relative;
   }
   .glow-border::after {
-    content: '';
+    content: "";
     @apply absolute -inset-[2px] rounded-[inherit] -z-10 opacity-30 blur-[8px];
-    background: linear-gradient(45deg, var(--color-google-blue), var(--color-google-red), var(--color-google-yellow), var(--color-google-green));
+    background: linear-gradient(
+      45deg,
+      var(--color-google-blue),
+      var(--color-google-red),
+      var(--color-google-yellow),
+      var(--color-google-green)
+    );
   }
 }
-
