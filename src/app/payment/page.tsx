@@ -4,7 +4,6 @@ import { Suspense, useState, useEffect, useCallback, useRef } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-import Link from "next/link";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
 const POLL_INTERVAL_MS = 3000;
@@ -49,6 +48,7 @@ function PaymentContent() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
   const [copied, setCopied] = useState<string | null>(null);
+  const [showCancelConfirm, setShowCancelConfirm] = useState(false);
 
   const pollIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const countdownIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -389,14 +389,64 @@ function PaymentContent() {
             )}
           </div>
 
-          {/* Back button */}
+          {/* Cancel button */}
           <div className="flex justify-center">
-            <Link href="/register" className="text-slate-500 hover:text-slate-300 text-sm flex items-center gap-1 transition-colors">
-              <span className="material-symbols-outlined text-sm">arrow_back</span>
-              Quay lại trang đăng ký
-            </Link>
+            <button
+              onClick={() => setShowCancelConfirm(true)}
+              className="text-slate-500 hover:text-slate-300 text-sm flex items-center gap-1 transition-colors"
+            >
+              <span className="material-symbols-outlined text-sm">close</span>
+              Hủy thanh toán
+            </button>
           </div>
         </motion.div>
+
+        {/* Cancel Confirmation Modal */}
+        <AnimatePresence>
+          {showCancelConfirm && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-50 flex items-center justify-center px-4 bg-black/60 backdrop-blur-sm"
+              onClick={() => setShowCancelConfirm(false)}
+            >
+              <motion.div
+                initial={{ scale: 0.9, y: 20 }}
+                animate={{ scale: 1, y: 0 }}
+                exit={{ scale: 0.9, y: 20 }}
+                className="bg-[#0A101E] border border-white/10 rounded-2xl p-6 md:p-8 max-w-sm w-full shadow-2xl"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-10 h-10 bg-amber-500/20 rounded-full flex items-center justify-center shrink-0">
+                    <span className="material-symbols-outlined text-amber-400">warning</span>
+                  </div>
+                  <h3 className="text-lg font-bold text-white">Hủy thanh toán?</h3>
+                </div>
+
+                <p className="text-slate-400 text-sm mb-6 leading-relaxed">
+                  Nếu bạn hủy, phiên thanh toán hiện tại sẽ hết hiệu lực. Bạn sẽ cần đăng ký lại và nhận mã QR mới.
+                </p>
+
+                <div className="flex gap-3">
+                  <button
+                    onClick={() => setShowCancelConfirm(false)}
+                    className="flex-1 py-3 px-4 rounded-xl border border-white/20 text-white font-medium hover:bg-white/5 transition-colors"
+                  >
+                    Tiếp tục thanh toán
+                  </button>
+                  <button
+                    onClick={() => router.push('/register')}
+                    className="flex-1 py-3 px-4 rounded-xl bg-red-500/20 border border-red-500/30 text-red-400 font-bold hover:bg-red-500/30 transition-colors"
+                  >
+                    Hủy
+                  </button>
+                </div>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         {/* Sidebar */}
         <motion.aside
