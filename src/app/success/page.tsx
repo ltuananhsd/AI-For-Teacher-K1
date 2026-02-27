@@ -1,16 +1,78 @@
 "use client";
 
+import { Suspense, useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+
+interface PaymentInfo {
+  amount: number;
+  currency: string;
+  paid_at: string | null;
+  transfer_content: string;
+}
+
 export default function SuccessPage() {
+  return (
+    <Suspense fallback={
+      <div className="flex-1 flex items-center justify-center">
+        <div className="w-12 h-12 border-4 border-primary/30 border-t-primary rounded-full animate-spin" />
+      </div>
+    }>
+      <SuccessContent />
+    </Suspense>
+  );
+}
+
+function SuccessContent() {
+  const searchParams = useSearchParams();
+  const registrationId = searchParams.get('id');
+  const [paymentInfo, setPaymentInfo] = useState<PaymentInfo | null>(null);
+  const [isVerified, setIsVerified] = useState(false);
+
+  // Verify payment status on mount
+  useEffect(() => {
+    if (!registrationId) {
+      setIsVerified(true); // Show page even without ID (direct access)
+      return;
+    }
+
+    const verifyPayment = async () => {
+      try {
+        const response = await fetch(`${API_BASE}/api/registrations/${registrationId}/status`);
+        const data = await response.json();
+        if (response.ok && data.data) {
+          const result = data.data;
+          if (result.payment_status === 'completed' || result.registration_status === 'paid') {
+            setPaymentInfo(result.payment);
+          }
+        }
+      } catch {
+        /* Non-critical — page works without verified data */
+      }
+      setIsVerified(true);
+    };
+
+    verifyPayment();
+  }, [registrationId]);
+
+  if (!isVerified) {
+    return (
+      <div className="flex-1 flex items-center justify-center">
+        <div className="w-12 h-12 border-4 border-primary/30 border-t-primary rounded-full animate-spin" />
+      </div>
+    );
+  }
+
   return (
     <div className="flex-1 flex flex-col items-center justify-center px-4 py-12 md:py-20 mb-[100px]">
       <div className="max-w-[1000px] w-full grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-        
+
         {/* Success Messaging */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, x: -30 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.7 }}
@@ -23,13 +85,46 @@ export default function SuccessPage() {
 
           <div className="space-y-4">
             <h1 className="text-4xl md:text-6xl font-bold text-white leading-tight">
-              Chào mừng tới <br/>
+              Chào mừng tới <br />
               <span className="text-[#4285F4] drop-shadow-[0_0_15px_rgba(66,133,244,0.6)] font-black tracking-tight">Thế hệ AI 2026</span>
             </h1>
             <p className="text-lg md:text-xl text-slate-300 max-w-lg leading-relaxed">
               Chúc mừng! Bạn đã chính thức trở thành thành viên của Google AI Ecosystem Bootcamp 2026. Một hành trình khai phá tiềm năng AI đang chờ đón bạn.
             </p>
           </div>
+
+          {/* Payment confirmation info */}
+          {paymentInfo && paymentInfo.paid_at && (
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+              className="bg-google-green/5 border border-google-green/20 rounded-xl p-4 space-y-2"
+            >
+              <div className="flex items-center gap-2 text-google-green text-sm font-semibold">
+                <span className="material-symbols-outlined text-lg">verified</span>
+                Thanh toán đã được xác nhận
+              </div>
+              <div className="flex flex-col gap-1 text-sm">
+                <div className="flex justify-between">
+                  <span className="text-slate-400">Số tiền:</span>
+                  <span className="text-white font-semibold">
+                    {new Intl.NumberFormat('vi-VN').format(paymentInfo.amount)} {paymentInfo.currency}
+                  </span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-slate-400">Thời gian:</span>
+                  <span className="text-white font-semibold">
+                    {new Date(paymentInfo.paid_at).toLocaleString('vi-VN')}
+                  </span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-slate-400">Mã giao dịch:</span>
+                  <span className="text-white font-mono text-xs">{paymentInfo.transfer_content}</span>
+                </div>
+              </div>
+            </motion.div>
+          )}
 
           <div className="flex flex-col sm:flex-row gap-4 pt-4">
             <a href="https://zalo.me/g/aqdhoc234" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-3 bg-primary text-white px-8 py-4 rounded-xl font-bold text-lg hover:shadow-lg hover:shadow-primary/20 transition-all active:scale-[0.98] whitespace-nowrap">
@@ -65,11 +160,11 @@ export default function SuccessPage() {
         </motion.div>
 
         {/* QR & Community Card */}
-        <motion.div 
-           initial={{ opacity: 0, scale: 0.95 }}
-           animate={{ opacity: 1, scale: 1 }}
-           transition={{ duration: 0.7, delay: 0.2 }}
-           className="relative @container"
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.7, delay: 0.2 }}
+          className="relative @container"
         >
           <div className="glow-border bg-[#101722]/60 backdrop-blur-xl border border-white/10 rounded-3xl p-8 flex flex-col items-center text-center shadow-2xl relative overflow-hidden">
             {/* Background Pattern Decor */}
@@ -81,9 +176,9 @@ export default function SuccessPage() {
               <div className="mb-6 p-4 bg-white/5 rounded-2xl">
                 <div className="size-64 md:size-72 bg-white/10 backdrop-blur-sm p-4 rounded-lg shadow-inner flex items-center justify-center relative group">
                   <div className="absolute inset-0 bg-gradient-to-tr from-white/5 to-transparent rounded-lg"></div>
-                  
+
                   <img src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=https://zalo.me/g/aqdhoc234&margin=10" alt="Zalo community group QR code" className="object-contain w-[98%] h-[98%] bg-white relative z-10 rounded-lg" />
-                  
+
                   {/* QR Frame Corners */}
                   <div className="absolute -top-2 -left-2 size-6 border-t-4 border-l-4 border-google-blue rounded-tl-lg"></div>
                   <div className="absolute -top-2 -right-2 size-6 border-t-4 border-r-4 border-google-red rounded-tr-lg"></div>
@@ -103,7 +198,7 @@ export default function SuccessPage() {
                   <span>HOẶC</span>
                   <div className="h-px grow bg-white/10"></div>
                 </div>
-                <button 
+                <button
                   onClick={() => navigator.clipboard.writeText("https://zalo.me/g/aqdhoc234")}
                   className="w-full py-3 px-4 border border-white/20 text-white rounded-xl font-bold hover:bg-white/10 transition-colors"
                 >
@@ -114,10 +209,10 @@ export default function SuccessPage() {
           </div>
 
           {/* Floating Badge */}
-          <motion.div 
-             animate={{ y: [0, -10, 0] }}
-             transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-             className="absolute -top-6 -right-6 md:-right-12 bg-[#101722]/80 backdrop-blur-xl p-4 rounded-2xl shadow-xl flex items-center gap-4 border border-white/10 z-20"
+          <motion.div
+            animate={{ y: [0, -10, 0] }}
+            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute -top-6 -right-6 md:-right-12 bg-[#101722]/80 backdrop-blur-xl p-4 rounded-2xl shadow-xl flex items-center gap-4 border border-white/10 z-20"
           >
             <div className="size-12 rounded-full bg-google-blue/10 flex items-center justify-center text-google-blue">
               <span className="material-symbols-outlined">verified</span>

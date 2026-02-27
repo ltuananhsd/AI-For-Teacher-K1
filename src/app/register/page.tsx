@@ -6,30 +6,106 @@ import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+
+interface FormData {
+  fullName: string;
+  phone: string;
+  email: string;
+  job: string;
+  goals: string;
+}
+
 export default function RegisterPage() {
   const [showModal, setShowModal] = useState(false);
-  const [formData, setFormData] = useState({ fullName: '', phone: '', email: '', job: '', goals: '' });
+  const [formData, setFormData] = useState<FormData>({ fullName: '', phone: '', email: '', job: '', goals: '' });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
   const router = useRouter();
 
-  const handleInputChange = (e: any) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+    setErrorMessage('');
   };
 
-  const handleProceed = (e: any) => {
+  const handleProceed = (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.fullName || !formData.phone || !formData.email) {
-      alert("Vui lòng nhập Họ và tên, Email và Số điện thoại!");
+      setErrorMessage("Vui lòng nhập Họ và tên, Email và Số điện thoại!");
+      return;
+    }
+    // Validate phone format
+    const phoneClean = formData.phone.replace(/\s|-/g, '');
+    if (!/^\+?[0-9]{9,15}$/.test(phoneClean)) {
+      setErrorMessage("Số điện thoại không hợp lệ. Vui lòng nhập lại.");
+      return;
+    }
+    // Validate email
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      setErrorMessage("Email không hợp lệ. Vui lòng nhập lại.");
       return;
     }
     setShowModal(true);
   };
 
+  const handleConfirm = async () => {
+    setIsSubmitting(true);
+    setErrorMessage('');
+
+    try {
+      const phoneClean = formData.phone.replace(/\s|-/g, '');
+      const response = await fetch(`${API_BASE}/api/registrations`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          full_name: formData.fullName.trim(),
+          email: formData.email.toLowerCase().trim(),
+          phone: phoneClean,
+          job_title: formData.job || undefined,
+          goals: formData.goals || undefined,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        // Handle specific error types
+        if (response.status === 409) {
+          setErrorMessage(data.error?.message || 'Email này đã đăng ký khóa học này rồi.');
+        } else if (response.status === 422) {
+          const details = data.error?.details;
+          if (Array.isArray(details) && details.length > 0) {
+            setErrorMessage(details.map((d: { message: string }) => d.message).join('. '));
+          } else {
+            setErrorMessage(data.error?.message || 'Thông tin không hợp lệ.');
+          }
+        } else {
+          setErrorMessage(data.error?.message || 'Có lỗi xảy ra. Vui lòng thử lại.');
+        }
+        setIsSubmitting(false);
+        return;
+      }
+
+      // Success — redirect to payment page with registration ID
+      const registrationId = data.data?.registration_id;
+      if (registrationId) {
+        router.push(`/payment?id=${registrationId}`);
+      } else {
+        setErrorMessage('Có lỗi xảy ra. Vui lòng thử lại.');
+        setIsSubmitting(false);
+      }
+    } catch {
+      setErrorMessage('Không thể kết nối đến máy chủ. Vui lòng kiểm tra kết nối mạng.');
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <div className="flex-1 flex flex-col items-center py-12 px-4 md:px-10">
       <div className="max-w-5xl w-full grid grid-cols-1 lg:grid-cols-12 gap-10">
-        
+
         {/* Registration Form Container */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, x: -30 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6 }}
@@ -45,7 +121,7 @@ export default function RegisterPage() {
               <span className="text-primary font-bold">25% Hoàn tất</span>
             </div>
             <div className="h-1.5 w-full bg-slate-800 rounded-full overflow-hidden">
-              <motion.div 
+              <motion.div
                 initial={{ width: 0 }}
                 animate={{ width: "25%" }}
                 transition={{ duration: 1, ease: "easeOut" }}
@@ -66,18 +142,30 @@ export default function RegisterPage() {
               </div>
             </div>
 
+            {/* Error message */}
+            {errorMessage && !showModal && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="flex items-start gap-3 p-4 bg-red-500/10 border border-red-500/30 rounded-lg"
+              >
+                <span className="material-symbols-outlined text-red-400 shrink-0">error</span>
+                <p className="text-sm text-red-300 font-medium">{errorMessage}</p>
+              </motion.div>
+            )}
+
             <form className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Full Name */}
               <div className="flex flex-col gap-2">
                 <label className="text-slate-300 text-sm font-medium ml-1">Họ và tên</label>
                 <div className="relative group">
                   <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-primary transition-colors">person</span>
-                  <input 
+                  <input
                     name="fullName"
                     value={formData.fullName}
                     onChange={handleInputChange}
-                    className="w-full bg-slate-900/50 border border-white/10 rounded-lg py-4 pl-12 pr-4 text-white placeholder:text-slate-600 focus:border-primary focus:ring-1 focus:ring-primary/30 outline-none transition-all" 
-                    placeholder="Nguyễn Văn A" 
+                    className="w-full bg-slate-900/50 border border-white/10 rounded-lg py-4 pl-12 pr-4 text-white placeholder:text-slate-600 focus:border-primary focus:ring-1 focus:ring-primary/30 outline-none transition-all"
+                    placeholder="Nguyễn Văn A"
                     type="text"
                     required
                   />
@@ -89,12 +177,12 @@ export default function RegisterPage() {
                 <label className="text-slate-300 text-sm font-medium ml-1">Số điện thoại</label>
                 <div className="relative group">
                   <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-primary transition-colors">call</span>
-                  <input 
+                  <input
                     name="phone"
                     value={formData.phone}
                     onChange={handleInputChange}
-                    className="w-full bg-slate-900/50 border border-white/10 rounded-lg py-4 pl-12 pr-4 text-white placeholder:text-slate-600 focus:border-primary focus:ring-1 focus:ring-primary/30 outline-none transition-all" 
-                    placeholder="0901 234 567" 
+                    className="w-full bg-slate-900/50 border border-white/10 rounded-lg py-4 pl-12 pr-4 text-white placeholder:text-slate-600 focus:border-primary focus:ring-1 focus:ring-primary/30 outline-none transition-all"
+                    placeholder="0901 234 567"
                     type="tel"
                     required
                   />
@@ -106,12 +194,12 @@ export default function RegisterPage() {
                 <label className="text-slate-300 text-sm font-medium ml-1">Email</label>
                 <div className="relative group">
                   <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-primary transition-colors">mail</span>
-                  <input 
+                  <input
                     name="email"
                     value={formData.email}
                     onChange={handleInputChange}
-                    className="w-full bg-slate-900/50 border border-white/10 rounded-lg py-4 pl-12 pr-4 text-white placeholder:text-slate-600 focus:border-primary focus:ring-1 focus:ring-primary/30 outline-none transition-all" 
-                    placeholder="nguyenvana@gmail.com" 
+                    className="w-full bg-slate-900/50 border border-white/10 rounded-lg py-4 pl-12 pr-4 text-white placeholder:text-slate-600 focus:border-primary focus:ring-1 focus:ring-primary/30 outline-none transition-all"
+                    placeholder="nguyenvana@gmail.com"
                     type="email"
                     required
                   />
@@ -140,14 +228,13 @@ export default function RegisterPage() {
                 <label className="text-slate-300 text-sm font-medium ml-1">Mục tiêu của bạn khi tham gia Bootcamp</label>
                 <div className="relative group">
                   <span className="material-symbols-outlined absolute left-4 top-4 text-slate-500 group-focus-within:text-primary transition-colors">track_changes</span>
-                  <textarea 
+                  <textarea
                     name="goals"
                     value={formData.goals}
                     onChange={handleInputChange}
-                    className="w-full bg-slate-900/50 border border-white/10 rounded-lg py-4 pl-12 pr-4 text-white placeholder:text-slate-600 focus:border-primary focus:ring-1 focus:ring-primary/30 outline-none transition-all resize-none" 
-                    placeholder="Chia sẻ kỳ vọng của bạn về kiến thức AI Ecosystem..." 
+                    className="w-full bg-slate-900/50 border border-white/10 rounded-lg py-4 pl-12 pr-4 text-white placeholder:text-slate-600 focus:border-primary focus:ring-1 focus:ring-primary/30 outline-none transition-all resize-none"
+                    placeholder="Chia sẻ kỳ vọng của bạn về kiến thức AI Ecosystem..."
                     rows={4}
-                    required
                   ></textarea>
                 </div>
               </div>
@@ -168,7 +255,7 @@ export default function RegisterPage() {
         </motion.div>
 
         {/* Sidebar Decor / Benefits */}
-        <motion.aside 
+        <motion.aside
           initial={{ opacity: 0, x: 30 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
@@ -199,12 +286,12 @@ export default function RegisterPage() {
           {/* Visual Accent Card */}
           <div className="relative rounded-xl h-48 overflow-hidden group">
             <div className="absolute inset-0">
-               <Image 
-                 src="/images/register-bg.jpg" 
-                 alt="Tech Background" 
-                 fill 
-                 className="object-cover transition-transform duration-700 group-hover:scale-110" 
-               />
+              <Image
+                src="/images/register-bg.jpg"
+                alt="Tech Background"
+                fill
+                className="object-cover transition-transform duration-700 group-hover:scale-110"
+              />
             </div>
             <div className="absolute inset-0 bg-gradient-to-t from-background-dark via-background-dark/40 to-transparent"></div>
             <div className="absolute bottom-4 left-4 right-4">
@@ -235,7 +322,7 @@ export default function RegisterPage() {
                 <span className="material-symbols-outlined text-3xl">info</span>
                 <h3 className="text-xl font-bold text-white">Xác nhận thông tin</h3>
               </div>
-              
+
               <p className="text-slate-300 text-sm mb-6 leading-relaxed">
                 Vui lòng kiểm tra lại thông tin đăng ký (đặc biệt là <b>Email</b> và <b>Số điện thoại</b>) bảo đảm chính xác để chúng tôi thêm bạn vào danh sách học viên.
               </p>
@@ -253,20 +340,50 @@ export default function RegisterPage() {
                   <span className="text-xs text-slate-500 font-medium uppercase min-w-[100px]">Số điện thoại:</span>
                   <span className="text-white font-semibold">{formData.phone}</span>
                 </div>
+                {formData.job && (
+                  <div className="flex flex-col">
+                    <span className="text-xs text-slate-500 font-medium uppercase min-w-[100px]">Nghề nghiệp:</span>
+                    <span className="text-white font-semibold">{formData.job}</span>
+                  </div>
+                )}
               </div>
 
+              {/* Error in modal */}
+              {errorMessage && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="flex items-start gap-3 p-3 mb-4 bg-red-500/10 border border-red-500/30 rounded-lg"
+                >
+                  <span className="material-symbols-outlined text-red-400 text-sm shrink-0">error</span>
+                  <p className="text-xs text-red-300">{errorMessage}</p>
+                </motion.div>
+              )}
+
               <div className="flex gap-4 mt-6">
-                <button 
-                  onClick={() => setShowModal(false)}
-                  className="flex-1 py-3 px-4 rounded-xl border border-white/20 text-white hover:bg-white/5 font-medium transition-colors"
+                <button
+                  onClick={() => { setShowModal(false); setErrorMessage(''); }}
+                  disabled={isSubmitting}
+                  className="flex-1 py-3 px-4 rounded-xl border border-white/20 text-white hover:bg-white/5 font-medium transition-colors disabled:opacity-50"
                 >
                   Sửa lại
                 </button>
-                <button 
-                  onClick={() => router.push("/payment")}
-                  className="flex-1 py-3 px-4 rounded-xl bg-primary hover:bg-primary/90 text-white font-bold transition-colors shadow-[0_0_15px_rgba(67,135,244,0.4)]"
+                <button
+                  onClick={handleConfirm}
+                  disabled={isSubmitting}
+                  className="flex-1 py-3 px-4 rounded-xl bg-primary hover:bg-primary/90 text-white font-bold transition-colors shadow-[0_0_15px_rgba(67,135,244,0.4)] disabled:opacity-50 flex items-center justify-center gap-2"
                 >
-                  Xác nhận
+                  {isSubmitting ? (
+                    <>
+                      <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                      </svg>
+                      Đang xử lý...
+                    </>
+                  ) : (
+                    'Xác nhận'
+                  )}
                 </button>
               </div>
             </motion.div>
