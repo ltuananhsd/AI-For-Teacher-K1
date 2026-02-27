@@ -34,10 +34,10 @@ export default function RegisterPage() {
       setErrorMessage("Vui lòng nhập Họ và tên, Email và Số điện thoại!");
       return;
     }
-    // Validate phone format
+    // Validate phone format — exactly 10 digits starting with 0
     const phoneClean = formData.phone.replace(/\s|-/g, '');
-    if (!/^\+?[0-9]{9,15}$/.test(phoneClean)) {
-      setErrorMessage("Số điện thoại không hợp lệ. Vui lòng nhập lại.");
+    if (!/^0[0-9]{9}$/.test(phoneClean)) {
+      setErrorMessage("Số điện thoại phải gồm đúng 10 chữ số, bắt đầu bằng 0 (VD: 0123456789)");
       return;
     }
     // Validate email
