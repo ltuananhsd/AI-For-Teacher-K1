@@ -157,6 +157,28 @@ function PaymentContent() {
     router.push('/register');
   };
 
+  // Handle user-initiated cancellation
+  const handleCancel = async () => {
+    if (!registrationId) {
+      router.push('/register');
+      return;
+    }
+
+    // Stop polling immediately
+    if (pollIntervalRef.current) clearInterval(pollIntervalRef.current);
+    if (countdownIntervalRef.current) clearInterval(countdownIntervalRef.current);
+
+    try {
+      await fetch(`${API_BASE}/api/registrations/${registrationId}/cancel`, {
+        method: 'POST',
+      });
+    } catch {
+      // Ignore errors — navigate anyway
+    }
+
+    router.push('/register');
+  };
+
   // Loading state
   if (isLoading) {
     return (
@@ -437,7 +459,7 @@ function PaymentContent() {
                     Tiếp tục thanh toán
                   </button>
                   <button
-                    onClick={() => router.push('/register')}
+                    onClick={handleCancel}
                     className="flex-1 py-3 px-4 rounded-xl bg-red-500/20 border border-red-500/30 text-red-400 font-bold hover:bg-red-500/30 transition-colors"
                   >
                     Hủy
