@@ -7,8 +7,8 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <Link href="/" className="flex items-center gap-2 group">
-            <div className="relative h-8 w-[120px] sm:w-[150px]">
-              <Image src="/images/logo-xanh.png" alt="Google AI 2026 Logo" fill className="object-contain" />
+            <div className="relative w-32 h-10">
+              <Image src="/images/logo-ces.png" alt="Google AI 2026 Logo" fill className="object-contain" />
             </div>
           </Link>
           <nav className="hidden md:flex items-center gap-8">

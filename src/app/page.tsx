@@ -2,6 +2,7 @@
 "use client";
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, Variants } from 'framer-motion';
+import Image from 'next/image';
 import {
   Rocket, Clock, Target, PieChart, Quote, Check, Crown, Users,
   Megaphone, Settings, Laptop, Trophy, Keyboard, Briefcase,
@@ -106,7 +107,7 @@ const TubesBackground = ({
 
   return (
     <div 
-      className={cn("relative w-full h-full overflow-hidden bg-[#020617]", className)}
+      className={cn("relative w-full h-full overflow-hidden bg-[#1e293b]", className)}
       onClick={handleClick}
     >
       <canvas 
@@ -116,7 +117,7 @@ const TubesBackground = ({
       />
       
       {/* Lớp mờ (Gradient Overlay) để làm dịu phần viền dưới, giúp chuyển tiếp mượt mà sang nội dung bên dưới */}
-      <div className="absolute bottom-0 left-0 w-full h-40 bg-gradient-to-t from-[#020617] to-transparent z-0 pointer-events-none"></div>
+      <div className="absolute bottom-0 left-0 w-full h-40 bg-gradient-to-t from-[#1e293b] to-transparent z-0 pointer-events-none"></div>
       
       {/* Lớp chứa nội dung (Children Overlay). 
           Quan trọng: Sử dụng pointer-events-none ở container và pointer-events-auto ở các thẻ con cần tương tác */}
@@ -284,7 +285,7 @@ export default function App(){
 
   return(
 
-    <div className="bg-[#020617] text-slate-200 antialiased selection:bg-blue-900/20 selection:text-white font-sans overflow-x-hidden">
+    <div className="bg-[#1e293b] text-slate-200 antialiased selection:bg-blue-900/20 selection:text-white font-sans overflow-x-hidden">
 
     {/* 0. NAVBAR */}
 
@@ -400,7 +401,7 @@ export default function App(){
 
     whileHover={{ y:-5, backgroundColor:"rgba(255,255,255,0.15)"}}
 
-    className="bg-slate-900/40 backdrop-blur-md/10 backdrop-blur-md border border-white/20 p-6 rounded-2xl text-white text-left flex flex-col items-center md:items-start text-center md:text-left"
+    className="bg-slate-800/40 backdrop-blur-md/10 backdrop-blur-md border border-white/20 p-6 rounded-2xl text-white text-left flex flex-col items-center md:items-start text-center md:text-left"
 
     >
 
@@ -440,21 +441,15 @@ export default function App(){
 
     {/* 2. TỔNG QUAN & TRIẾT LÝ */}
 
-    <section id="tong-quan" className="py-20 bg-slate-900/40 backdrop-blur-md">
+    <section id="tong-quan" className="py-20 bg-slate-800/40 backdrop-blur-md">
 
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
     <motion.div
 
-    variants={fadeInUp} initial="hidden" whileInView="visible" viewport={{ once:true, margin:"-100px"}}
-
-    className="text-center max-w-3xl mx-auto mb-16"
-
+    className="text-center max-w-4xl mx-auto mb-16 bg-slate-800/50 backdrop-blur-xl border border-white/10 shadow-2xl shadow-blue-900/20 py-8 px-10 rounded-2xl"
     >
-
-    <h2 className="text-blue-600 font-semibold tracking-wide uppercase text-sm">Phần I</h2>
-
-    <h3 className="mt-2 text-3xl md:text-4xl font-bold text-white">Tổng QuanChương Trình</h3>
+      <h3 className="text-4xl md:text-5xl font-extrabold text-white tracking-tight">Tổng Quan Chương Trình</h3>
 
     <div className="w-24 h-1 bg-blue-900/20 mx-auto mt-6 rounded-full"></div>
 
@@ -470,7 +465,7 @@ export default function App(){
 
     <Quote size={80} className="absolute top-8 right-10 text-blue-200 opacity-50" />
 
-    <h4 className="text-2xl font-bold text-blue-900 mb-4 relative z-10">Triết lý đào tạo</h4>
+    <h4 className="text-2xl font-bold text-white mb-4 relative z-10">Triết lý đào tạo</h4>
 
     <p className="text-lg text-slate-300 leading-relaxed mb-8 relative z-10">
 
@@ -480,7 +475,7 @@ export default function App(){
 
     {/* Flow Diagram */}
 
-    <div className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-0 my-10 bg-slate-900/40 backdrop-blur-md p-6 rounded-2xl shadow-lg shadow-black/30 border border-white/10 relative z-10">
+    <div className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-0 my-10 bg-slate-800/40 backdrop-blur-md p-6 rounded-2xl shadow-lg shadow-black/30 border border-white/20 relative z-10">
 
     {['Idea','Content','App','Workflow','Agent'].map((step, idx)=>(
 
@@ -494,7 +489,7 @@ export default function App(){
 
     >
 
-    <span className="text-blue-700 font-bold bg-blue-900/40 px-4 py-2 rounded-lg">{step}</span>
+    <span className="text-blue-100 font-semibold tracking-wide bg-blue-600/30 border border-blue-500/40 px-5 py-2.5 rounded-xl shadow-lg shadow-blue-900/20">{step}</span>
 
     </motion.div>
 
@@ -540,7 +535,7 @@ export default function App(){
 
     </div>
 
-    <p className="text-lg text-slate-300 font-medium text-center bg-slate-900/40 backdrop-blur-md/60 p-4 rounded-xl relative z-10">
+    <p className="text-lg text-slate-300 font-medium text-center bg-slate-800/40 backdrop-blur-md/60 p-4 rounded-xl relative z-10">
 
     Học viên sẽ không chỉ học cách dùng từng công cụ riêng lẻ mà được hướng dẫn xây dựng một quy trình/ hệ thống hoàn chỉnh từ ý tưởng đến triển khai thực tế.
 
@@ -554,21 +549,16 @@ export default function App(){
 
     {/* 3. ĐIỂM KHÁC BIỆT */}
 
-    <section className="py-20 bg-[radial-gradient(#3b82f6_1px,transparent_1px)] bg-[size:30px_30px] bg-[#020617] relative">
+    <section className="py-20 bg-[radial-gradient(#3b82f6_1px,transparent_1px)] bg-[size:30px_30px] bg-[#1e293b] relative">
 
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
     <motion.div
 
-    variants={fadeInUp} initial="hidden" whileInView="visible" viewport={{ once:true}}
-
-    className="text-center mb-16"
-
+    className="text-center max-w-4xl mx-auto mb-16 bg-slate-800/50 backdrop-blur-xl border border-white/10 shadow-2xl shadow-blue-900/20 py-8 px-10 rounded-2xl"
     >
-
-    <h3 className="text-3xl font-bold text-white">Sự Khác Biệt Cốt Lõi</h3>
-
-    <p className="mt-4 text-slate-400 text-lg">Tại sao chương trình của CES Global là duy nhất?</p>
+      <h3 className="text-4xl md:text-5xl font-extrabold text-white tracking-tight">Sự Khác Biệt Cốt Lõi</h3>
+      <p className="mt-5 text-blue-200/80 text-lg font-medium">Tại sao chương trình của CES Global là duy nhất?</p>
 
     </motion.div>
 
@@ -576,7 +566,7 @@ export default function App(){
 
     variants={fadeInUp} initial="hidden" whileInView="visible" viewport={{ once:true}}
 
-    className="overflow-x-auto shadow-2xl shadow-blue-900/5 rounded-2xl bg-slate-900/40 backdrop-blur-md border border-white/10"
+    className="overflow-x-auto shadow-2xl shadow-blue-900/5 rounded-2xl bg-slate-800/40 backdrop-blur-md border border-white/20"
 
     >
 
@@ -586,7 +576,7 @@ export default function App(){
 
     <tr>
 
-    <th className="py-5 px-6 bg-[#020617] font-bold text-slate-300 text-lg border-b border-white/20 w-1/4">Tiêu chí</th>
+    <th className="py-5 px-6 bg-[#1e293b] font-bold text-slate-300 text-lg border-b border-white/20 w-1/4">Tiêu chí</th>
 
     <th className="py-5 px-6 bg-white/5 font-bold text-slate-400 text-lg border-b border-white/20 w-1/3">Đào tạo AI thông thường</th>
 
@@ -624,7 +614,7 @@ export default function App(){
 
     viewport={{ once:true}}
 
-    className="hover:bg-[#020617] transition-colors"
+    className="hover:bg-[#1e293b] transition-colors"
 
     >
 
@@ -656,9 +646,10 @@ export default function App(){
 
     {/* 4. ĐỐI TƯỢNG */}
 
-    <section className="py-20 bg-[#020617] relative text-white">
+    <section className="py-20 bg-[#0f172a] relative text-white">
 
-    <div className="absolute inset-0 bg-blue-900/5 pointer-events-none"></div>
+    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl h-[40vh] bg-blue-600/10 blur-[120px] rounded-full pointer-events-none z-0"></div>
+    <div className="absolute inset-0 bg-blue-900/5 pointer-events-none z-0"></div>
 
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
 
@@ -706,9 +697,9 @@ export default function App(){
 
     key={idx} variants={cardVariant}
 
-    whileHover={{ scale:1.03, backgroundColor:"rgba(15, 23, 42, 0.8)"}}// bg-slate-900/80
+    whileHover={{ scale:1.03, backgroundColor:"rgba(15, 23, 42, 0.8)"}}// bg-slate-800/80
 
-    className="bg-slate-900/40 backdrop-blur-md p-6 rounded-2xl border border-white/10 transition-colors duration-300 group"
+    className="bg-slate-800/40 backdrop-blur-md p-6 rounded-2xl border border-white/20 transition-colors duration-300 group"
 
     >
 
@@ -734,7 +725,7 @@ export default function App(){
 
     {/* 5. PHƯƠNG PHÁP */}
 
-    <section className="py-20 bg-slate-900/40 backdrop-blur-md overflow-hidden">
+    <section className="py-20 bg-slate-800/40 backdrop-blur-md overflow-hidden">
 
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
@@ -810,7 +801,7 @@ export default function App(){
 
     {/* 6. HỆ SINH THÁI (ECOSYSTEM MAP) */}
 
-    <section id="ecosystem" className="py-20 bg-slate-900">
+    <section id="ecosystem" className="py-20 bg-slate-800">
 
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
@@ -1026,7 +1017,7 @@ export default function App(){
 
     viewport={{ once:true, margin:"-50px"}}
 
-    className={`bg-slate-900/40 backdrop-blur-md rounded-3xl relative z-10 transition-all duration-300 border ${isActive ?'shadow-xl border-blue-500/50 bg-[#0a1532]/60':'shadow-lg shadow-black/30 border-white/5 hover:border-blue-500/30 hover:bg-[#0a1532]/40'}`}
+    className={`bg-slate-800/40 backdrop-blur-md rounded-3xl relative z-10 transition-all duration-300 border ${isActive ?'shadow-xl border-blue-500/50 bg-[#0a1532]/60':'shadow-lg shadow-black/30 border-white/5 hover:border-blue-500/30 hover:bg-[#0a1532]/40'}`}
 
     >
 
@@ -1166,45 +1157,90 @@ export default function App(){
 
     {/* 9. GIẢNG VIÊN & YÊU CẦU CHUẨN BỊ */}
 
-    <section className="py-24 bg-slate-900/40 backdrop-blur-md border-t border-white/10">
+    <section className="py-24 bg-slate-800/40 backdrop-blur-md border-t border-white/20 relative overflow-hidden">
 
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="absolute top-0 right-0 w-1/2 h-full bg-cyan-600/5 blur-[150px] rounded-full pointer-events-none z-0"></div>
+    <div className="absolute bottom-0 left-0 w-1/3 h-1/2 bg-blue-600/10 blur-[130px] rounded-full pointer-events-none z-0"></div>
 
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+
+    <div className="flex flex-col gap-24">
 
     <motion.div variants={fadeInUp} initial="hidden" whileInView="visible" viewport={{ once:true}}>
 
-    <h2 className="text-blue-600 font-semibold tracking-wide uppercase text-sm"></h2>
+    <h2 className="text-blue-600 font-semibold tracking-wide uppercase text-sm text-center"></h2>
 
-    <h3 className="mt-2 text-3xl font-bold text-white mb-8">Giới Thiệu Giảng Viên</h3>
+    <h3 className="mt-2 text-3xl font-bold text-white mb-12 text-center">Giới Thiệu Giảng Viên</h3>
 
-    <div className="flex items-center gap-6 p-6 bg-blue-900/20 rounded-2xl border border-blue-500/20 hover:shadow-md transition-shadow cursor-default">
-
-    <div className="w-24 h-24 bg-blue-200/50 rounded-full flex items-center justify-center flex-shrink-0 shadow-inner">
-
-    <Briefcase className="text-blue-500" size={40} />
-
-    </div>
-
-    <div>
-
-    <h4 className="text-xl font-bold text-white">Giới thiệu giảng viên khóa học</h4>
-
-    <p className="text-slate-400 mt-2">Chuyên gia hàng đầu trong lĩnh vực triển khai và tích hợp hệ thống AI thực chiến cho Doanh nghiệp.</p>
-
-    </div>
-
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      {[
+        { 
+          name: "Mr. Lưu Tuấn Anh", 
+          title: "Team Leader AI Automation",
+          sub: "Chuyên gia Ứng dụng AI Sáng tạo & Tự động hóa",
+          quote: "Biến ý tưởng thành sản phẩm thực tế thông qua sức mạnh của AI Agents và Automation.",
+          img: "/images/tuan-anh.jpg",
+          imgPos: "object-top"
+        },
+        { 
+          name: "Mr. Nguyễn Văn Tiệp", 
+          title: "Co-founder CES Global",
+          sub: "Chuyên gia Chiến lược Chuyển đổi số & GenAI",
+          quote: "Người kiến tạo tư duy chiến lược, đưa doanh nghiệp Việt tiếp cận chuẩn mực quản trị AI quốc tế.",
+          img: "/images/anh-tiep.jpg",
+          imgPos: "object-top"
+        },
+        { 
+          name: "Ms. Nguyễn Kim Anh", 
+          title: "Chuyên gia Đào tạo",
+          sub: "Thiết kế trải nghiệm học tập AI",
+          quote: "Cầu nối sư phạm giúp đơn giản hóa công nghệ phức tạp, biến AI thành công cụ dễ dùng cho mọi nhân sự.",
+          img: "/images/kim-anh.png",
+          imgPos: "object-top"
+        }
+      ].map((instructor, idx) => (
+        <motion.div 
+          key={idx}
+          whileHover={{ scale: 1.02, backgroundColor:"rgba(30, 58, 138, 0.2)" }}
+          className="flex flex-col items-center text-center gap-6 p-8 bg-slate-800/40 backdrop-blur-xl rounded-2xl border border-white/20 shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] hover:shadow-[0_8px_32px_0_rgba(59,130,246,0.5)] hover:border-blue-500/50 transition-all duration-300 group cursor-default relative overflow-hidden"
+        >
+          <div className="absolute inset-0 bg-gradient-to-b from-blue-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+          <div className="w-40 h-40 sm:w-48 sm:h-48 rounded-full overflow-hidden border-4 border-blue-500/30 flex-shrink-0 relative shadow-[0_0_30px_rgba(59,130,246,0.3)] group-hover:shadow-[0_0_50px_rgba(59,130,246,0.5)] group-hover:border-blue-400 transition-colors">
+            {instructor.img ? (
+              <Image src={instructor.img} alt={instructor.name} fill className={`object-cover ${instructor.imgPos || 'object-center'} group-hover:scale-110 transition-transform duration-500 ease-in-out`} />
+            ) : (
+              <div className="w-full h-full bg-[#1e293b] flex items-center justify-center group-hover:bg-blue-900/50 transition-colors">
+                <Briefcase className="text-blue-500/50 group-hover:text-blue-400 transition-colors" size={32} />
+              </div>
+            )}
+          </div>
+          <div className="flex-1 w-full">
+            <h4 className="text-2xl font-bold text-white group-hover:text-blue-100 transition-colors">{instructor.name}</h4>
+            <div className="text-blue-400 font-medium text-sm mt-2 mb-4">
+              {instructor.title} 
+              <span className="block text-blue-300/80 mt-1">{instructor.sub}</span>
+            </div>
+            <p className="text-slate-300 italic leading-relaxed text-sm">
+              <span className="text-blue-500 text-lg leading-none mr-1">"</span>
+              {instructor.quote}
+              <span className="text-blue-500 text-lg leading-none ml-1">"</span>
+            </p>
+          </div>
+        </motion.div>
+      ))}
     </div>
 
     </motion.div>
 
-    <motion.div variants={fadeInUp} initial="hidden" whileInView="visible" viewport={{ once:true}} transition={{ delay:0.2}}>
+    <motion.div variants={fadeInUp} initial="hidden" whileInView="visible" viewport={{ once:true}} transition={{ delay:0.2}} className="max-w-4xl mx-auto w-full relative">
 
-    <h2 className="text-blue-600 font-semibold tracking-wide uppercase text-sm"></h2>
+    <div className="absolute inset-0 bg-blue-500/10 blur-[100px] rounded-full pointer-events-none z-0"></div>
 
-    <h3 className="mt-2 text-3xl font-bold text-white mb-8">Yêu Cầu & Tài Nguyên</h3>
+    <h2 className="text-blue-600 font-semibold tracking-wide uppercase text-sm text-center relative z-10"></h2>
 
-    <div className="bg-slate-900/40 backdrop-blur-md shadow-[0_10px_40px_-10px_rgba(0,0,0,0.08)] rounded-2xl p-8 border border-white/10">
+    <h3 className="mt-2 text-3xl font-bold text-white mb-8 text-center relative z-10">Yêu Cầu & Tài Nguyên</h3>
+
+    <div className="bg-slate-800/40 backdrop-blur-xl shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] rounded-2xl p-8 border border-white/20 relative z-10">
 
     <h4 className="font-bold text-xl mb-6 text-slate-200 border-b pb-4">Điều kiện tham gia</h4>
 
@@ -1256,7 +1292,7 @@ export default function App(){
 
     {/* 10. FOOTER & CALL TO ACTION */}
 
-    <section id="dang-ky" className="py-24 bg-[#020617] border-t border-white/5 text-white relative overflow-hidden">
+    <section id="dang-ky" className="py-24 bg-[#1e293b] border-t border-white/5 text-white relative overflow-hidden">
 
     {/* Decor Wave */}
 
@@ -1326,7 +1362,7 @@ export default function App(){
 
     href="mailto:dichvukhachhang@cesglobal.com.vn"
 
-    className="flex items-center gap-3 bg-slate-900/60 backdrop-blur-md px-8 py-4 rounded-full transition-all border border-slate-700 hover:border-blue-500 text-slate-200 hover:text-white w-full sm:w-auto justify-center shadow-lg"
+    className="flex items-center gap-3 bg-slate-800/60 backdrop-blur-md px-8 py-4 rounded-full transition-all border border-slate-700 hover:border-blue-500 text-slate-200 hover:text-white w-full sm:w-auto justify-center shadow-lg"
 
     >
 
