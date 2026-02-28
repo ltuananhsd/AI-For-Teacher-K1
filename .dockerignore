@@ -1,0 +1,50 @@
+# Dependencies
+node_modules
+.pnp
+.pnp.*
+.yarn
+
+# Next.js build output
+.next
+out
+build
+
+# Git
+.git
+.gitignore
+
+# Environment files (secrets — injected at runtime / build ARG)
+.env*
+
+# Documentation
+*.md
+docs/
+AGENTS.md
+README.md
+
+# Backend (separate deployment)
+server/
+
+# Dev / Debug files
+*.txt
+*.py
+*.log
+noi_dung_khoa_hoc/
+_stitch/
+build-v2.js
+build-v2-fix.js
+build-v3.js
+convert.js
+
+# IDE / OS
+.vscode
+.idea
+.DS_Store
+*.pem
+
+# Vercel
+.vercel
+
+# TypeScript build info
+*.tsbuildinfo
+next-env.d.ts
