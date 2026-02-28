@@ -810,7 +810,7 @@ export default function App(){
 
     {/* 6. HỆ SINH THÁI (ECOSYSTEM MAP) */}
 
-    <section id="ecosystem" className="py-20 bg-slate-900 border-t-4 border-blue-500">
+    <section id="ecosystem" className="py-20 bg-slate-900">
 
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
@@ -838,7 +838,7 @@ export default function App(){
 
     <div className="border-2 border-blue-400 bg-blue-900/90 py-4 px-10 rounded-xl text-center shadow-[0_0_20px_rgba(96,165,250,0.4)] backdrop-blur-md">
 
-    <h4 className="text-2xl font-black text-white tracking-widest">GOOGLE AIECOSYSTEM</h4>
+    <h4 className="text-2xl font-black text-white tracking-widest">GOOGLE AI ECO SYSTEM</h4>
 
     <p className="text-blue-300 font-mono mt-1 text-sm">The Complete Map 2026</p>
 
