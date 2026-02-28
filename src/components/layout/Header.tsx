@@ -11,6 +11,15 @@ export default function Header() {
               <Image src="/images/logo-ces.png" alt="Google AI 2026 Logo" fill className="object-contain" />
             </div>
           </Link>
+          
+          {/* Mobile Register Button (Blinking effect) */}
+          <Link
+            className="md:hidden flex items-center justify-center px-4 py-1.5 rounded-full bg-gradient-to-r from-[#4285F4] to-[#2b6ce0] border border-blue-300/30 text-white text-[11px] font-black uppercase tracking-wider shadow-[0_0_15px_rgba(66,133,244,0.8)] animate-pulse"
+            href="/register"
+          >
+            Đăng Ký
+          </Link>
+
           <nav className="hidden md:flex items-center gap-8">
             <Link className="text-sm font-medium text-slate-300 hover:text-white transition-colors" href="/chuong-trinh">
               Chương Trình
