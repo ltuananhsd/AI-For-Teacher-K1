@@ -361,7 +361,7 @@ export default function App(){
           Xây dựng hệ thống làm việc thông minh & tự động hóa dành cho Cấp quản lý, Chuyên viên và Doanh nghiệp vừa và nhỏ (SME).
           </motion.p>
           
-          <div className="flex flex-wrap gap-4 mt-8">
+          <div className="flex flex-wrap justify-center lg:justify-start gap-4 mt-8 w-full">
             <span className="bg-[#4285F4] text-white px-5 py-2.5 rounded-full text-xs font-bold tracking-widest uppercase">Bootcamp 2026</span>
             <span className="bg-[#34A853] text-white px-5 py-2.5 rounded-full text-xs font-bold tracking-widest uppercase">70% Thực Hành</span>
             <span className="bg-[#FBBC04] text-[#131B33] px-5 py-2.5 rounded-full text-xs font-bold tracking-widest uppercase">Dành Cho SME</span>
@@ -721,7 +721,7 @@ export default function App(){
 
     <div className="absolute inset-0 bg-gradient-to-tr from-blue-600 to-cyan-400 rounded-3xl transform rotate-3 scale-105 opacity-20"></div>
 
-    <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Đội ngũ làm việc với AI" className="rounded-3xl shadow-2xl relative z-10 w-full object-cover h-[400px] md:h-[500px]" />
+    <img src="/images/ai_automation_system.png" alt="Hệ thống Chatbot và Agentic AI tự động hóa" className="rounded-3xl shadow-2xl relative z-10 w-full object-cover h-[400px] md:h-[500px]" />
 
     </motion.div>
 
