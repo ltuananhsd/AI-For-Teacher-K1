@@ -4,6 +4,7 @@
   --color-primary: #4387f4;
   --color-background-light: #f5f7f8;
   --color-background-dark: #101722;
+  --color-google-blue: #4285f4;
   --color-google-red: #ea4335;
   --color-google-yellow: #fbbc05;
   --color-google-green: #34a853;
@@ -28,17 +29,48 @@
     @apply bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display transition-colors duration-300;
   }
   .glow-border {
-    @apply relative;
+    @apply relative z-0;
   }
   .glow-border::after {
     content: "";
-    @apply absolute -inset-[2px] rounded-[inherit] -z-10 opacity-30 blur-[8px];
+    @apply absolute -inset-[2px] rounded-[inherit] -z-10 opacity-40 blur-[10px];
     background: linear-gradient(
-      45deg,
+      90deg,
       var(--color-google-blue),
       var(--color-google-red),
       var(--color-google-yellow),
       var(--color-google-green)
     );
+  }
+
+  .google-gradient-border {
+    position: relative;
+  }
+  .google-gradient-border::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 2px; /* Border thickness */
+    background: linear-gradient(
+      90deg,
+      var(--color-google-blue),
+      var(--color-google-red),
+      var(--color-google-yellow),
+      var(--color-google-green)
+    );
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  .google-halo {
+    box-shadow:
+      0 0 30px rgba(66, 133, 244, 0.15),
+      0 0 50px rgba(234, 67, 53, 0.1),
+      0 0 20px rgba(251, 188, 4, 0.1);
   }
 }

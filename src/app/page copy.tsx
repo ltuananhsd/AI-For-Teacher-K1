@@ -107,7 +107,7 @@ const TubesBackground = ({
 
   return (
     <div 
-      className={cn("relative w-full h-full overflow-hidden bg-[#0A1128]", className)}
+      className={cn("relative w-full h-full overflow-hidden bg-[#1e293b]", className)}
       onClick={handleClick}
     >
       <canvas 
@@ -117,7 +117,7 @@ const TubesBackground = ({
       />
       
       {/* Lớp mờ (Gradient Overlay) để làm dịu phần viền dưới, giúp chuyển tiếp mượt mà sang nội dung bên dưới */}
-      <div className="absolute bottom-0 left-0 w-full h-40 bg-gradient-to-t from-[#0A1128] to-transparent z-0 pointer-events-none"></div>
+      <div className="absolute bottom-0 left-0 w-full h-40 bg-gradient-to-t from-[#1e293b] to-transparent z-0 pointer-events-none"></div>
       
       {/* Lớp chứa nội dung (Children Overlay). 
           Quan trọng: Sử dụng pointer-events-none ở container và pointer-events-auto ở các thẻ con cần tương tác */}
@@ -284,7 +284,8 @@ export default function App(){
   
 
   return(
-    <div className="bg-[#0A1128] text-white antialiased selection:bg-blue-900/40 selection:text-white font-sans overflow-x-hidden pt-12 md:pt-24">
+
+    <div className="bg-[#1e293b] text-slate-200 antialiased selection:bg-blue-900/20 selection:text-white font-sans overflow-x-hidden">
 
     {/* 0. NAVBAR */}
 
@@ -293,6 +294,7 @@ export default function App(){
     {/* 1. HERO SECTION */}
     <section className="relative w-full min-h-screen flex flex-col">
 <TubesBackground className="flex-1 w-full min-h-screen" enableClickInteraction={true}>
+<div className="container mx-auto px-6 md:px-12 py-32 flex flex-col items-center text-center justify-center h-full">
 
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
 
@@ -318,92 +320,106 @@ export default function App(){
 
     </div>
 
-    <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-left pt-10">
+    <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
 
-      <div className="relative w-full max-w-7xl mx-auto bg-[#131B33]/80 border border-white/5 rounded-[3rem] p-8 md:p-16 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.8)] backdrop-blur-md overflow-hidden flex flex-col lg:flex-row gap-16">
-        {/* macOS Controls */}
-        <div className="absolute top-6 left-6 flex gap-2 z-20">
-          <div className="w-3 h-3 rounded-full bg-[#EA4335] shadow-inner shadow-black/20"></div>
-          <div className="w-3 h-3 rounded-full bg-[#FBBC04] shadow-inner shadow-black/20"></div>
-          <div className="w-3 h-3 rounded-full bg-[#34A853] shadow-inner shadow-black/20"></div>
-        </div>
-        
-        {/* Bottom Google Line */}
-        <div className="absolute bottom-0 left-0 w-full h-1.5 bg-gradient-to-r from-[#4285F4] via-[#34A853] via-[#FBBC04] to-[#EA4335]"></div>
+    <motion.div
 
-        {/* Left Column: Text Content */}
-        <div className="flex-1 pt-4 relative z-10 lg:pr-10">
-          <motion.div
-          initial={{ opacity:0, y:-20}}
-          animate={{ opacity:1, y:0}}
-          transition={{ duration:0.5}}
-          className="inline-flex items-center gap-2 px-6 py-2 rounded-full bg-[#1A2542] border border-blue-500/20 text-white font-semibold mb-8 backdrop-blur-xl shadow-xl"
-          >
-          <Rocket size={14} className="text-[#4285F4]" />
-          <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-blue-200">Google AI System</span>
-          </motion.div>
+    initial={{ opacity:0, y:-20}}
 
-          <motion.h1
-          initial={{ opacity:0, y:20}}
-          animate={{ opacity:1, y:0}}
-          transition={{ duration:0.7, delay:0.2}}
-          className="text-5xl md:text-6xl lg:text-7xl font-extrabold text-white tracking-tight leading-[1.1] mb-8"
-          >
-          LÀM CHỦ<br/>HỆ SINH THÁI<br/> <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#4285F4] via-[#EA4335] to-[#FBBC04]">GOOGLE AI.</span>
-          </motion.h1>
+    animate={{ opacity:1, y:0}}
 
-          <motion.p
-          initial={{ opacity:0}}
-          animate={{ opacity:1}}
-          transition={{ duration:0.7, delay:0.4}}
-          className="mt-4 text-xl text-slate-300 font-light leading-relaxed mb-12 max-w-xl"
-          >
-          Xây dựng hệ thống làm việc thông minh & tự động hóa dành cho Cấp quản lý, Chuyên viên và Doanh nghiệp vừa và nhỏ (SME).
-          </motion.p>
-          
-          <div className="flex flex-wrap gap-4 mt-8">
-            <span className="bg-[#4285F4] text-white px-5 py-2.5 rounded-full text-xs font-bold tracking-widest uppercase">Bootcamp 2026</span>
-            <span className="bg-[#34A853] text-white px-5 py-2.5 rounded-full text-xs font-bold tracking-widest uppercase">70% Thực Hành</span>
-            <span className="bg-[#FBBC04] text-[#131B33] px-5 py-2.5 rounded-full text-xs font-bold tracking-widest uppercase">Dành Cho SME</span>
-          </div>
-        </div>
+    transition={{ duration:0.5}}
 
-        {/* Right Column: Timeline / Cards */}
-        <motion.div 
-          variants={staggerContainer}
-          initial="hidden"
-          animate="visible"
-          className="lg:w-[400px] border border-white/5 bg-black/20 rounded-[2rem] p-8 relative flex flex-col gap-6"
-        >
-          <motion.div variants={fadeInUp} className="text-[10px] uppercase tracking-[0.2em] font-bold text-gray-400 w-full text-center flex items-center justify-center gap-2 mb-2 relative z-20">
-            <span className="text-[#FBBC04]">C</span> NỘI DUNG KHOÁ HỌC
-          </motion.div>
-          
-          <div className="absolute left-1/2 top-24 bottom-16 w-px bg-white/5 -translate-x-1/2"></div>
-        
-          {[
-          { icon:Clock, title:"Thời lượng", text:"5 buổi (2.5 - 3h/buổi)"},
-          { icon:Target, title:"Phương pháp", text:"Outcome-based"},
-          { icon:PieChart, title:"Tỷ lệ học", text:"30% Tư duy - 70% Thực chiến"}
-          ].map((item, idx)=>(
-          <motion.div
-          key={idx}
-          variants={cardVariant}
-          whileHover={{ scale: 1.05, y: -5, boxShadow: "0 0 30px rgba(66, 133, 244, 0.4)" }}
-          className="bg-[#1A2542] border border-white/10 hover:border-blue-500/50 rounded-2xl text-white flex flex-col items-center text-center p-6 shadow-xl relative z-10 w-full group overflow-hidden transition-colors"
-          >
-            {/* Halo background hidden initially, shows on hover */}
-            <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            
-          <item.icon size={28} className="text-[#4285F4] mb-3 relative z-10 group-hover:scale-110 transition-transform duration-300" />
-          <h3 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1 relative z-10">{item.title}</h3>
-          <p className="font-extrabold text-lg leading-tight text-white relative z-10">{item.text}</p>
-          </motion.div>
-          ))}
-          
-        </motion.div>
+    className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-900/50 border border-blue-700/50 text-blue-300 text-sm font-semibold mb-8 backdrop-blur-sm"
 
-      </div>
+    >
+
+    <Rocket size={16} />
+
+    </motion.div>
+
+    <motion.h1
+    initial={{ opacity:0, y:20}}
+    animate={{ opacity:1, y:0}}
+    transition={{ duration:0.7, delay:0.2}}
+    className="text-4xl md:text-6xl lg:text-7xl font-extrabold text-white tracking-tight mb-6 leading-tight drop-shadow-2xl"
+    >
+    LÀM CHỦ<br/> <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#4285F4] via-[#EA4335] to-[#FBBC04]">GOOGLE AI</span>
+    </motion.h1>
+
+    <motion.p
+
+    initial={{ opacity:0}}
+
+    animate={{ opacity:1}}
+
+    transition={{ duration:0.7, delay:0.4}}
+
+    className="mt-4 text-xl md:text-2xl text-blue-100 max-w-3xl mx-auto font-light leading-relaxed mb-12"
+
+    >
+
+    Xây dựng hệ thống làm việc thông minh & tự động hóa dành cho<br className="hidden md:block"/> Cấp quản lý, Chuyên viên và Doanh nghiệp vừa và nhỏ (SME).
+    </motion.p>
+
+    <motion.div
+
+    variants={staggerContainer}
+
+    initial="hidden"
+
+    animate="visible"
+
+    className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto mt-10"
+
+    >
+
+    {[
+
+    { icon:Clock, title:"Thời lượng", text:"5 buổi (2.5 - 3h/buổi)", sub:"+ 4 tuần làm SP có Mentor"},
+
+    { icon:Target, title:"Phương pháp", text:"Outcome-based", sub:"(Ra sản phẩm thực tế)"},
+
+    { icon:PieChart, title:"Tỷ lệ học", text:"30% Tư duy - 70% Thực chiến", sub:"Thực hành liên tục", isHighlight:true}
+
+    ].map((item, idx)=>(
+
+    <motion.div
+    key={idx}
+    variants={cardVariant}
+    whileHover={{ y:-5, backgroundColor:"rgba(30,41,59,0.8)"}}
+    className="bg-slate-800/60 backdrop-blur-md rounded-2xl text-white text-left flex flex-col items-center md:items-start text-center md:text-left google-gradient-border google-halo p-6 group"
+    >
+
+    <item.icon size={36} className="text-blue-400 mb-4" />
+
+    <h3 className="text-lg font-semibold text-blue-200 uppercase tracking-wider mb-2">{item.title}</h3>
+
+    {item.isHighlight ?(
+
+    <p className="font-medium text-lg text-blue-400 mt-2 text-2xl leading-tight">
+
+    30%<span className="text-lg text-white font-normal">Tư duy<br/>70%<span className="text-lg text-white font-normal">Thực chiến</span></span>
+
+    </p>
+
+    ):(
+
+    <p className="font-medium text-lg leading-tight">
+
+    {item.text}<br/><span className="text-sm font-normal text-blue-200 mt-1 block">{item.sub}</span>
+
+    </p>
+
+    )}
+
+    </motion.div>
+
+    ))}
+
+    </motion.div>
+
+    </div>
 
     </div>
 
@@ -412,12 +428,12 @@ export default function App(){
 
     {/* 2. TỔNG QUAN & TRIẾT LÝ */}
 
-    <section id="tong-quan" className="py-24 relative bg-[#0A1128]">
+    <section id="tong-quan" className="py-20 bg-slate-800/40 backdrop-blur-md">
 
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
     <motion.div
-    className="text-center max-w-4xl mx-auto mb-16 bg-white/5 border border-white/10 backdrop-blur-xl py-8 px-10 rounded-full"
+    className="text-center max-w-4xl mx-auto mb-16 bg-slate-800/70 backdrop-blur-xl google-gradient-border py-8 px-10 rounded-2xl glow-border"
     >
       <h3 className="text-4xl md:text-5xl font-extrabold text-white tracking-tight drop-shadow-lg">Tổng Quan Chương Trình</h3>
 
@@ -445,7 +461,7 @@ export default function App(){
 
     {/* Flow Diagram */}
 
-    <div className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-0 my-10 bg-[#131B33]/40 backdrop-blur-md p-6 rounded-2xl shadow-lg shadow-black/30 border border-white/20 relative z-10">
+    <div className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-0 my-10 bg-slate-800/40 backdrop-blur-md p-6 rounded-2xl shadow-lg shadow-black/30 border border-white/20 relative z-10">
 
     {['Idea','Content','App','Workflow','Agent'].map((step, idx)=>(
 
@@ -505,7 +521,7 @@ export default function App(){
 
     </div>
 
-    <p className="text-lg text-slate-300 font-medium text-center bg-[#131B33]/40 backdrop-blur-md/60 p-4 rounded-xl relative z-10">
+    <p className="text-lg text-slate-300 font-medium text-center bg-slate-800/40 backdrop-blur-md/60 p-4 rounded-xl relative z-10">
 
     Học viên sẽ không chỉ học cách dùng từng công cụ riêng lẻ mà được hướng dẫn xây dựng một quy trình/ hệ thống hoàn chỉnh từ ý tưởng đến triển khai thực tế.
 
@@ -519,12 +535,12 @@ export default function App(){
 
     {/* 3. ĐIỂM KHÁC BIỆT */}
 
-    <section className="py-20 bg-[radial-gradient(#3b82f6_1px,transparent_1px)] bg-[size:30px_30px] bg-[#131B33] relative">
+    <section className="py-20 bg-[radial-gradient(#3b82f6_1px,transparent_1px)] bg-[size:30px_30px] bg-[#1e293b] relative">
 
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
     <motion.div
-    className="text-center max-w-4xl mx-auto mb-16 bg-[#131B33]/70 backdrop-blur-xl google-gradient-border py-8 px-10 rounded-2xl glow-border"
+    className="text-center max-w-4xl mx-auto mb-16 bg-slate-800/70 backdrop-blur-xl google-gradient-border py-8 px-10 rounded-2xl glow-border"
     >
       <h3 className="text-4xl md:text-5xl font-extrabold text-white tracking-tight">Sự Khác Biệt Cốt Lõi</h3>
       <p className="mt-5 text-gray-300 text-lg font-medium">Tại sao chương trình của CES Global là duy nhất?</p>
@@ -533,7 +549,7 @@ export default function App(){
 
     <motion.div
     variants={fadeInUp} initial="hidden" whileInView="visible" viewport={{ once:true}}
-    className="overflow-x-auto rounded-2xl bg-[#131B33]/60 backdrop-blur-xl google-gradient-border google-halo p-1"
+    className="overflow-x-auto rounded-2xl bg-slate-800/60 backdrop-blur-xl google-gradient-border google-halo p-1"
     >
 
     <table className="w-full text-left border-collapse">
@@ -542,8 +558,8 @@ export default function App(){
 
     <tr>
 
-    <th className="py-5 px-6 bg-[#131B33] font-bold text-slate-300 text-lg border-b border-r border-white/10 w-1/4">Tiêu chí</th>
-    <th className="py-5 px-6 bg-[#131B33]/80 font-bold text-slate-400 text-lg border-b border-r border-white/10 w-1/3">Đào tạo AI thông thường</th>
+    <th className="py-5 px-6 bg-[#1e293b] font-bold text-slate-300 text-lg border-b border-r border-white/10 w-1/4">Tiêu chí</th>
+    <th className="py-5 px-6 bg-slate-800/80 font-bold text-slate-400 text-lg border-b border-r border-white/10 w-1/3">Đào tạo AI thông thường</th>
     <th className="py-5 px-6 bg-blue-600 font-bold text-white text-lg border-b border-blue-700 w-5/12 shadow-[0_0_20px_rgba(37,99,235,0.4)] relative">
       <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent"></div>
       Google AI Ecosystem Bootcamp
@@ -564,7 +580,7 @@ export default function App(){
     whileInView={{ opacity:1, x:0}}
     transition={{ delay: idx *0.1}}
     viewport={{ once:true}}
-    className="hover:bg-[#131B33] transition-colors"
+    className="hover:bg-[#1e293b] transition-colors"
     >
     <td className="py-4 px-6 font-semibold border-r border-white/10">{row.k}</td>
     <td className="py-4 px-6 text-slate-300 line-through decoration-red-500 decoration-2 border-r border-white/10">{row.o}</td>
@@ -589,7 +605,7 @@ export default function App(){
 
     {/* 4. ĐỐI TƯỢNG */}
 
-    <section className="py-20 bg-[#0A1128] relative text-white">
+    <section className="py-20 bg-[#0f172a] relative text-white">
 
     <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl h-[40vh] bg-blue-600/10 blur-[120px] rounded-full pointer-events-none z-0"></div>
     <div className="absolute inset-0 bg-blue-900/5 pointer-events-none z-0"></div>
@@ -598,7 +614,7 @@ export default function App(){
 
     <motion.div
     variants={fadeInUp} initial="hidden" whileInView="visible" viewport={{ once:true}}
-    className="text-center max-w-4xl mx-auto mb-16 bg-[#131B33]/70 backdrop-blur-xl google-gradient-border py-8 px-10 rounded-2xl glow-border"
+    className="text-center max-w-4xl mx-auto mb-16 bg-slate-800/70 backdrop-blur-xl google-gradient-border py-8 px-10 rounded-2xl glow-border"
     >
       <h3 className="text-4xl md:text-5xl font-extrabold text-white tracking-tight drop-shadow-lg">Đối Tượng Tham Gia</h3>
       <div className="w-24 h-1 bg-gradient-to-r from-[#4285F4] via-[#34A853] to-[#FBBC04] mx-auto mt-6 rounded-full"></div>
@@ -632,7 +648,7 @@ export default function App(){
     <motion.div
     key={idx} variants={cardVariant}
     whileHover={{ scale:1.02, y:-8 }}
-    className="bg-[#131B33]/40 backdrop-blur-md p-6 rounded-2xl transition-all duration-300 group border border-slate-700 hover:border-blue-500/50 hover:shadow-[0_0_30px_rgba(59,130,246,0.15)] relative overflow-hidden"
+    className="bg-slate-800/40 backdrop-blur-md p-6 rounded-2xl transition-all duration-300 group border border-slate-700 hover:border-blue-500/50 hover:shadow-[0_0_30px_rgba(59,130,246,0.15)] relative overflow-hidden"
     >
     <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 rounded-full blur-3xl group-hover:bg-blue-400/20 transition-all pointer-events-none"></div>
     <div className="w-14 h-14 bg-gradient-to-br from-blue-600/20 to-cyan-500/20 border border-blue-500/20 rounded-xl flex items-center justify-center text-blue-400 mb-6 group-hover:scale-110 group-hover:text-white group-hover:from-blue-500 group-hover:to-cyan-400 group-hover:shadow-[0_0_20px_rgba(59,130,246,0.4)] transition-all z-10 relative">
@@ -657,7 +673,7 @@ export default function App(){
 
     {/* 5. PHƯƠNG PHÁP */}
 
-    <section className="py-20 bg-[#131B33]/40 backdrop-blur-md overflow-hidden">
+    <section className="py-20 bg-slate-800/40 backdrop-blur-md overflow-hidden">
 
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
@@ -733,14 +749,14 @@ export default function App(){
 
     {/* 6. HỆ SINH THÁI (ECOSYSTEM MAP) */}
 
-    <section id="ecosystem" className="py-20 bg-[#131B33]/40 backdrop-blur-md">
+    <section id="ecosystem" className="py-20 bg-slate-800/40 backdrop-blur-md">
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     {/* Ecosystem UI Map */}
     <div className="relative max-w-5xl mx-auto p-4 md:p-8 rounded-3xl">
 
     <motion.div
     initial={{ opacity:0, y:-20}} whileInView={{ opacity:1, y:0}} viewport={{ once:true}}
-    className="text-center max-w-4xl mx-auto mb-16 bg-[#131B33]/70 backdrop-blur-xl google-gradient-border py-8 px-10 rounded-2xl glow-border relative z-20"
+    className="text-center max-w-4xl mx-auto mb-16 bg-slate-800/70 backdrop-blur-xl google-gradient-border py-8 px-10 rounded-2xl glow-border relative z-20"
     >
       <h3 className="text-4xl md:text-5xl font-extrabold text-white tracking-tight drop-shadow-lg">BẢN ĐỒ HỆ SINH THÁI GOOGLE AI 2026</h3>
       <div className="w-24 h-1 bg-gradient-to-r from-[#4285F4] via-[#34A853] to-[#FBBC04] mx-auto mt-6 rounded-full"></div>
@@ -761,7 +777,7 @@ export default function App(){
 
     <div className="hidden md:block absolute -top-[40px] left-1/2 w-[2px] h-[40px] bg-blue-900/20/50 -translate-x-1/2"></div>
 
-    <div className="border border-indigo-500/50 hover:border-indigo-400 transition-colors rounded-xl overflow-hidden bg-[#131B33]/80 shadow-lg">
+    <div className="border border-indigo-500/50 hover:border-indigo-400 transition-colors rounded-xl overflow-hidden bg-slate-800/80 shadow-lg">
 
     <div className="bg-indigo-900/80 py-3 text-center border-b border-indigo-500/30 font-bold text-white tracking-wider text-sm">MODELS</div>
 
@@ -775,7 +791,7 @@ export default function App(){
 
     <div className="flex justify-center text-indigo-500"><ArrowDown size={20} /></div>
 
-    <div className="border border-indigo-500/50 hover:border-indigo-400 transition-colors rounded-xl overflow-hidden bg-[#131B33]/80 shadow-lg">
+    <div className="border border-indigo-500/50 hover:border-indigo-400 transition-colors rounded-xl overflow-hidden bg-slate-800/80 shadow-lg">
 
     <div className="bg-indigo-900/80 py-3 text-center border-b border-indigo-500/30 font-bold text-white tracking-wider text-sm">ASSISTANTS</div>
 
@@ -795,7 +811,7 @@ export default function App(){
 
     <div className="hidden md:block absolute -top-[40px] left-1/2 w-[2px] h-[40px] bg-blue-900/20/50 -translate-x-1/2"></div>
 
-    <div className="border border-cyan-500/50 hover:border-cyan-400 transition-colors rounded-xl overflow-hidden bg-[#131B33]/80 shadow-lg">
+    <div className="border border-cyan-500/50 hover:border-cyan-400 transition-colors rounded-xl overflow-hidden bg-slate-800/80 shadow-lg">
 
     <div className="bg-cyan-900/80 py-3 text-center border-b border-cyan-500/30 font-bold text-white tracking-wider text-sm">BUILD&CODE</div>
 
@@ -809,7 +825,7 @@ export default function App(){
 
     <div className="flex justify-center text-cyan-500"><ArrowDown size={20} /></div>
 
-    <div className="border border-cyan-500/50 hover:border-cyan-400 transition-colors rounded-xl overflow-hidden bg-[#131B33]/80 shadow-lg">
+    <div className="border border-cyan-500/50 hover:border-cyan-400 transition-colors rounded-xl overflow-hidden bg-slate-800/80 shadow-lg">
 
     <div className="bg-cyan-900/80 py-3 text-center border-b border-cyan-500/30 font-bold text-white tracking-wider text-sm">AGENTS</div>
 
@@ -829,7 +845,7 @@ export default function App(){
 
     <div className="hidden md:block absolute -top-[40px] left-1/2 w-[2px] h-[40px] bg-blue-900/20/50 -translate-x-1/2"></div>
 
-    <div className="border border-blue-400/50 hover:border-blue-300 transition-colors rounded-xl overflow-hidden bg-[#131B33]/80 shadow-lg">
+    <div className="border border-blue-400/50 hover:border-blue-300 transition-colors rounded-xl overflow-hidden bg-slate-800/80 shadow-lg">
 
     <div className="bg-blue-800/80 py-3 text-center border-b border-blue-400/30 font-bold text-white tracking-wider text-sm">CREATIVE</div>
 
@@ -843,7 +859,7 @@ export default function App(){
 
     <div className="flex justify-center text-blue-400"><ArrowDown size={20} /></div>
 
-    <div className="border border-blue-400/50 hover:border-blue-300 transition-colors rounded-xl overflow-hidden bg-[#131B33]/80 shadow-lg">
+    <div className="border border-blue-400/50 hover:border-blue-300 transition-colors rounded-xl overflow-hidden bg-slate-800/80 shadow-lg">
 
     <div className="bg-blue-800/80 py-3 text-center border-b border-blue-400/30 font-bold text-white tracking-wider text-sm">PIPELINE</div>
 
@@ -877,103 +893,192 @@ export default function App(){
 
     </section>
 
-    {/* 7. KIẾN TRÚC 5 TẦNG (DASHBOARD LAYOUT) */}
-    <section id="lo-trinh" className="py-24 bg-[#0B1221] relative overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-        <div className="bg-[#131B33] rounded-[3rem] border border-white/5 shadow-2xl overflow-hidden flex flex-col md:flex-row min-h-[700px]">
-          
-          {/* Left Sidebar */}
-          <div className="w-full md:w-[340px] lg:w-[400px] bg-[#0A1128]/80 border-r border-white/5 p-6 md:py-10 md:px-8 flex flex-col gap-6">
-            <h3 className="text-xs font-bold text-gray-500 tracking-widest uppercase mb-2 ml-4">Kiến trúc 5 tầng</h3>
-            
-            <div className="flex flex-col gap-3">
-              {courseModules.map((module, index) => {
-                const isActive = activeSession === module.id;
-                const subTitles = [
-                  "Nền tảng tư duy & giao tiếp AI",
-                  "Tối ưu hóa hiệu suất vận hành",
-                  "Hệ thống sản xuất nội dung tự động",
-                  "Tự động hóa quy trình & trợ lý Agent",
-                  "Chiến lược & Quản trị AI cấp cao"
-                ];
-                
-                return (
-                  <button
-                    key={module.id}
-                    onClick={() => setActiveSession(module.id)}
-                    className={`text-left p-5 rounded-3xl transition-all duration-300 relative border ${isActive ? 'bg-[#1A2542] border-blue-500/30 shadow-[0_0_30px_-5px_rgba(59,130,246,0.2)]' : 'bg-transparent border-transparent hover:bg-white/5'}`}
-                  >
-                    {isActive && (
-                      <div className="absolute -left-0.5 top-1/2 -translate-y-1/2 w-1.5 h-10 bg-gradient-to-b from-[#EA4335] via-[#FBBC04] to-[#4285F4] rounded-r-full"></div>
-                    )}
-                    <h4 className={`text-[10px] uppercase font-bold tracking-widest mb-1.5 ${isActive ? 'text-transparent bg-clip-text bg-gradient-to-r from-[#EA4335] via-[#FBBC04] to-[#4285F4]' : 'text-gray-500'}`}>TẦNG {module.id} — {subTitles[index]}</h4>
-                    <h3 className={`font-bold text-base leading-snug ${isActive ? 'text-white' : 'text-slate-400'}`}>{module.title}</h3>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
+    {/* 7. HEADER LỘ TRÌNH */}
+    <section id="lo-trinh" className="pt-24 pb-12 bg-slate-800/40 backdrop-blur-md">
 
-          {/* Right Content Area */}
-          <div className="flex-1 p-8 md:p-12 lg:p-16 relative bg-[#131B33]">
-            <AnimatePresence mode="wait">
-              {courseModules.map((module) => {
-                if (activeSession !== module.id) return null;
-                return (
-                  <motion.div
-                    key={module.id}
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -20 }}
-                    transition={{ duration: 0.3 }}
-                    className="h-full flex flex-col"
-                  >
-                    <div className="mb-10">
-                      <span className="inline-block px-5 py-1.5 rounded-full bg-gradient-to-r from-[#EA4335] to-[#4285F4] text-[10px] font-bold text-white mb-6 uppercase tracking-widest shadow-lg">CHƯƠNG TRÌNH CHI TIẾT</span>
-                      <h2 className="text-3xl lg:text-5xl font-extrabold text-white leading-[1.15] mb-4 tracking-tight">{module.title}</h2>
-                      <h3 className="text-lg font-bold text-[#FBBC04]">{module.objective}</h3>
-                    </div>
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
 
-                    <div className="mb-10">
-                      <h4 className="flex items-center gap-2 text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-6">
-                        <Layers size={14} /> ỨNG DỤNG & CÔNG CỤ ({module.points.length})
-                      </h4>
-                      <div className="flex flex-col gap-5">
-                        {module.points.map((point, i) => (
-                          <div key={i} className="flex gap-4">
-                            <div className="w-1.5 h-1.5 rounded-full bg-[#4285F4] mt-2.5 shrink-0 shadow-[0_0_10px_rgba(66,133,244,0.8)]"></div>
-                            <p className="text-slate-300 text-base leading-relaxed"><strong className="text-white font-semibold">{point.name}</strong> {point.desc}</p>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
+    <motion.div 
+    variants={fadeInUp} initial="hidden" whileInView="visible" viewport={{ once:true}}
+    className="text-center max-w-4xl mx-auto mb-16 bg-slate-800/70 backdrop-blur-xl google-gradient-border py-8 px-10 rounded-2xl glow-border"
+    >
+      <h3 className="text-4xl md:text-5xl font-extrabold text-white tracking-tight drop-shadow-lg">LỘ TRÌNH TINH GỌN 5 BUỔI</h3>
+      <div className="w-24 h-1 bg-gradient-to-r from-[#4285F4] via-[#34A853] to-[#FBBC04] mx-auto mt-6 rounded-full"></div>
+      <p className="mt-5 text-gray-300 text-lg font-medium">
+      Dưới đây là nội dung tóm tắt chuyên nghiệp cho từng buổi học trong chương trình Google AI Ecosystem Bootcamp, được thiết kế nhằm giúp doanh nghiệp làm chủ hệ sinh thái AI của Google để tối ưu hóa hiệu suất và quy trình làm việc.
+      </p>
+    </motion.div>
 
-                    <div className="mt-auto relative pt-8">
-                      <div className="absolute top-2 left-6 w-12 h-12 bg-[#FBBC04] rounded-full flex items-center justify-center text-[#131B33] z-20 shadow-lg shadow-yellow-500/20 transform -rotate-12">
-                        <Zap size={24} fill="currentColor" />
-                      </div>
-                      <div className="bg-[#1A2542] border border-white/5 rounded-[2.5rem] p-8 md:p-12 pl-12 md:pl-16 shadow-2xl relative overflow-hidden ml-4">
-                        <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent"></div>
-                        <h4 className="text-[10px] font-bold text-gray-500 tracking-widest uppercase mb-3 relative z-10">MỤC TIÊU ĐẦU RA</h4>
-                        <p className="text-xl md:text-2xl font-bold text-white leading-snug relative z-10 pb-2 italic">
-                          "{module.practice.replace('Kết thúc buổi học:', '').replace(' Kết thúc bootcamp: ', '').trim()}"
-                        </p>
-                      </div>
-                    </div>
-                  </motion.div>
-                );
-              })}
-            </AnimatePresence>
-          </div>
+    </div>
 
-        </div>
-      </div>
+    </section>
+
+    {/* 8. CÁC BUỔI HỌC (ACCORDION TOGGLE) */}
+    <section className="py-12 bg-slate-800/40 backdrop-blur-md">
+
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4 relative">
+
+    {courseModules.map((module, index)=>{
+
+    const isActive = activeSession ===module.id;
+
+    const colors = getColorClasses(module.colorTheme);
+
+    return(
+
+    <motion.div
+
+    key={module.id}
+
+    initial={{ opacity:0, y:20}}
+
+    whileInView={{ opacity:1, y:0}}
+
+    transition={{ duration:0.4, delay: index *0.1}}
+
+    viewport={{ once:true, margin:"-50px"}}
+
+    className={`bg-slate-800/40 backdrop-blur-md rounded-3xl relative z-10 transition-all duration-300 border ${isActive ?'shadow-xl border-blue-500/50 bg-[#0a1532]/60':'shadow-lg shadow-black/30 border-white/5 hover:border-blue-500/30 hover:bg-[#0a1532]/40'}`}
+
+    >
+
+    {/* Phần Header cho phép Click để Toggle */}
+
+    <div
+
+    onClick={()=> toggleSession(module.id)}
+
+    className="p-5 md:px-8 md:py-6 cursor-pointer flex items-center group gap-5 md:gap-8"
+
+    >
+
+    {/* Số thứ tự font to (Typography Badge) */}
+
+    <div className={`flex-shrink-0 text-5xl md:text-6xl font-black bg-clip-text text-transparent transition-all duration-300 select-none ${isActive ? 'bg-gradient-to-br from-blue-400 to-cyan-300 drop-shadow-md' : 'bg-gradient-to-br from-blue-700 to-blue-900 opacity-60 group-hover:opacity-100 group-hover:from-blue-500 group-hover:to-blue-700'}`}>
+
+    {module.id.toString().padStart(2, '0')}
+
+    </div>
+
+    <h3 className={`flex-1 text-xl md:text-2xl font-bold pr-4 transition-colors duration-300 ${isActive ? 'text-white' :'text-slate-300 group-hover:text-blue-100'}`}>
+
+    {module.title}
+
+    </h3>
+
+    <div className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 transition-all duration-300 ${isActive ?'bg-blue-500/20 text-blue-300 rotate-180':'bg-white/5 text-slate-500 group-hover:bg-blue-900/40 group-hover:text-blue-400'}`}>
+
+    <ChevronDown size={24} />
+
+    </div>
+
+    </div>
+
+    {/* Phần Nội dung mở rộng (Content) có hiệu ứng */}
+
+    <AnimatePresence>
+
+    {isActive &&(
+
+    <motion.div
+
+    initial={{ height:0, opacity:0}}
+
+    animate={{ height:"auto", opacity:1}}
+
+    exit={{ height:0, opacity:0}}
+
+    transition={{ duration:0.3, ease:"easeInOut"}}
+
+    className="overflow-hidden"
+
+    >
+
+    <div className="px-6 pb-6 md:px-8 md:pb-8 pt-0 border-t border-white/5 mt-2">
+
+    <p className={`${colors.text} font-medium mb-6 flex items-start gap-2 pt-4`}>
+
+    <Target className="shrink-0 mt-1" size={18}/>
+
+    <span><strong className="text-white mr-1">Mục tiêu:</strong>{module.objective}</span>
+
+    </p>
+
+    <h4 className="font-bold text-slate-200 mb-3 border-b pb-2">Nội dung trọng tâm:</h4>
+
+    <ul className="space-y-3 text-slate-400 mb-6">
+
+    {module.points.map((point, i)=>(
+
+    <li key={i} className="flex items-start gap-3">
+
+    <Check className="text-green-500 shrink-0 mt-0.5" size={18}/>
+
+    <span><strong className="text-slate-200">{point.name}</strong>{point.desc}</span>
+
+    </li>
+
+    ))}
+
+    </ul>
+
+    {/* Box Thực hành */}
+
+    <div className={`${colors.bgLight} p-5 rounded-xl border ${colors.borderLight}`}>
+
+    <p className="text-slate-300 flex items-start gap-2">
+
+    <Zap className={`${colors.text} shrink-0 mt-0.5`} size={18}/>
+
+    <span>
+
+    <strong className={`${colors.text}`}>Thực hành:</strong>{module.practice}
+
+    </span>
+
+    </p>
+
+    </div>
+
+    {/* Box Dự án cuối khóa (Chỉ hiện ở Buổi cuối) */}
+
+    {module.isFinal &&(
+
+    <div className="bg-gradient-to-r from-indigo-900/30 to-blue-900/10 p-6 rounded-xl border border-indigo-500/30 shadow-inner mt-6">
+
+    <h4 className="text-xl font-bold text-indigo-300 mb-2 flex items-center gap-2">
+
+    <Flag size={20}/> Dự án cuối khóa:
+
+    </h4>
+
+    <p className="text-slate-300">Trình bày bản thiết kế hệ thống AI giải quyết trực tiếp một bài toán thực tế của doanh nghiệp học viên.</p>
+
+    </div>
+
+    )}
+
+    </div>
+
+    </motion.div>
+
+    )}
+
+    </AnimatePresence>
+
+    </motion.div>
+
+    );
+
+    })}
+
+    </div>
+
     </section>
 
     {/* 9. GIẢNG VIÊN & YÊU CẦU CHUẨN BỊ */}
 
-    <section className="py-24 bg-[#131B33]/40 backdrop-blur-md border-t border-white/20 relative overflow-hidden">
+    <section className="py-24 bg-slate-800/40 backdrop-blur-md border-t border-white/20 relative overflow-hidden">
 
     <div className="absolute top-0 right-0 w-1/2 h-full bg-cyan-600/5 blur-[150px] rounded-full pointer-events-none z-0"></div>
     <div className="absolute bottom-0 left-0 w-1/3 h-1/2 bg-blue-600/10 blur-[130px] rounded-full pointer-events-none z-0"></div>
@@ -1018,14 +1123,14 @@ export default function App(){
         <motion.div 
           key={idx}
           whileHover={{ scale: 1.02, backgroundColor:"rgba(30, 58, 138, 0.2)" }}
-          className="flex flex-col items-center text-center gap-6 p-8 bg-[#131B33]/40 backdrop-blur-xl rounded-2xl border border-white/20 shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] hover:shadow-[0_8px_32px_0_rgba(59,130,246,0.5)] hover:border-blue-500/50 transition-all duration-300 group cursor-default relative overflow-hidden"
+          className="flex flex-col items-center text-center gap-6 p-8 bg-slate-800/40 backdrop-blur-xl rounded-2xl border border-white/20 shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] hover:shadow-[0_8px_32px_0_rgba(59,130,246,0.5)] hover:border-blue-500/50 transition-all duration-300 group cursor-default relative overflow-hidden"
         >
           <div className="absolute inset-0 bg-gradient-to-b from-blue-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
           <div className="w-40 h-40 sm:w-48 sm:h-48 rounded-full overflow-hidden border-4 border-blue-500/30 flex-shrink-0 relative shadow-[0_0_30px_rgba(59,130,246,0.3)] group-hover:shadow-[0_0_50px_rgba(59,130,246,0.5)] group-hover:border-blue-400 transition-colors">
             {instructor.img ? (
               <Image src={instructor.img} alt={instructor.name} fill className={`object-cover ${instructor.imgPos || 'object-center'} group-hover:scale-110 transition-transform duration-500 ease-in-out`} />
             ) : (
-              <div className="w-full h-full bg-[#131B33] flex items-center justify-center group-hover:bg-blue-900/50 transition-colors">
+              <div className="w-full h-full bg-[#1e293b] flex items-center justify-center group-hover:bg-blue-900/50 transition-colors">
                 <Briefcase className="text-blue-500/50 group-hover:text-blue-400 transition-colors" size={32} />
               </div>
             )}
@@ -1056,7 +1161,7 @@ export default function App(){
 
     <h3 className="mt-2 text-3xl font-bold text-white mb-8 text-center relative z-10">Yêu Cầu & Tài Nguyên</h3>
 
-    <div className="bg-[#131B33]/40 backdrop-blur-xl shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] rounded-2xl p-8 border border-white/20 relative z-10">
+    <div className="bg-slate-800/40 backdrop-blur-xl shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] rounded-2xl p-8 border border-white/20 relative z-10">
 
     <h4 className="font-bold text-xl mb-6 text-slate-200 border-b pb-4">Điều kiện tham gia</h4>
 
@@ -1108,7 +1213,7 @@ export default function App(){
 
     {/* 10. FOOTER & CALL TO ACTION */}
 
-    <section id="dang-ky" className="py-24 bg-[#131B33] border-t border-white/5 text-white relative overflow-hidden">
+    <section id="dang-ky" className="py-24 bg-[#1e293b] border-t border-white/5 text-white relative overflow-hidden">
 
     {/* Decor Wave */}
 
@@ -1142,120 +1247,58 @@ export default function App(){
 
     </motion.h2>
 
-    <motion.div
-      initial={{ y:20, opacity:0}} whileInView={{ y:0, opacity:1}} transition={{ delay:0.4}} viewport={{ once:true}}
-      className="max-w-[1200px] mx-auto my-16 relative px-4 xl:px-0"
+    <motion.p
+
+    initial={{ y:20, opacity:0}} whileInView={{ y:0, opacity:1}} transition={{ delay:0.4}} viewport={{ once:true}}
+
+    className="text-xl text-slate-300 mb-12 max-w-2xl mx-auto"
+
     >
-      {/* Glow behind card */}
-      <div className="absolute inset-0 bg-blue-500/10 blur-[60px] rounded-full pointer-events-none"></div>
-      
-      <div className="bg-[#1A2542] border border-white/10 hover:border-blue-500/40 transition-colors duration-500 rounded-[2rem] p-6 sm:p-8 lg:p-12 relative z-10 shadow-2xl overflow-hidden text-left group">
-        <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-[#4285F4] via-[#34A853] via-[#FBBC04] to-[#EA4335] opacity-80 group-hover:opacity-100 transition-opacity"></div>
-        
-        <div className="text-center mb-10">
-          <span className="inline-block bg-[#131B33] border border-white/5 text-blue-400 text-[10px] font-bold px-4 py-1.5 rounded-full tracking-widest uppercase mb-4 shadow-sm">Mô hình: Cam kết đầu ra</span>
-          <h3 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-white tracking-tight">GOOGLE AI BOOTCAMP</h3>
-        </div>
-        
-        <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-6 lg:gap-8 items-stretch">
-          
-          {/* BOX 1: PRICING (Left) */}
-          <div className="flex flex-col justify-between bg-[#0A1128]/60 rounded-2xl p-6 lg:p-8 xl:p-10 border border-white/5 shadow-inner">
-            <div className="w-full flex-1 flex flex-col justify-center">
-              
-              <div className="flex flex-wrap items-center justify-between gap-3 w-full mb-6 pb-6 border-b border-white/5">
-                <div className="text-slate-300 font-medium text-sm md:text-base flex items-center gap-3">
-                  <span className="bg-red-500/20 text-red-400 px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider shrink-0">Giá gốc</span>
-                  <span className="whitespace-nowrap">Giá trị chương trình:</span>
-                </div>
-                <span className="text-[#EA4335] font-black line-through text-2xl md:text-3xl decoration-red-500/60 decoration-[3px] drop-shadow-[0_0_10px_rgba(234,67,53,0.3)] shrink-0">3.000.000 VNĐ</span>
-              </div>
-              
-              <div className="flex flex-wrap items-center justify-between gap-3 w-full mb-8 pb-6 border-b border-white/5">
-                <span className="text-slate-400 font-medium text-sm md:text-base">Học phí:</span>
-                <span className="text-green-400 font-extrabold text-3xl md:text-4xl drop-shadow-[0_0_10px_rgba(74,222,128,0.4)] shrink-0">0 VNĐ</span>
-              </div>
-              
-              <div className="text-center w-full mb-8 mt-2">
-                <span className="block text-slate-400 font-medium mb-3 text-sm uppercase tracking-widest">Phí cam kết</span>
-                <div className="text-5xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#FBBC04] to-[#FFF1BA] drop-shadow-md py-1">899.000 VNĐ</div>
-              </div>
-            </div>
 
-            <div className="w-full mt-auto">
-              <div className="bg-blue-900/30 border border-blue-500/30 rounded-xl p-5 shadow-inner relative overflow-hidden text-left">
-                <div className="absolute top-0 left-0 w-1 h-full bg-[#FBBC04]"></div>
-                <p className="text-sm text-blue-100 font-medium leading-relaxed">
-                  <span className="text-[#FBBC04] font-bold uppercase text-[11px] tracking-wider block mb-1.5 flex items-center gap-1.5">
-                    <span className="w-4 h-4 rounded-full bg-[#FBBC04] text-slate-900 flex items-center justify-center text-[10px]">C</span> 
-                    Lưu ý quan trọng
-                  </span> 
-                  Không phải học phí. Đây là khoản <strong className="text-white">cam kết</strong> để bạn học nghiêm túc và ra sản phẩm thực tế.
-                </p>
-              </div>
-            </div>
-          </div>
+    Vui lòng liên hệ để được tư vấn lộ trình và đăng ký giữ chỗ ngay hôm nay.
 
-          {/* BOX 2: REFUND + ACTION (Right) */}
-          <div className="flex flex-col justify-between gap-6 lg:gap-8">
-            <div className="bg-[#131B33]/50 p-6 lg:p-10 rounded-2xl border border-white/5 flex-1 flex flex-col justify-center">
-              <h4 className="font-bold text-white mb-6 text-center text-sm uppercase tracking-wider text-green-400">Hoàn trả 100% khi bạn:</h4>
-              <ul className="space-y-6">
-                <li className="flex items-start gap-4">
-                  <div className="bg-green-500/10 p-1 rounded-full shrink-0">
-                    <Check className="text-green-500" size={18} />
-                  </div>
-                  <span className="text-slate-300 font-medium text-[15px] pt-0.5">Tham gia tối thiểu 80% thời lượng</span>
-                </li>
-                <li className="flex items-start gap-4">
-                  <div className="bg-green-500/10 p-1 rounded-full shrink-0">
-                    <Check className="text-green-500" size={18} />
-                  </div>
-                  <span className="text-slate-300 font-medium text-[15px] pt-0.5">Hoàn thành bài tập & project cuối khóa</span>
-                </li>
-                <li className="flex items-start gap-4">
-                  <div className="bg-green-500/10 p-1 rounded-full shrink-0">
-                    <Check className="text-green-500" size={18} />
-                  </div>
-                  <span className="text-slate-300 font-medium text-[15px] pt-0.5">Trình bày và bảo vệ thành công sản phẩm</span>
-                </li>
-              </ul>
-            </div>
+    </motion.p>
 
-            <div className="flex flex-col gap-3 shrink-0">
-              <motion.a
-                href="/register"
-                whileHover={{ scale: 1.02 }} 
-                whileTap={{ scale: 0.98 }}
-                className="w-full py-4 md:py-5 rounded-full bg-gradient-to-r from-[#4285F4] to-blue-600 hover:from-blue-500 hover:to-blue-400 text-white font-black text-lg text-center shadow-[0_0_30px_rgba(66,133,244,0.4)] transition-all flex items-center justify-center gap-2 group/btn cursor-pointer"
-              >
-                <Rocket size={20} className="group-hover/btn:translate-y-[-2px] transition-transform" /> ĐĂNG KÝ NGAY
-              </motion.a>
-              
-              <motion.a
-                whileHover={{ scale: 1.02 }} 
-                whileTap={{ scale: 0.98 }}
-                href="tel:0911991288"
-                className="w-full py-3.5 rounded-full bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white font-bold text-sm text-center transition-all border border-white/10 flex items-center justify-center gap-2"
-              >
-                <Phone size={16} /> Hotline hỗ trợ: 0911 991 288
-              </motion.a>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </motion.div>
-
-    {/* Subdued Email Info */}
     <motion.div
-      initial={{ y:20, opacity:0}} whileInView={{ y:0, opacity:1}} transition={{ delay:0.6}} viewport={{ once:true}}
-      className="mt-12 mb-16 text-slate-500 flex flex-col items-center gap-2"
+
+    initial={{ y:20, opacity:0}} whileInView={{ y:0, opacity:1}} transition={{ delay:0.6}} viewport={{ once:true}}
+
+    className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-12"
+
     >
-      <p className="text-xs uppercase tracking-widest font-semibold text-slate-600 mb-1">Email liên hệ hợp tác</p>
-      <a href="mailto:dichvukhachhang@cesglobal.com.vn" className="flex items-center gap-2 hover:text-blue-400 transition-colors bg-white/5 px-6 py-2 rounded-full border border-white/5 text-sm">
-        <Mail size={16} /> dichvukhachhang@cesglobal.com.vn
-      </a>
+
+    <motion.a
+
+    whileHover={{ scale:1.05, backgroundColor:"rgba(15, 23, 42, 0.8)"}} whileTap={{ scale:0.95}}
+
+    href="mailto:dichvukhachhang@cesglobal.com.vn"
+
+    className="flex items-center gap-3 bg-slate-800/60 backdrop-blur-md px-8 py-4 rounded-full transition-all border border-slate-700 hover:border-blue-500 text-slate-200 hover:text-white w-full sm:w-auto justify-center shadow-lg"
+
+    >
+
+    <Mail size={20} className="text-blue-400" />
+
+    <span className="font-medium text-lg">dichvukhachhang@cesglobal.com.vn</span>
+
+    </motion.a>
+
+    <motion.a
+
+    whileHover={{ scale:1.05, y:-2}} whileTap={{ scale:0.95}}
+
+    href="tel:0911991288"
+
+    className="flex items-center gap-3 bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white px-8 py-4 rounded-full transition-all shadow-[0_0_20px_rgba(59,130,246,0.4)] w-full sm:w-auto justify-center"
+
+    >
+
+    <Phone size={20} />
+
+    <span className="font-bold text-lg">Hotline: 0911 991 288</span>
+
+    </motion.a>
+
     </motion.div>
 
     <p className="text-blue-400 text-sm">©2026CES Global.All rights reserved.</p>

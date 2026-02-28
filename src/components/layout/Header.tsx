@@ -3,8 +3,8 @@ import Link from "next/link";
 
 export default function Header() {
   return (
-    <header className="fixed top-0 z-50 w-full border-b border-white/5 bg-[#0A101E]/60 backdrop-blur-md">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <header className="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[96%] max-w-6xl rounded-full border border-white/10 bg-[#141517]/70 backdrop-blur-xl shadow-2xl">
+      <div className="px-6 sm:px-8">
         <div className="flex items-center justify-between h-16">
           <Link href="/" className="flex items-center gap-2 group">
             <div className="relative w-32 h-10">
