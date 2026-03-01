@@ -366,6 +366,31 @@ export default function App(){
             <span className="bg-[#34A853] text-white px-5 py-2.5 rounded-full text-xs font-bold tracking-widest uppercase">70% Thực Hành</span>
             <span className="bg-[#FBBC04] text-[#131B33] px-5 py-2.5 rounded-full text-xs font-bold tracking-widest uppercase">Dành Cho SME</span>
           </div>
+
+          {/* Schedule Info Box */}
+          <motion.div 
+            initial={{ opacity:0, y:20}}
+            animate={{ opacity:1, y:0}}
+            transition={{ duration:0.7, delay:0.6}}
+            className="mt-8 flex flex-col sm:flex-row items-center sm:items-start lg:items-center text-center sm:text-left gap-4 p-5 rounded-2xl bg-[#0A1128]/80 border border-blue-500/20 backdrop-blur-xl shadow-lg relative overflow-hidden group"
+          >
+            {/* Background Glow Effect */}
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+            
+            <div className="shrink-0 w-12 h-12 rounded-xl bg-blue-900/40 border border-blue-500/30 flex items-center justify-center text-blue-400 group-hover:scale-110 group-hover:text-[#FBBC04] transition-all duration-300">
+              <Zap size={24} />
+            </div>
+            
+            <div className="flex-1 relative z-10">
+              <div className="text-white text-lg font-semibold mb-1 flex flex-col sm:flex-row items-center sm:items-baseline gap-1 sm:gap-2">
+                <span>Khai giảng:</span>
+                <span className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#FBBC04] to-[#FFF1BA] drop-shadow-md">15/03/2026</span>
+              </div>
+              <p className="text-slate-300 text-sm leading-relaxed max-w-lg">
+                <span className="text-blue-300 font-medium whitespace-nowrap">Học tối Chủ nhật hàng tuần</span><span className="hidden sm:inline"> -</span><br className="sm:hidden" /> Trong tuần: triển khai sản phẩm & làm dự án thực tế có hướng dẫn.
+              </p>
+            </div>
+          </motion.div>
         </div>
 
         {/* Right Column: Timeline / Cards */}
