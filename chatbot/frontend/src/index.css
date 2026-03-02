@@ -1,0 +1,44 @@
+@import url('https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-gradient-to-br from-white via-pale-50 to-pale-200 text-gray-800 font-sans antialiased overflow-hidden min-h-screen selection:bg-indigo-100;
+  }
+}
+
+@layer components {
+
+  /* Nova UI Utilities */
+  .bg-pale-gradient {
+    @apply bg-gradient-to-br from-indigo-50/50 via-purple-50/30 to-blue-50/50;
+  }
+
+  .glass {
+    @apply bg-white/80 backdrop-blur-md border border-white/20 shadow-sm;
+  }
+
+  .glass-panel {
+    @apply bg-white border border-gray-100 shadow-sm;
+  }
+
+  .input-capsule {
+    @apply bg-white border border-gray-200 shadow-sm focus-within:shadow-md focus-within:border-indigo-200 transition-all rounded-full;
+  }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-200 rounded-full hover:bg-gray-300 transition-colors;
+}
