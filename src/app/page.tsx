@@ -386,9 +386,10 @@ export default function App(){
                 <span>Khai giảng:</span>
                 <span className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#FBBC04] to-[#FFF1BA] drop-shadow-md">15/03/2026</span>
               </div>
-              <p className="text-slate-300 text-sm leading-relaxed max-w-lg">
-                <span className="text-blue-300 font-medium whitespace-nowrap">Học tối Chủ nhật hàng tuần</span><span className="hidden sm:inline"> -</span><br className="sm:hidden" /> Trong tuần: triển khai sản phẩm & làm dự án thực tế có hướng dẫn.
-              </p>
+              <div className="text-slate-300 text-sm leading-relaxed max-w-lg space-y-1">
+                <p><span className="text-blue-300 font-medium">Giai đoạn 1 (5 tuần):</span> Học tư duy và công cụ qua Zoom với giảng viên 1 buổi/tuần vào tối chủ nhật từ 20h-22h30</p>
+                <p><span className="text-blue-300 font-medium">Giai đoạn 2 (5 tuần):</span> Thực chiến làm sản phẩm theo nhóm có mentor theo sát hướng dẫn</p>
+              </div>
             </div>
           </motion.div>
         </div>
@@ -407,7 +408,7 @@ export default function App(){
           <div className="absolute left-1/2 top-24 bottom-16 w-px bg-white/5 -translate-x-1/2"></div>
         
           {[
-          { icon:Clock, title:"Thời lượng", text:"5 buổi (2.5 - 3h/buổi)"},
+          { icon:Clock, title:"Thời lượng", text:"10 tuần"},
           { icon:Target, title:"Phương pháp", text:"Outcome-based"},
           { icon:PieChart, title:"Tỷ lệ học", text:"30% Tư duy - 70% Thực chiến"}
           ].map((item, idx)=>(
@@ -415,7 +416,7 @@ export default function App(){
           key={idx}
           variants={cardVariant}
           whileHover={{ scale: 1.05, y: -5, boxShadow: "0 0 30px rgba(66, 133, 244, 0.4)" }}
-          className="bg-[#1A2542] border border-white/10 hover:border-blue-500/50 rounded-2xl text-white flex flex-col items-center text-center p-6 shadow-xl relative z-10 w-full group overflow-hidden transition-colors"
+          className="bg-[#1A2542] border border-white/10 hover:border-blue-500/50 rounded-2xl text-white flex flex-col items-center justify-center text-center p-6 shadow-xl relative z-10 w-full flex-1 group overflow-hidden transition-colors"
           >
             {/* Halo background hidden initially, shows on hover */}
             <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
