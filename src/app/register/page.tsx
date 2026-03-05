@@ -6,6 +6,7 @@ import { User, Phone, Mail, Briefcase, ArrowRight, ShieldCheck, CheckCircle2, Ch
 import { motion, AnimatePresence } from 'framer-motion';
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+const COURSE_SLUG = 'google-ai-bootcamp-k1';
 
 interface FormData {
   fullName: string;
@@ -62,6 +63,7 @@ export default function RegisterPage() {
           phone: phoneClean,
           job_title: formData.job || undefined,
           goals: formData.goals || undefined,
+          course_slug: COURSE_SLUG,
         }),
       });
 
@@ -103,9 +105,9 @@ export default function RegisterPage() {
       {/* Background Decor */}
       <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-600/10 blur-[120px] rounded-full pointer-events-none z-0"></div>
       <div className="absolute top-[40%] right-[-10%] w-[30%] h-[40%] bg-green-500/5 blur-[120px] rounded-full pointer-events-none z-0"></div>
-      
+
       <div className="max-w-5xl mx-auto relative z-10 grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-8 xl:gap-12 mt-8">
-        
+
         {/* Left Column (Main Form) */}
         <div className="w-full">
           <div className="mb-8">
@@ -116,7 +118,7 @@ export default function RegisterPage() {
             </div>
             {/* Progress Bar */}
             <div className="w-full bg-[#1A1B1E] border border-white/5 h-1.5 rounded-full overflow-hidden flex shadow-inner">
-              <motion.div 
+              <motion.div
                 initial={{ width: 0 }}
                 animate={{ width: "25%" }}
                 transition={{ duration: 1, delay: 0.2 }}
@@ -125,7 +127,7 @@ export default function RegisterPage() {
             </div>
           </div>
 
-          <motion.div 
+          <motion.div
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.5 }}
@@ -155,7 +157,7 @@ export default function RegisterPage() {
 
             <form className="space-y-6" onSubmit={handleProceed}>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                
+
                 {/* Họ và tên */}
                 <div className="space-y-2">
                   <label htmlFor="fullName" className="text-sm font-semibold text-slate-300 ml-1">Họ và tên</label>
@@ -163,19 +165,19 @@ export default function RegisterPage() {
                     <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-500 group-focus-within:text-blue-400 transition-colors">
                       <User size={18} />
                     </div>
-                    <input 
-                      type="text" 
+                    <input
+                      type="text"
                       id="fullName"
                       name="fullName"
                       value={formData.fullName}
                       onChange={handleInputChange}
-                      placeholder="Nguyễn Văn A" 
+                      placeholder="Nguyễn Văn A"
                       required
-                      className="w-full bg-[#0f1012] border border-white/10 rounded-xl py-3 pl-11 pr-4 text-white focus:outline-none focus:border-[#4285F4] focus:ring-1 focus:ring-[#4285F4] transition-all placeholder:text-slate-600 shadow-inner" 
+                      className="w-full bg-[#0f1012] border border-white/10 rounded-xl py-3 pl-11 pr-4 text-white focus:outline-none focus:border-[#4285F4] focus:ring-1 focus:ring-[#4285F4] transition-all placeholder:text-slate-600 shadow-inner"
                     />
                   </div>
                 </div>
-                
+
                 {/* Số điện thoại */}
                 <div className="space-y-2">
                   <label htmlFor="phone" className="text-sm font-semibold text-slate-300 ml-1">Số điện thoại</label>
@@ -183,19 +185,19 @@ export default function RegisterPage() {
                     <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-500 group-focus-within:text-blue-400 transition-colors">
                       <Phone size={18} />
                     </div>
-                    <input 
-                      type="tel" 
+                    <input
+                      type="tel"
                       id="phone"
                       name="phone"
                       value={formData.phone}
                       onChange={handleInputChange}
-                      placeholder="0901 234 567" 
+                      placeholder="0901 234 567"
                       required
-                      className="w-full bg-[#0f1012] border border-white/10 rounded-xl py-3 pl-11 pr-4 text-white focus:outline-none focus:border-[#4285F4] focus:ring-1 focus:ring-[#4285F4] transition-all placeholder:text-slate-600 shadow-inner" 
+                      className="w-full bg-[#0f1012] border border-white/10 rounded-xl py-3 pl-11 pr-4 text-white focus:outline-none focus:border-[#4285F4] focus:ring-1 focus:ring-[#4285F4] transition-all placeholder:text-slate-600 shadow-inner"
                     />
                   </div>
                 </div>
-                
+
                 {/* Email */}
                 <div className="space-y-2">
                   <label htmlFor="email" className="text-sm font-semibold text-slate-300 ml-1">Email</label>
@@ -203,19 +205,19 @@ export default function RegisterPage() {
                     <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-500 group-focus-within:text-blue-400 transition-colors">
                       <Mail size={18} />
                     </div>
-                    <input 
-                      type="email" 
+                    <input
+                      type="email"
                       id="email"
                       name="email"
                       value={formData.email}
                       onChange={handleInputChange}
-                      placeholder="nguyenvana@gmail.com" 
+                      placeholder="nguyenvana@gmail.com"
                       required
-                      className="w-full bg-[#0f1012] border border-white/10 rounded-xl py-3 pl-11 pr-4 text-white focus:outline-none focus:border-[#4285F4] focus:ring-1 focus:ring-[#4285F4] transition-all placeholder:text-slate-600 shadow-inner" 
+                      className="w-full bg-[#0f1012] border border-white/10 rounded-xl py-3 pl-11 pr-4 text-white focus:outline-none focus:border-[#4285F4] focus:ring-1 focus:ring-[#4285F4] transition-all placeholder:text-slate-600 shadow-inner"
                     />
                   </div>
                 </div>
-                
+
                 {/* Chức vụ */}
                 <div className="space-y-2">
                   <label htmlFor="job" className="text-sm font-semibold text-slate-300 ml-1">Chức vụ / Nghề nghiệp</label>
@@ -223,7 +225,7 @@ export default function RegisterPage() {
                     <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-500 group-focus-within:text-blue-400 transition-colors z-10">
                       <Briefcase size={18} />
                     </div>
-                    <select 
+                    <select
                       id="job"
                       name="job"
                       value={formData.job}
@@ -253,23 +255,23 @@ export default function RegisterPage() {
                       <div className="w-1.5 h-1.5 rounded-full border-t-[1.5px] border-r-[1.5px] border-current -rotate-45 -ml-0.5 mt-0.5"></div>
                     </div>
                   </div>
-                  <textarea 
+                  <textarea
                     id="goals"
                     name="goals"
-                    rows={4} 
+                    rows={4}
                     value={formData.goals}
                     onChange={handleInputChange}
-                    placeholder="Chia sẻ kỳ vọng của bạn về kiến thức AI Ecosystem, sản phẩm bạn muốn tạo ra..." 
+                    placeholder="Chia sẻ kỳ vọng của bạn về kiến thức AI Ecosystem, sản phẩm bạn muốn tạo ra..."
                     className="w-full bg-[#0f1012] border border-white/10 rounded-xl py-3 pl-11 pr-4 text-white focus:outline-none focus:border-[#4285F4] focus:ring-1 focus:ring-[#4285F4] transition-all placeholder:text-slate-600 resize-none shadow-inner leading-relaxed"
                   ></textarea>
                 </div>
               </div>
 
               <div className="pt-6">
-                <motion.button 
+                <motion.button
                   whileHover={{ scale: 1.01 }}
                   whileTap={{ scale: 0.98 }}
-                  type="submit" 
+                  type="submit"
                   className="w-full py-4 rounded-xl font-bold text-white text-lg transition-all flex items-center justify-center gap-2 bg-gradient-to-r from-[#4285F4] to-[#2b6ce0] hover:from-[#3372f5] hover:to-[#225cc7] shadow-[0_0_20px_rgba(66,133,244,0.3)] group border border-[#4285F4]/30"
                 >
                   Tiếp tục thanh toán <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
@@ -284,7 +286,7 @@ export default function RegisterPage() {
         </div>
 
         {/* Right Column (Benefits) */}
-        <motion.div 
+        <motion.div
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.2 }}
@@ -295,7 +297,7 @@ export default function RegisterPage() {
             <h3 className="text-lg font-bold text-white mb-6 flex items-center gap-2 pb-4 border-b border-white/5">
               <ShieldCheck className="text-[#4285F4]" size={22} /> Lợi ích khóa học
             </h3>
-            
+
             <ul className="space-y-6">
               <li className="flex gap-4">
                 <div className="shrink-0 mt-0.5">
@@ -326,12 +328,12 @@ export default function RegisterPage() {
               </li>
             </ul>
           </div>
-          
+
           {/* Sẵn sàng bứt phá */}
           <div className="bg-[#1A1B1E] border border-white/10 rounded-2xl p-[2px] overflow-hidden relative shadow-xl group">
             <div className="absolute inset-0 bg-gradient-to-br from-[#4285F4]/20 via-transparent to-cyan-400/20 opacity-100 transition-opacity duration-700 pointer-events-none mix-blend-screen"></div>
             <div className="rounded-xl overflow-hidden relative aspect-[4/3] bg-[#0f1012] flex flex-col justify-end p-6 border border-white/5">
-              
+
               {/* Fake AI connection image pattern */}
               <div className="absolute inset-0 opacity-40">
                 <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[60%] w-[150%]">
@@ -344,7 +346,7 @@ export default function RegisterPage() {
                   {/* Central Node */}
                   <circle cx="50%" cy="50%" r="40" fill="url(#glow)" />
                   <circle cx="50%" cy="50%" r="4" fill="#60A5FA" className="animate-pulse" />
-                  
+
                   {/* Lines to edges */}
                   <g stroke="rgba(96, 165, 250, 0.4)" strokeWidth="1" strokeDasharray="3 3" className="opacity-80">
                     <line x1="50%" y1="50%" x2="20%" y2="20%" />
@@ -354,7 +356,7 @@ export default function RegisterPage() {
                     <line x1="50%" y1="50%" x2="30%" y2="95%" />
                     <line x1="50%" y1="50%" x2="70%" y2="90%" />
                   </g>
-                  
+
                   {/* Surrounding Nodes */}
                   <g fill="#93C5FD">
                     <circle cx="20%" cy="20%" r="2" />
@@ -366,14 +368,14 @@ export default function RegisterPage() {
                   </g>
                 </svg>
               </div>
-              
+
               <div className="relative z-10 w-full text-left mt-auto">
                 <span className="block text-[11px] font-bold text-white/70 tracking-[0.1em] uppercase mb-1 drop-shadow-md">SẴN SÀNG BỨT PHÁ</span>
                 <span className="text-base text-white font-bold drop-shadow-lg">Thế hệ AI mới bắt đầu từ bạn.</span>
               </div>
             </div>
           </div>
-          
+
         </motion.div>
       </div>
 
