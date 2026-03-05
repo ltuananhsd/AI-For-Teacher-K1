@@ -16,3 +16,7 @@ tiktoken
 pymupdf
 langchain-chroma
 faiss-cpu
+asyncpg
+httpx
+cryptography
+python-multipart
