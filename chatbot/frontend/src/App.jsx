@@ -4,11 +4,20 @@ import Sidebar from './components/layout/Sidebar';
 import ChatInput from './components/chat/ChatInput';
 import MessageBubble from './components/chat/MessageBubble';
 import RegistrationModal from './components/modals/RegistrationModal';
+import AdminAuthGate from './components/admin/AdminAuthGate';
+import DashboardLayout from './components/layout/DashboardLayout';
+
 import RegistrationDashboard from './pages/RegistrationDashboard';
+import ChannelsPage from './pages/ChannelsPage';
+import RagPage from './pages/RagPage';
+import AiSettingsPage from './pages/AiSettingsPage';
+import StatusPage from './pages/StatusPage';
+import SettingsPage from './pages/SettingsPage';
+
 import useChat from './hooks/useChat';
 import { Menu } from 'lucide-react';
 
-// Simple hash-based routing: /#/dashboard → Dashboard, everything else → Chat
+// Simple hash-based routing
 function useHashRoute() {
     const [hash, setHash] = useState(window.location.hash);
     useEffect(() => {
@@ -19,15 +28,30 @@ function useHashRoute() {
     return hash;
 }
 
+const ADMIN_ROUTES = {
+    '#/leads': RegistrationDashboard,
+    '#/channels': ChannelsPage,
+    '#/rag': RagPage,
+    '#/ai-settings': AiSettingsPage,
+    '#/status': StatusPage,
+    '#/settings': SettingsPage,
+};
+
 export default function App() {
     const hash = useHashRoute();
 
-    // Show dashboard if hash matches
-    if (hash === '#/dashboard') {
-        return <RegistrationDashboard />;
+    const AdminPage = ADMIN_ROUTES[hash];
+    if (AdminPage) {
+        return (
+            <AdminAuthGate>
+                <DashboardLayout>
+                    <AdminPage />
+                </DashboardLayout>
+            </AdminAuthGate>
+        );
     }
 
-    // Default: Chat UI
+    // Default (#/ or empty): Chat UI — no auth required
     return <ChatApp />;
 }
 

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Trash2, RefreshCw, Calendar, Users, ArrowLeft, Search } from 'lucide-react';
+import { Trash2, RefreshCw, Calendar, Users, Search } from 'lucide-react';
 
 const API_URL = '/api/v1';
 
@@ -63,30 +63,17 @@ export default function RegistrationDashboard() {
     ).length;
 
     return (
-        <div className="min-h-screen bg-gray-50">
-            {/* Header */}
-            <div className="bg-white border-b border-gray-200 sticky top-0 z-10">
-                <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-                    <div className="flex items-center gap-4">
-                        <a href="/" className="p-2 hover:bg-gray-100 rounded-lg text-gray-500 transition-colors">
-                            <ArrowLeft size={20} />
-                        </a>
-                        <div>
-                            <h1 className="text-xl font-bold text-gray-800">Quản lý Đăng ký</h1>
-                            <p className="text-sm text-gray-500">Dashboard theo dõi lead đăng ký tư vấn</p>
-                        </div>
-                    </div>
-                    <button
-                        onClick={fetchRegistrations}
-                        className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
-                    >
-                        <RefreshCw size={16} className={loading ? 'animate-spin' : ''} />
-                        Làm mới
-                    </button>
-                </div>
+        <div className="space-y-6">
+            {/* Refresh button */}
+            <div className="flex justify-end">
+                <button
+                    onClick={fetchRegistrations}
+                    className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
+                >
+                    <RefreshCw size={16} className={loading ? 'animate-spin' : ''} />
+                    Làm mới
+                </button>
             </div>
-
-            <div className="max-w-6xl mx-auto px-6 py-6 space-y-6">
                 {/* Stats Cards */}
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                     <div className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm">
@@ -222,7 +209,6 @@ export default function RegistrationDashboard() {
                         </table>
                     </div>
                 </div>
-            </div>
         </div>
     );
 }
