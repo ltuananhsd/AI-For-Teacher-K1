@@ -125,11 +125,7 @@ export default function App() {
         </div>
       </header>
 
-      {/* -- BẮT ĐẦU KHUNG ẨN THU NHỎ MOBILE -- */}
-      {/* Ở điện thoại (< 768px), hệ thống sẽ zoom nhỏ lại còn 85%. Trên máy tính giữ nguyên 100%. Bạn có thể đổi 0.85 thành 0.8 (để nhỏ hơn) hoặc 0.9 (để to lên). */}
-      <div className="max-md:[zoom:0.85]">
-        
-        {/* 1. HERO SECTION */}
+      {/* 1. HERO SECTION */}
         <section className="relative min-h-screen flex items-center justify-center pt-24 pb-20 px-4 md:px-8 border-b-4 border-gray-800 overflow-hidden bg-[#fdfbf7]">
           {/* Abstract Decorative Shapes */}
           <div className="absolute top-10 left-10 w-32 h-32 bg-[#ffcc00] rounded-full border-4 border-gray-800 animate-[bounce_5s_infinite]" />
@@ -192,13 +188,13 @@ export default function App() {
               { icon: Users, color: "bg-[#2a3b8f]", title: "Học sinh chán", desc: "Phương pháp cũ mất hút với Gen Z, Gen Alpha.", rot: "-rotate-3" },
               { icon: Brain, color: "bg-[#e94e77]", title: "Áp lực AI", desc: "Bắt buộc ứng dụng AI nhưng loay hoay không biết bắt đầu.", rot: "rotate-2" }
             ].map((item, idx) => (
-              <motion.div key={idx} variants={fadeInUp} className={`bg-white p-8 rounded-3xl border-4 border-gray-800 shadow-[8px_8px_0px_rgba(0,0,0,0.8)] transform ${item.rot} relative hover:-translate-y-2 transition-transform`}>
+              <motion.div key={idx} variants={fadeInUp} className={`bg-white w-[90%] md:w-full mx-auto p-6 md:p-8 rounded-[1.5rem] md:rounded-3xl border-4 border-gray-800 shadow-[6px_6px_0px_rgba(0,0,0,0.8)] md:shadow-[8px_8px_0px_rgba(0,0,0,0.8)] transform ${item.rot} relative hover:-translate-y-2 transition-transform`}>
                 <Tape className="-top-4 left-1/2 -translate-x-1/2" />
-                <div className={`w-16 h-16 ${item.color} rounded-full border-4 border-gray-800 flex items-center justify-center mb-6 shadow-[4px_4px_0px_#1f2937] transform -rotate-12`}>
-                  <item.icon size={32} className="text-white" strokeWidth={2.5} />
+                <div className={`w-12 h-12 md:w-16 md:h-16 ${item.color} rounded-full border-4 border-gray-800 flex items-center justify-center mb-4 md:mb-6 shadow-[3px_3px_0px_#1f2937] md:shadow-[4px_4px_0px_#1f2937] transform -rotate-12`}>
+                  <item.icon className="w-6 h-6 md:w-8 md:h-8 text-white" strokeWidth={2.5} />
                 </div>
-                <h3 className="text-2xl font-black mb-3 uppercase tracking-wide">{item.title}</h3>
-                <p className="text-gray-700 font-medium text-lg border-t-2 border-dashed border-gray-300 pt-3">{item.desc}</p>
+                <h3 className="text-xl md:text-2xl font-black mb-2 md:mb-3 uppercase tracking-wide">{item.title}</h3>
+                <p className="text-gray-700 font-medium text-base md:text-lg border-t-2 border-dashed border-gray-300 pt-3">{item.desc}</p>
               </motion.div>
             ))}
           </motion.div>
@@ -217,16 +213,16 @@ export default function App() {
               { icon: Brain, color: theme.navy, title: "Bộ não thứ 2", desc: "Biến tài liệu thành Sơ đồ tư duy, Podcast học tập cuốn hút." },
               { icon: Gamepad2, color: theme.orange, title: "Kiến tạo Game", desc: "Tự làm Mini-game tương tác với học sinh và đưa lên Web chỉ bằng vài câu lệnh." }
             ].map((item, idx) => (
-              <motion.div key={idx} variants={fadeInUp} className="bg-[#fdfbf7] p-10 rounded-[2.5rem] border-4 border-gray-800 relative group flex gap-6 items-start"
-                   style={{ boxShadow: `10px 10px 0px ${item.color}` }}>
+              <motion.div key={idx} variants={fadeInUp} className="bg-[#fdfbf7] w-[90%] md:w-full mx-auto p-6 md:p-10 rounded-[1.5rem] md:rounded-[2.5rem] border-4 border-gray-800 relative group flex flex-col md:flex-row gap-4 md:gap-6 items-center md:items-start text-center md:text-left"
+                   style={{ boxShadow: `6px 6px 0px ${item.color}` }}>
                 
-                <div className="shrink-0 w-20 h-20 bg-white border-4 border-gray-800 rounded-2xl flex items-center justify-center transform group-hover:rotate-12 transition-transform duration-300"
+                <div className="shrink-0 w-16 h-16 md:w-20 md:h-20 bg-white border-4 border-gray-800 rounded-2xl flex items-center justify-center transform group-hover:rotate-12 transition-transform duration-300"
                      style={{ boxShadow: `4px 4px 0px ${item.color}` }}>
-                  <item.icon size={40} color={item.color} strokeWidth={2.5} />
+                  <item.icon className="w-8 h-8 md:w-10 md:h-10" color={item.color} strokeWidth={2.5} />
                 </div>
                 <div>
-                  <h3 className="text-3xl font-black mb-3 uppercase" style={{ color: item.color, textShadow: '1px 1px 0 #1f2937, -1px -1px 0 #1f2937, 1px -1px 0 #1f2937, -1px 1px 0 #1f2937' }}>{item.title}</h3>
-                  <p className="text-gray-800 font-bold text-lg leading-relaxed">{item.desc}</p>
+                  <h3 className="text-2xl md:text-3xl font-black mb-2 md:mb-3 uppercase" style={{ color: item.color, textShadow: '1px 1px 0 #1f2937, -1px -1px 0 #1f2937, 1px -1px 0 #1f2937, -1px 1px 0 #1f2937' }}>{item.title}</h3>
+                  <p className="text-gray-800 font-bold text-base md:text-lg leading-relaxed">{item.desc}</p>
                 </div>
               </motion.div>
             ))}
@@ -246,44 +242,44 @@ export default function App() {
                 { title: "Giảng viên, Trợ giảng", desc: "Tóm tắt tài liệu, tạo câu hỏi trắc nghiệm." },
                 { title: "Cán bộ quản lý giáo dục", desc: "Tối ưu hóa quy trình, đánh giá chất lượng." },
               ].map((item, idx) => (
-                <div key={idx} className="flex gap-4 items-start bg-white p-6 rounded-2xl border-4 border-gray-800 shadow-[6px_6px_0px_#2a3b8f] transform hover:-translate-y-1 transition-transform">
-                  <div className="bg-[#ffcc00] p-1 border-4 border-gray-800 rounded-xl transform -rotate-6">
-                    <CheckCircle2 size={32} className="text-gray-800" strokeWidth={3} />
+                <div key={idx} className="flex flex-col md:flex-row gap-3 md:gap-4 items-center md:items-start text-center md:text-left bg-white w-[90%] md:w-full mx-auto p-5 md:p-6 rounded-2xl border-4 border-gray-800 shadow-[6px_6px_0px_#2a3b8f] transform hover:-translate-y-1 transition-transform">
+                  <div className="bg-[#ffcc00] p-1.5 md:p-1 border-4 border-gray-800 rounded-xl transform -rotate-6 shrink-0">
+                    <CheckCircle2 className="w-6 h-6 md:w-8 md:h-8 text-gray-800" strokeWidth={3} />
                   </div>
                   <div>
-                    <h4 className="font-black text-xl uppercase mb-1">{item.title}</h4>
-                    <p className="text-gray-700 font-medium">{item.desc}</p>
+                    <h4 className="font-black text-lg md:text-xl uppercase mb-1 md:mb-1">{item.title}</h4>
+                    <p className="text-gray-700 text-sm md:text-base font-medium">{item.desc}</p>
                   </div>
                 </div>
               ))}
-              <div className="mt-8 bg-[#e94e77] text-white p-6 border-4 border-gray-800 shadow-[6px_6px_0px_#ffcc00] font-black text-lg transform rotate-2 text-center">
+              <div className="mt-6 md:mt-8 bg-[#e94e77] text-white p-4 md:p-6 w-[90%] md:w-full mx-auto border-4 border-gray-800 shadow-[6px_6px_0px_#ffcc00] font-black text-base md:text-lg transform rotate-2 text-center">
                 <Lightbulb className="inline mr-2 mb-1" /> HOÀN TOÀN KHÔNG YÊU CẦU BIẾT LẬP TRÌNH!
               </div>
             </div>
           </motion.div>
 
           <motion.div variants={fadeInUp} initial="hidden" whileInView="visible" viewport={{ once: true }} 
-               className="bg-[#2a3b8f] p-10 md:p-14 rounded-[3rem] text-white border-4 border-gray-800 shadow-[12px_12px_0px_#ff7e67] relative mt-12 lg:mt-0">
+               className="bg-[#2a3b8f] w-[95%] md:w-full mx-auto p-8 md:p-14 rounded-[2rem] md:rounded-[3rem] text-white border-4 border-gray-800 shadow-[8px_8px_0px_#ff7e67] md:shadow-[12px_12px_0px_#ff7e67] relative mt-12 lg:mt-0 max-md:text-center">
              <Tape className="-top-5 right-10 transform rotate-6 bg-[#ffcc00]" />
              <Tape className="-top-5 right-20 transform -rotate-3 bg-[#45b596]" />
              
-            <span className="inline-block bg-[#ffcc00] text-gray-900 py-1.5 px-4 font-black tracking-widest uppercase mb-6 border-2 border-gray-800 transform rotate-2">
+            <span className="inline-block bg-[#ffcc00] text-gray-900 py-1.5 px-4 text-xs md:text-sm font-black tracking-widest uppercase mb-6 border-2 border-gray-800 transform rotate-2">
               4. Triết lý đào tạo
             </span>
-            <h2 className="text-4xl md:text-5xl font-black mb-10 leading-tight" style={{ textShadow: '3px 3px 0px #1f2937' }}>
+            <h2 className="text-3xl md:text-5xl font-black mb-10 leading-tight" style={{ textShadow: '3px 3px 0px #1f2937' }}>
               Học Thực Chiến <br/><span className="text-[#e94e77]" style={{ textShadow: '3px 3px 0px #1f2937, -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white' }}>Ra Sản Phẩm</span>
             </h2>
             
-            <div className="grid gap-6">
+            <div className="grid gap-4 md:gap-6">
               {[
                 { icon: Target, text: "Thực hành là nền tảng: Cầm tay chỉ việc trên máy cá nhân." },
                 { icon: Trophy, text: "Học xong có sản phẩm: SKKN, Flashcard, Podcast, Web Game." },
                 { icon: Smile, text: "Vui vẻ & Tương tác: Phá bỏ e ngại công nghệ." },
                 { icon: Users, text: "Ngôn ngữ bình dân: Sư phạm, dễ hiểu." }
               ].map((item, i) =>(
-                 <div key={i} className="flex items-center gap-4 bg-white/10 p-4 rounded-xl border-2 border-white/20">
-                  <div className="bg-[#45b596] p-2 rounded-full border-2 border-gray-800"><item.icon size={24} className="text-gray-900" /></div>
-                  <p className="font-bold text-lg">{item.text}</p>
+                 <div key={i} className="flex flex-col md:flex-row items-center md:items-start text-center md:text-left gap-3 md:gap-4 bg-white/10 p-4 rounded-xl border-2 border-white/20">
+                  <div className="bg-[#45b596] p-2 rounded-full border-2 border-gray-800 shrink-0"><item.icon className="w-5 h-5 md:w-6 md:h-6 text-gray-900" /></div>
+                  <p className="font-bold text-base md:text-lg">{item.text}</p>
                 </div>
               ))}
             </div>
@@ -328,33 +324,33 @@ export default function App() {
               }
             ].map((item, idx) => (
               <motion.div key={idx} initial={{ opacity: 0, y: 50, rotate: idx % 2 === 0 ? -2 : 2 }} whileInView={{ opacity: 1, y: 0, rotate: idx % 2 === 0 ? -1 : 1 }} viewport={{ once: true, margin: "-100px" }}
-                className="bg-[#fdfbf7] p-8 md:p-10 rounded-[2rem] border-4 border-gray-800 flex flex-col md:flex-row gap-6 relative"
-                style={{ boxShadow: `12px 12px 0px ${theme.navy}` }}>
+                className="bg-[#fdfbf7] w-[90%] md:w-full mx-auto p-6 md:p-10 rounded-[1.5rem] md:rounded-[2rem] border-4 border-gray-800 flex flex-col md:flex-row gap-4 md:gap-6 relative"
+                style={{ boxShadow: `8px 8px 0px ${theme.navy}` }}>
                 
-                <Tape className="-top-4 right-10" />
+                <Tape className="-top-4 right-6 md:right-10" />
                 
                 {/* Badge Buổi */}
-                <div className="shrink-0">
-                  <div className={`${item.color} border-4 border-gray-800 text-gray-900 px-6 py-4 rounded-2xl transform -rotate-3 shadow-[4px_4px_0px_#1f2937] flex items-center justify-center font-black text-2xl`}>
+                <div className="shrink-0 max-md:flex max-md:justify-center">
+                  <div className={`${item.color} border-4 border-gray-800 text-gray-900 px-4 py-3 md:px-6 md:py-4 rounded-xl md:rounded-2xl transform -rotate-3 shadow-[4px_4px_0px_#1f2937] inline-flex items-center justify-center font-black text-xl md:text-2xl`}>
                     {item.buoi}
                   </div>
                 </div>
                 
-                <div className="flex-1">
-                  <h3 className="text-3xl font-black mb-6 uppercase tracking-tight text-[#2a3b8f]" style={{ textShadow: '2px 2px 0px #ffcc00' }}>{item.title}</h3>
-                  <ul className="space-y-4 mb-8 font-bold text-lg text-gray-700">
+                <div className="flex-1 max-md:text-center">
+                  <h3 className="text-2xl md:text-3xl font-black mb-4 md:mb-6 uppercase tracking-tight text-[#2a3b8f]" style={{ textShadow: '2px 2px 0px #ffcc00' }}>{item.title}</h3>
+                  <ul className="space-y-3 md:space-y-4 mb-6 md:mb-8 font-bold text-base md:text-lg text-gray-700 text-left">
                     {item.content.map((li, i) => (
-                      <li key={i} className="flex gap-3 items-start">
-                        <span className="shrink-0 mt-1"><Sparkles size={20} className="text-[#e94e77] fill-current" /></span>
+                      <li key={i} className="flex gap-2 md:gap-3 items-start">
+                        <span className="shrink-0 mt-1"><Sparkles className="w-5 h-5 text-[#e94e77] fill-current" /></span>
                         <span>{li}</span>
                       </li>
                     ))}
                   </ul>
-                  <div className="bg-gray-800 text-white p-5 rounded-xl border-4 border-[#ffcc00] transform rotate-1">
-                    <span className="font-black uppercase text-[#ffcc00] flex items-center gap-2 mb-2">
-                      <Trophy size={20} /> Sản phẩm thu về:
+                  <div className="bg-gray-800 text-white p-4 md:p-5 rounded-xl border-4 border-[#ffcc00] transform rotate-1 text-left">
+                    <span className="font-black text-sm md:text-base uppercase text-[#ffcc00] flex items-center gap-2 mb-2">
+                      <Trophy className="w-4 h-4 md:w-5 md:h-5" /> Sản phẩm thu về:
                     </span>
-                    <p className="font-bold text-lg">{item.product}</p>
+                    <p className="font-bold text-base md:text-lg">{item.product}</p>
                   </div>
                 </div>
               </motion.div>
@@ -369,21 +365,21 @@ export default function App() {
           {/* Funky Background Frame */}
           <div className="absolute inset-4 md:inset-8 bg-[#45b596] transform rotate-2 rounded-3xl border-4 border-gray-800 shadow-[8px_8px_0px_#ffcc00]"></div>
           
-          <div className="relative bg-[#f9f6ea] p-10 md:p-16 rounded-3xl border-4 border-gray-800 text-center flex flex-col items-center">
+          <div className="relative bg-[#f9f6ea] w-[95%] md:w-full mx-auto p-6 md:p-16 rounded-[2rem] md:rounded-3xl border-4 border-gray-800 text-center flex flex-col items-center">
             
             <div className="absolute -top-5 left-1/2 -translate-x-1/2 w-32 h-10 bg-yellow-200 transform -rotate-3 border-2 border-gray-800 z-50 shadow-[2px_2px_0px_rgba(0,0,0,0.2)]"></div>
             
             <div className="mb-12 relative">
-              <span className="inline-block bg-[#e94e77] text-white py-1.5 px-6 rounded-full text-sm font-black tracking-widest uppercase mb-4 shadow-[3px_3px_0px_#2a3b8f] border-2 border-[#2a3b8f] transform -rotate-1">
+              <span className="inline-block bg-[#e94e77] text-white py-1.5 px-6 rounded-full text-xs md:text-sm font-black tracking-widest uppercase mb-4 shadow-[3px_3px_0px_#2a3b8f] border-2 border-[#2a3b8f] transform -rotate-1">
                 5. GIẢNG VIÊN
               </span>
-              <h2 className="text-4xl md:text-6xl font-black text-[#2a3b8f] tracking-tight uppercase" style={{ textShadow: '3px 3px 0px #ffcc00, -1px -1px 0 #1a1a1a, 1px -1px 0 #1a1a1a, -1px 1px 0 #1a1a1a, 1px 1px 0 #1a1a1a' }}>
+              <h2 className="text-3xl md:text-6xl font-black text-[#2a3b8f] tracking-tight uppercase" style={{ textShadow: '3px 3px 0px #ffcc00, -1px -1px 0 #1a1a1a, 1px -1px 0 #1a1a1a, -1px 1px 0 #1a1a1a, 1px 1px 0 #1a1a1a' }}>
                 Đội ngũ chuyên gia
               </h2>
             </div>
 
             {/* Avatar Illustration Composite */}
-            <div className="relative w-56 h-56 mb-8 group">
+            <div className="relative w-48 h-48 md:w-56 md:h-56 mb-8 group">
               <div className="absolute inset-0 bg-[#e94e77] rounded-full transform -rotate-6 border-4 border-gray-800 transition-transform group-hover:rotate-0"></div>
               <div className="absolute inset-2 bg-[#ffcc00] rounded-full transform rotate-3 border-4 border-gray-800"></div>
               
@@ -393,31 +389,31 @@ export default function App() {
 
               <div className="absolute bottom-6 -right-2 z-20 transform rotate-[15deg] group-hover:rotate-0 transition-all duration-300">
                 <div className="bg-white rounded-full p-2 border-4 border-gray-800 shadow-[4px_4px_0px_#e94e77]">
-                  <FlaskConical size={40} fill="#e94e77" strokeWidth={2.5} className="text-gray-800" />
+                  <FlaskConical className="w-8 h-8 md:w-10 md:h-10 text-gray-800" fill="#e94e77" strokeWidth={2.5} />
                 </div>
               </div>
               <div className="absolute top-4 -left-4 z-20 text-[#e94e77] animate-pulse">
-                 <Sparkles size={40} fill="currentColor" strokeWidth={2} className="text-gray-800 drop-shadow-[2px_2px_0px_#1a1a1a]" />
+                 <Sparkles className="w-8 h-8 md:w-10 md:h-10 text-gray-800 drop-shadow-[2px_2px_0px_#1a1a1a]" fill="currentColor" strokeWidth={2} />
               </div>
             </div>
 
-            <div className="bg-[#2a3b8f] text-white border-4 border-[#ffcc00] px-8 py-3 transform rotate-1 relative shadow-[6px_6px_0px_rgba(0,0,0,0.8)] mb-8 outline outline-4 outline-gray-800">
-               <h3 className="text-2xl md:text-3xl font-black tracking-widest uppercase text-center" style={{ textShadow: '2px 2px 0px rgba(0,0,0,0.5)' }}>Nguyễn Kim Anh</h3>
+            <div className="bg-[#2a3b8f] text-white border-4 border-[#ffcc00] px-6 py-2 md:px-8 md:py-3 transform rotate-1 relative shadow-[6px_6px_0px_rgba(0,0,0,0.8)] mb-6 md:mb-8 outline outline-4 outline-gray-800">
+               <h3 className="text-xl md:text-3xl font-black tracking-widest uppercase text-center" style={{ textShadow: '2px 2px 0px rgba(0,0,0,0.5)' }}>Nguyễn Kim Anh</h3>
                <div className="absolute top-1.5 left-1.5 w-2 h-2 bg-gray-300 rounded-full border border-gray-600"></div>
                <div className="absolute top-1.5 right-1.5 w-2 h-2 bg-gray-300 rounded-full border border-gray-600"></div>
                <div className="absolute bottom-1.5 left-1.5 w-2 h-2 bg-gray-300 rounded-full border border-gray-600"></div>
                <div className="absolute bottom-1.5 right-1.5 w-2 h-2 bg-gray-300 rounded-full border border-gray-600"></div>
             </div>
 
-            <p className="text-xl text-gray-800 font-bold max-w-xl leading-relaxed bg-white p-6 rounded-2xl border-4 border-gray-800 shadow-[6px_6px_0px_#45b596]">
+            <p className="text-sm md:text-xl text-gray-800 font-bold max-w-xl leading-relaxed bg-white p-4 md:p-6 rounded-2xl border-4 border-gray-800 shadow-[6px_6px_0px_#45b596]">
               Chuyên gia Đào tạo, Thiết kế trải nghiệm học tập AI <br className="hidden md:block"/> dành riêng cho Giáo Viên
             </p>
 
             <div className="absolute top-12 right-12 text-[#2a3b8f] opacity-10 transform rotate-12 pointer-events-none">
-              <Palette size={80} strokeWidth={1.5} />
+              <Palette className="w-12 h-12 md:w-20 md:h-20" strokeWidth={1.5} />
             </div>
             <div className="absolute bottom-12 left-12 text-[#e94e77] opacity-10 transform -rotate-12 pointer-events-none">
-              <BookOpen size={80} strokeWidth={1.5} />
+              <BookOpen className="w-12 h-12 md:w-20 md:h-20" strokeWidth={1.5} />
             </div>
           </div>
         </div>
@@ -428,22 +424,22 @@ export default function App() {
         <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
           
           <motion.div variants={fadeInUp} initial="hidden" whileInView="visible" viewport={{ once: true }}>
-            <h2 className="text-4xl md:text-5xl lg:text-[2.75rem] xl:text-6xl font-black mb-10 leading-[1.2] text-white uppercase" style={{ textShadow: '4px 4px 0px #e94e77' }}>
+            <h2 className="text-3xl md:text-5xl lg:text-[2.75rem] xl:text-6xl font-black mb-8 md:mb-10 leading-[1.2] text-white uppercase" style={{ textShadow: '4px 4px 0px #e94e77' }}>
               <span className="whitespace-nowrap">Đầu tư một lần,</span> <br/>
               <span className="text-[#ffcc00]" style={{ textShadow: '4px 4px 0px #1f2937' }}>giải phóng mãi mãi!</span>
             </h2>
             
-            <div className="bg-[#fdfbf7] p-8 rounded-3xl border-4 border-gray-800 shadow-[8px_8px_0px_#45b596] mb-8 transform -rotate-1">
+            <div className="bg-[#fdfbf7] w-[90%] md:w-full mx-auto p-6 md:p-8 rounded-[1.5rem] md:rounded-3xl border-4 border-gray-800 shadow-[6px_6px_0px_#45b596] md:shadow-[8px_8px_0px_#45b596] mb-8 transform -rotate-1">
               <Tape className="-top-4 right-10" />
-              <h4 className="text-2xl font-black mb-6 uppercase border-b-4 border-gray-800 pb-2 inline-block">Giá trị nhận được:</h4>
-              <ul className="space-y-4 font-bold text-lg text-gray-800">
-                <li className="flex items-start gap-3"><CheckCircle2 className="text-[#e94e77] mt-1 shrink-0" strokeWidth={3} /> Tiết kiệm 80% thời gian soạn bài.</li>
-                <li className="flex items-start gap-3"><CheckCircle2 className="text-[#e94e77] mt-1 shrink-0" strokeWidth={3} /> Sở hữu kho Công cụ cá nhân.</li>
-                <li className="flex items-start gap-3"><CheckCircle2 className="text-[#e94e77] mt-1 shrink-0" strokeWidth={3} /> "Giáo viên công nghệ" tiên phong.</li>
+              <h4 className="text-xl md:text-2xl font-black mb-4 md:mb-6 uppercase border-b-4 border-gray-800 pb-2 inline-block">Giá trị nhận được:</h4>
+              <ul className="space-y-3 md:space-y-4 font-bold text-base md:text-lg text-gray-800">
+                <li className="flex items-start gap-2 md:gap-3"><CheckCircle2 className="w-5 h-5 md:w-6 md:h-6 text-[#e94e77] mt-1 shrink-0" strokeWidth={3} /> Tiết kiệm 80% thời gian soạn bài.</li>
+                <li className="flex items-start gap-2 md:gap-3"><CheckCircle2 className="w-5 h-5 md:w-6 md:h-6 text-[#e94e77] mt-1 shrink-0" strokeWidth={3} /> Sở hữu kho Công cụ cá nhân.</li>
+                <li className="flex items-start gap-2 md:gap-3"><CheckCircle2 className="w-5 h-5 md:w-6 md:h-6 text-[#e94e77] mt-1 shrink-0" strokeWidth={3} /> "Giáo viên công nghệ" tiên phong.</li>
               </ul>
             </div>
 
-            <div className="bg-[#1f2937] p-6 rounded-2xl border-4 border-[#ffcc00] text-white font-bold transform rotate-1">
+            <div className="bg-[#1f2937] w-[90%] md:w-full mx-auto p-5 md:p-6 rounded-2xl border-4 border-[#ffcc00] text-white font-bold text-sm md:text-base transform rotate-1">
               <span className="text-[#ffcc00] uppercase block mb-2">⚠ Yêu cầu chuẩn bị:</span>
               - 1 Laptop cá nhân có kết nối Wifi.<br/>
               - Đã đăng nhập tài khoản Google.
@@ -452,36 +448,36 @@ export default function App() {
 
           {/* Pricing Ticket */}
           <motion.div variants={fadeInUp} initial="hidden" whileInView="visible" viewport={{ once: true }}
-            className="bg-[#ffcc00] p-8 md:p-12 rounded-[2rem] border-4 border-gray-800 relative text-center"
-            style={{ boxShadow: '16px 16px 0px #e94e77' }}>
+            className="bg-[#ffcc00] p-6 md:p-12 w-[90%] md:w-full mx-auto rounded-[1.5rem] md:rounded-[2rem] border-4 border-gray-800 relative text-center"
+            style={{ boxShadow: '8px 8px 0px #e94e77' }}>
             
             {/* Dashed inner border to look like a coupon */}
             <div className="absolute inset-4 border-4 border-dashed border-gray-800 rounded-xl pointer-events-none" />
             
-            <div className="absolute -top-6 -right-6 bg-[#e94e77] text-white px-6 py-4 rounded-full font-black text-xl border-4 border-gray-800 shadow-[6px_6px_0px_#1f2937] transform rotate-12 z-10 animate-pulse">
+            <div className="absolute -top-6 -right-2 md:-right-6 bg-[#e94e77] text-white px-4 py-2 md:px-6 md:py-4 rounded-full font-black text-lg md:text-xl border-4 border-gray-800 shadow-[4px_4px_0px_#1f2937] transform rotate-12 z-10 animate-pulse">
               CHỈ 50 SUẤT!
             </div>
             
             <div className="relative z-10 py-6">
-              <p className="text-gray-800 font-black text-2xl uppercase mb-2">Khoản đầu tư</p>
-              <p className="text-gray-600 font-bold mb-4 line-through decoration-4 decoration-[#e94e77] text-xl">Giá gốc: 2.500.000 VNĐ</p>
+              <p className="text-gray-800 font-black text-xl md:text-2xl uppercase mb-2">Khoản đầu tư</p>
+              <p className="text-gray-600 font-bold mb-4 line-through decoration-4 decoration-[#e94e77] text-lg md:text-xl">Giá gốc: 2.500.000 VNĐ</p>
               
-              <div className="text-gray-900 font-black text-6xl md:text-7xl tracking-tighter mb-4" style={{ textShadow: '4px 4px 0px white' }}>
-                449<span className="text-4xl">k</span>
+              <div className="text-gray-900 font-black text-5xl md:text-7xl tracking-tighter mb-4" style={{ textShadow: '4px 4px 0px white' }}>
+                449<span className="text-3xl md:text-4xl">k</span>
               </div>
               
-              <div className="bg-[#1f2937] text-[#ffcc00] inline-block px-6 py-2 rounded-xl font-black uppercase tracking-wider border-2 border-gray-800 mb-2 transform -rotate-2">
+              <div className="bg-[#1f2937] text-[#ffcc00] inline-block px-4 py-1.5 md:px-6 md:py-2 rounded-xl text-sm md:text-base font-black uppercase tracking-wider border-2 border-gray-800 mb-2 transform -rotate-2">
                 HỌC PHÍ ƯU ĐÃI
               </div>
-              <p className="text-sm font-bold text-gray-800 mt-2">Trước ngày 18/03/2026</p>
+              <p className="text-xs md:text-sm font-bold text-gray-800 mt-2">Trước ngày 18/03/2026</p>
             </div>
 
-            <div className="relative z-10 space-y-3 mb-8 text-left bg-white p-5 rounded-2xl border-4 border-gray-800 font-black">
-              <div className="flex items-center gap-3"><Calendar className="text-[#45b596]" /> Khai giảng: 28/03/2026</div>
-              <div className="flex items-center gap-3"><Clock className="text-[#45b596]" /> Thứ 4 & Thứ 7 (19h30 - 22h00)</div>
+            <div className="relative z-10 space-y-3 mb-6 md:mb-8 text-left bg-white p-4 md:p-5 rounded-2xl border-4 border-gray-800 font-black text-sm md:text-base">
+              <div className="flex items-center gap-3"><Calendar className="text-[#45b596] w-5 h-5" /> Khai giảng: 28/03/2026</div>
+              <div className="flex items-center gap-3"><Clock className="text-[#45b596] w-5 h-5" /> Thứ 4 & Thứ 7 (19h30 - 22h00)</div>
             </div>
 
-            <FunkyButton href="/register" bgClass="bg-[#2a3b8f]" shadowColor="#1f2937" className="w-full relative z-10 py-6 text-2xl">
+            <FunkyButton href="/register" bgClass="bg-[#2a3b8f]" shadowColor="#1f2937" className="w-full relative z-10 py-4 md:py-6 text-xl md:text-2xl">
               ĐĂNG KÝ GIỮ CHỖ!
             </FunkyButton>
           </motion.div>
@@ -511,9 +507,6 @@ export default function App() {
           </div>
         </div>
       </footer>
-      
-      </div> 
-      {/* -- KẾT THÚC KHUNG ẨN THU NHỎ MOBILE -- */}
 
     </div>
   );
