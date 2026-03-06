@@ -16,16 +16,16 @@ interface PaymentInfo {
 }
 
 const Tape = ({ className = "" }) => (
-  <div className={`absolute w-24 h-8 bg-[#e94e77]/90 border-4 border-gray-800 opacity-90 backdrop-blur-sm z-20 ${className}`} 
-       style={{ boxShadow: '2px 2px 0px rgba(0,0,0,0.2)' }} />
+  <div className={`absolute w-24 h-8 bg-[#e94e77]/90 border-4 border-gray-800 opacity-90 backdrop-blur-sm z-20 ${className}`}
+    style={{ boxShadow: '2px 2px 0px rgba(0,0,0,0.2)' }} />
 );
 
 export default function SuccessPage() {
   return (
     <Suspense fallback={
-       <div className="flex-1 min-h-[80vh] bg-[#fdfbf7] flex items-center justify-center">
-         <div className="w-16 h-16 border-8 border-gray-800 border-t-[#ffcc00] rounded-full animate-spin shadow-[4px_4px_0px_#1f2937]" />
-       </div>
+      <div className="flex-1 min-h-[80vh] bg-[#fdfbf7] flex items-center justify-center">
+        <div className="w-16 h-16 border-8 border-gray-800 border-t-[#ffcc00] rounded-full animate-spin shadow-[4px_4px_0px_#1f2937]" />
+      </div>
     }>
       <SuccessContent />
     </Suspense>
@@ -34,60 +34,48 @@ export default function SuccessPage() {
 
 function SuccessContent() {
   const searchParams = useSearchParams();
-  const registrationId = searchParams.get('id');
+  const enrollmentId = searchParams.get('id');
   const [paymentInfo, setPaymentInfo] = useState<PaymentInfo | null>(null);
   const [isVerified, setIsVerified] = useState(false);
 
   useEffect(() => {
-    if (!registrationId) {
+    if (!enrollmentId) {
       setIsVerified(true);
       return;
     }
 
     const verifyPayment = async () => {
-      // --- TẠM TẮT GỌI API ĐỂ TEST UI ---
-      setTimeout(() => {
-        setPaymentInfo({
-          amount: 449000,
-          currency: 'VND',
-          paid_at: new Date().toISOString(),
-          transfer_content: 'CES K1 ' + new Date().toISOString().slice(11, 19).replace(/:/g, '')
-        });
-        setIsVerified(true);
-      }, 1000);
-      /* Code gọi thật đã bị ẩn
       try {
-        const response = await fetch(`${API_BASE}/api/registrations/${registrationId}/status`);
+        const response = await fetch(`${API_BASE}/api/enrollments/${enrollmentId}/status`);
         const data = await response.json();
         if (response.ok && data.data) {
           const result = data.data;
-          if (result.payment_status === 'completed' || result.registration_status === 'paid') {
+          if (result.payment_status === 'completed' || result.enrollment_status === 'paid') {
             setPaymentInfo(result.payment);
           }
         }
       } catch {
-        //
+        /* Non-critical — page works without verified data */
       }
       setIsVerified(true);
-      */
     };
 
     verifyPayment();
-  }, [registrationId]);
+  }, [enrollmentId]);
 
   if (!isVerified) {
     return (
-       <div className="flex-1 min-h-[80vh] bg-[#fdfbf7] flex items-center justify-center">
-         <div className="w-16 h-16 border-8 border-gray-800 border-t-[#ffcc00] rounded-full animate-spin shadow-[4px_4px_0px_#1f2937]" />
-       </div>
+      <div className="flex-1 min-h-[80vh] bg-[#fdfbf7] flex items-center justify-center">
+        <div className="w-16 h-16 border-8 border-gray-800 border-t-[#ffcc00] rounded-full animate-spin shadow-[4px_4px_0px_#1f2937]" />
+      </div>
     );
   }
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center px-4 py-12 md:py-20 mb-[50px] bg-[#fdfbf7] font-sans relative overflow-hidden">
-      
+
       <div className="fixed inset-0 pointer-events-none opacity-[0.03] z-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] mix-blend-multiply" />
-      
+
       {/* Abstract Decor */}
       <div className="absolute top-10 right-10 w-32 h-32 bg-[#ffcc00] rounded-full border-4 border-gray-800" />
       <div className="absolute top-40 left-10 w-24 h-24 bg-[#45b596] transform rotate-45 border-4 border-gray-800" />
@@ -140,8 +128,8 @@ function SuccessContent() {
           )}
 
           <div className="flex flex-col sm:flex-row gap-4 pt-4 mt-8 max-w-lg">
-            <a href="https://zalo.me/g/aqdhoc234" target="_blank" rel="noopener noreferrer" 
-               className="flex items-center justify-center gap-3 bg-[#e94e77] text-white px-8 py-5 border-4 border-gray-800 rounded-2xl font-black text-xl uppercase tracking-wider hover:-translate-y-1 shadow-[6px_6px_0px_#1f2937] hover:shadow-[8px_8px_0px_#1f2937] active:translate-y-2 active:shadow-none transition-all w-full text-center whitespace-nowrap"
+            <a href="https://zalo.me/g/grybmv805" target="_blank" rel="noopener noreferrer"
+              className="flex items-center justify-center gap-3 bg-[#e94e77] text-white px-8 py-5 border-4 border-gray-800 rounded-2xl font-black text-xl uppercase tracking-wider hover:-translate-y-1 shadow-[6px_6px_0px_#1f2937] hover:shadow-[8px_8px_0px_#1f2937] active:translate-y-2 active:shadow-none transition-all w-full text-center whitespace-nowrap"
             >
               <Send size={24} strokeWidth={3} /> VÀO ZALO NGAY
             </a>
@@ -161,12 +149,12 @@ function SuccessContent() {
             <div className="w-16 h-16 bg-[#2a3b8f] rounded-full border-4 border-gray-800 flex items-center justify-center absolute -top-8 -left-8 shadow-[4px_4px_0px_#ffcc00] z-20">
               <Star className="text-white fill-[#ffcc00] w-8 h-8 rotate-45" />
             </div>
-            
+
             <div className="relative z-10 w-full flex flex-col items-center mt-4">
-               {/* QR Zalo */}
+              {/* QR Zalo */}
               <div className="mb-6 bg-gray-100 border-4 border-gray-800 rounded-2xl p-3 shadow-[inset_0px_4px_0px_rgba(0,0,0,0.1)]">
                 <div className="relative bg-white border-4 border-gray-800 rounded-xl overflow-hidden shadow-[4px_4px_0px_#e94e77]">
-                  <img src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=https://zalo.me/g/aqdhoc234&margin=10" alt="Zalo community QR" className="object-contain w-48 h-48 md:w-56 md:h-56 pointer-events-none" />
+                  <img src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=https://zalo.me/g/grybmv805&margin=10" alt="Zalo community QR" className="object-contain w-48 h-48 md:w-56 md:h-56 pointer-events-none" />
                 </div>
               </div>
 
@@ -175,8 +163,8 @@ function SuccessContent() {
                 Thầy cô nhớ gia nhập nhóm Zalo ngay để nhận tài liệu chuẩn bị, Link cài đặt các phần mềm nhé.
               </p>
 
-              <button onClick={() => navigator.clipboard.writeText("https://zalo.me/g/aqdhoc234")}
-                 className="w-full py-4 px-4 bg-white border-4 border-gray-800 text-gray-900 rounded-2xl font-black uppercase text-sm tracking-wider hover:bg-[#ffcc00] transition-colors shadow-[4px_4px_0px_#1f2937] active:translate-y-1 active:shadow-none"
+              <button onClick={() => navigator.clipboard.writeText("https://zalo.me/g/grybmv805")}
+                className="w-full py-4 px-4 bg-white border-4 border-gray-800 text-gray-900 rounded-2xl font-black uppercase text-sm tracking-wider hover:bg-[#ffcc00] transition-colors shadow-[4px_4px_0px_#1f2937] active:translate-y-1 active:shadow-none"
               >
                 Copy Link Zalo
               </button>

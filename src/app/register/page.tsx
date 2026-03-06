@@ -6,7 +6,7 @@ import { User, Phone, Mail, Briefcase, ArrowRight, ShieldCheck, CheckCircle2, Ch
 import { motion, AnimatePresence } from 'framer-motion';
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
-const COURSE_SLUG = 'google-ai-bootcamp-k1';
+const COURSE_SLUG = 'ai-for-teacher-k1';
 
 interface FormData {
   fullName: string;
@@ -23,13 +23,13 @@ const theme = {
   yellow: '#ffcc00',
   teal: '#45b596',
   orange: '#ff7e67',
-  bg: '#fdfbf7', 
+  bg: '#fdfbf7',
   dark: '#1f2937'
 };
 
 const Tape = ({ className = "" }) => (
-  <div className={`absolute w-24 h-8 bg-yellow-200/90 border-2 border-gray-800 opacity-90 backdrop-blur-sm z-20 ${className}`} 
-       style={{ boxShadow: '2px 2px 0px rgba(0,0,0,0.2)' }} />
+  <div className={`absolute w-24 h-8 bg-yellow-200/90 border-2 border-gray-800 opacity-90 backdrop-blur-sm z-20 ${className}`}
+    style={{ boxShadow: '2px 2px 0px rgba(0,0,0,0.2)' }} />
 );
 
 export default function RegisterPage() {
@@ -66,27 +66,59 @@ export default function RegisterPage() {
     setIsSubmitting(true);
     setErrorMessage('');
 
-    // --- TẠM TẮT GỌI API BACKEND ĐỂ TEST UI MƯỢT MÀ ---
     try {
-      // Giả lập delay mạng 1 giây cho thật
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      // Bỏ qua fetch, tự động nhảy luôn sang bước Payment
-      const dummyRegistrationId = "demo-id-12345";
-      router.push(`/payment?id=${dummyRegistrationId}`);
-      
+      const phoneClean = formData.phone.replace(/\s|-/g, '');
+      const response = await fetch(`${API_BASE}/api/enrollments/register`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          full_name: formData.fullName.trim(),
+          email: formData.email.toLowerCase().trim(),
+          phone: phoneClean,
+          job_title: formData.job || undefined,
+          goals: formData.goals || undefined,
+          course_slug: COURSE_SLUG,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        if (response.status === 409) {
+          setErrorMessage(data.error?.message || 'Email này đã đăng ký khóa học này rồi.');
+        } else if (response.status === 422) {
+          const details = data.error?.details;
+          if (Array.isArray(details) && details.length > 0) {
+            setErrorMessage(details.map((d: { message: string }) => d.message).join('. '));
+          } else {
+            setErrorMessage(data.error?.message || 'Thông tin không hợp lệ.');
+          }
+        } else {
+          setErrorMessage(data.error?.message || 'Có lỗi xảy ra. Vui lòng thử lại.');
+        }
+        setIsSubmitting(false);
+        return;
+      }
+
+      // Success — redirect to payment page
+      const enrollmentId = data.data?.enrollment_id;
+      if (enrollmentId) {
+        router.push(`/payment?id=${enrollmentId}`);
+      } else {
+        setErrorMessage('Có lỗi xảy ra. Vui lòng thử lại.');
+        setIsSubmitting(false);
+      }
     } catch {
-      setErrorMessage('Không thể giả lập kết nối.');
+      setErrorMessage('Không thể kết nối đến máy chủ. Vui lòng kiểm tra kết nối mạng.');
       setIsSubmitting(false);
     }
-    // --------------------------------------------------
   };
 
   return (
     <div className="min-h-screen bg-[#fdfbf7] text-gray-800 pt-12 pb-16 px-4 font-sans relative overflow-hidden selection:bg-[#ffcc00] selection:text-gray-900">
       {/* Background Texture */}
       <div className="fixed inset-0 pointer-events-none opacity-[0.03] z-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] mix-blend-multiply" />
-      
+
       {/* Abstract Decor */}
       <div className="absolute top-10 right-10 w-32 h-32 bg-[#ffcc00] rounded-full border-4 border-gray-800" />
       <div className="absolute top-40 left-10 w-24 h-24 bg-[#45b596] transform rotate-45 border-4 border-gray-800" />
@@ -97,7 +129,7 @@ export default function RegisterPage() {
           ← QUAY LẠI TRANG CHỦ
         </button>
         <div className="bg-white px-3 py-2 rounded-2xl border-4 border-gray-800 shadow-[4px_4px_0px_#e94e77] transform rotate-2">
-           <img src="/images/logo-xanh.png" alt="Logo CES" className="h-8 md:h-10 object-contain" />
+          <img src="/images/logo-xanh.png" alt="Logo CES" className="h-8 md:h-10 object-contain" />
         </div>
       </div>
 
@@ -106,12 +138,12 @@ export default function RegisterPage() {
         {/* Left Column (Main Form) */}
         <div className="w-full">
           <div className="mb-10 text-center md:text-left relative">
-             <div className="inline-block bg-[#1f2937] text-white py-2 px-6 rounded-full text-sm font-black tracking-widest uppercase mb-6 border-2 border-gray-800 transform rotate-1 shadow-[4px_4px_0px_#ffcc00]">
-               Bước 1: Thông tin học viên
-             </div>
-             <h1 className="text-4xl md:text-6xl font-black uppercase leading-[1.1] text-[#2a3b8f]" style={{ textShadow: '4px 4px 0px #ffcc00, -1px -1px 0 #1f2937, 1px -1px 0 #1f2937, -1px 1px 0 #1f2937, 1px 1px 0 #1f2937' }}>
-               Đăng Ký Tham Gia
-             </h1>
+            <div className="inline-block bg-[#1f2937] text-white py-2 px-6 rounded-full text-sm font-black tracking-widest uppercase mb-6 border-2 border-gray-800 transform rotate-1 shadow-[4px_4px_0px_#ffcc00]">
+              Bước 1: Thông tin học viên
+            </div>
+            <h1 className="text-4xl md:text-6xl font-black uppercase leading-[1.1] text-[#2a3b8f]" style={{ textShadow: '4px 4px 0px #ffcc00, -1px -1px 0 #1f2937, 1px -1px 0 #1f2937, -1px 1px 0 #1f2937, 1px 1px 0 #1f2937' }}>
+              Đăng Ký Tham Gia
+            </h1>
           </div>
 
           <motion.div
@@ -120,7 +152,7 @@ export default function RegisterPage() {
             className="bg-white border-4 border-gray-800 rounded-3xl p-6 md:p-10 shadow-[12px_12px_0px_#2a3b8f] relative"
           >
             <Tape className="-top-4 right-10 transform rotate-6 bg-[#45b596]/90" />
-            
+
             <div className="flex items-center gap-4 mb-8 pb-6 border-b-4 border-dashed border-gray-300">
               <div className="w-16 h-16 bg-[#ffcc00] border-4 border-gray-800 rounded-full flex items-center justify-center shadow-[4px_4px_0px_#1f2937] transform -rotate-6 shrink-0">
                 <Target size={28} className="text-gray-900" strokeWidth={3} />
@@ -234,12 +266,12 @@ export default function RegisterPage() {
 
         {/* Right Column (Benefits) */}
         <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.2 }} className="space-y-8 lg:mt-32">
-          
+
           {/* Lợi ích khóa học */}
           <div className="bg-[#45b596] border-4 border-gray-800 rounded-3xl p-8 shadow-[8px_8px_0px_#1f2937] transform rotate-1">
-             <Tape className="-top-3 left-10 transform -rotate-2 bg-[#ffcc00]" />
+            <Tape className="-top-3 left-10 transform -rotate-2 bg-[#ffcc00]" />
             <h3 className="text-2xl font-black text-white mb-6 flex items-center gap-3 uppercase drop-shadow-[2px_2px_0px_#1a1a1a]">
-               Đặc Quyền
+              Đặc Quyền
             </h3>
 
             <ul className="space-y-6 bg-white p-6 border-4 border-gray-800 rounded-2xl shadow-inner">
@@ -268,8 +300,8 @@ export default function RegisterPage() {
           </div>
 
           <div className="bg-[#ffcc00] border-4 border-gray-800 rounded-3xl p-6 shadow-[8px_8px_0px_#e94e77] text-center transform -rotate-2">
-             <Sparkles className="mx-auto text-[#2a3b8f] mb-4" size={48} strokeWidth={2} />
-             <h3 className="font-black text-3xl uppercase text-gray-900 leading-tight">Chỉ còn <span className="text-[#e94e77] bg-white px-2 border-2 border-gray-800 rounded-lg">15</span> suất <br/> Early Bird!</h3>
+            <Sparkles className="mx-auto text-[#2a3b8f] mb-4" size={48} strokeWidth={2} />
+            <h3 className="font-black text-3xl uppercase text-gray-900 leading-tight">Chỉ còn <span className="text-[#e94e77] bg-white px-2 border-2 border-gray-800 rounded-lg">15</span> suất <br /> Early Bird!</h3>
           </div>
 
         </motion.div>
@@ -285,7 +317,7 @@ export default function RegisterPage() {
               className="bg-[#fdfbf7] border-4 border-gray-800 rounded-[2rem] p-6 md:p-8 max-w-md w-full shadow-[16px_16px_0px_#2a3b8f] relative overflow-hidden"
             >
               <Tape className="-top-4 left-1/2 -translate-x-1/2 bg-[#e94e77]" />
-              
+
               <div className="flex items-center justify-center gap-3 mb-6 mt-2 relative z-10">
                 <h3 className="text-3xl font-black text-gray-800 tracking-tight uppercase" style={{ textShadow: '2px 2px 0px #ffcc00' }}>Xác nhận</h3>
               </div>
@@ -311,12 +343,12 @@ export default function RegisterPage() {
                 </div>
               </div>
 
-               {errorMessage && (
-                  <div className="flex items-start gap-3 p-3 mb-6 bg-[#ff7e67] border-4 border-gray-800 rounded-xl relative z-10">
-                    <AlertTriangle className="text-gray-900 shrink-0 mt-0.5" size={20} />
-                    <p className="text-sm text-gray-900 font-bold">{errorMessage}</p>
-                  </div>
-                )}
+              {errorMessage && (
+                <div className="flex items-start gap-3 p-3 mb-6 bg-[#ff7e67] border-4 border-gray-800 rounded-xl relative z-10">
+                  <AlertTriangle className="text-gray-900 shrink-0 mt-0.5" size={20} />
+                  <p className="text-sm text-gray-900 font-bold">{errorMessage}</p>
+                </div>
+              )}
 
               <div className="flex flex-col-reverse md:flex-row gap-4 mt-8 relative z-10">
                 <button onClick={() => { setShowModal(false); setErrorMessage(''); }} disabled={isSubmitting}
