@@ -48,7 +48,7 @@ interface FunkyButtonProps {
 
 const FunkyButton: React.FC<FunkyButtonProps> = ({ children, href, bgClass = "bg-[#e94e77]", shadowColor = "#2a3b8f", textColor="text-white", className="" }) => (
   <a href={href} 
-     className={`relative inline-flex items-center justify-center px-8 py-4 font-black text-lg md:text-xl uppercase tracking-wider border-4 border-gray-800 rounded-2xl transition-all duration-200 active:translate-x-[6px] active:translate-y-[6px] hover:-translate-y-1 ${bgClass} ${textColor} ${className}`}
+     className={`relative inline-flex items-center justify-center px-6 py-3 md:px-8 md:py-4 font-black text-base md:text-xl uppercase tracking-wider border-4 border-gray-800 rounded-2xl transition-all duration-200 active:translate-x-[6px] active:translate-y-[6px] hover:-translate-y-1 ${bgClass} ${textColor} ${className}`}
      style={{ boxShadow: `6px 6px 0px ${shadowColor}`, '--tw-shadow-color': shadowColor } as React.CSSProperties}
      onMouseDown={(e) => e.currentTarget.style.boxShadow = '0px 0px 0px transparent'}
      onMouseUp={(e) => e.currentTarget.style.boxShadow = `6px 6px 0px ${shadowColor}`}
@@ -125,10 +125,14 @@ export default function App() {
         </div>
       </header>
 
-      {/* 1. HERO SECTION */}
-      <section className="relative min-h-screen flex items-center justify-center pt-24 pb-20 px-4 md:px-8 border-b-4 border-gray-800 overflow-hidden bg-[#fdfbf7]">
-        {/* Abstract Decorative Shapes */}
-        <div className="absolute top-10 left-10 w-32 h-32 bg-[#ffcc00] rounded-full border-4 border-gray-800 animate-[bounce_5s_infinite]" />
+      {/* -- BẮT ĐẦU KHUNG ẨN THU NHỎ MOBILE -- */}
+      {/* Ở điện thoại (< 768px), hệ thống sẽ zoom nhỏ lại còn 85%. Trên máy tính giữ nguyên 100%. Bạn có thể đổi 0.85 thành 0.8 (để nhỏ hơn) hoặc 0.9 (để to lên). */}
+      <div className="max-md:[zoom:0.85]">
+        
+        {/* 1. HERO SECTION */}
+        <section className="relative min-h-screen flex items-center justify-center pt-24 pb-20 px-4 md:px-8 border-b-4 border-gray-800 overflow-hidden bg-[#fdfbf7]">
+          {/* Abstract Decorative Shapes */}
+          <div className="absolute top-10 left-10 w-32 h-32 bg-[#ffcc00] rounded-full border-4 border-gray-800 animate-[bounce_5s_infinite]" />
         <div className="absolute bottom-20 left-20 w-24 h-24 bg-[#45b596] rotate-45 border-4 border-gray-800" />
         <div className="absolute top-32 right-10 w-40 h-40 bg-[#e94e77] rounded-[2rem] transform rotate-12 border-4 border-gray-800" />
         <div className="absolute bottom-32 right-20 w-16 h-16 bg-[#2a3b8f] rounded-full border-4 border-gray-800" />
@@ -136,34 +140,34 @@ export default function App() {
         <div className="max-w-5xl mx-auto text-center relative z-10">
           <motion.div initial="hidden" animate="visible" variants={staggerContainer} className="flex flex-col items-center">
             
-            <motion.div variants={fadeInUp} className="flex flex-wrap items-center justify-center gap-4 mb-8">
-              <div className="bg-white px-5 py-2 rounded-2xl border-4 border-gray-800 shadow-[4px_4px_0px_#45b596] font-black uppercase flex items-center gap-2 transform -rotate-2">
-                <Target size={20} className="text-[#e94e77]" /> CESGLOBAL
+            <motion.div variants={fadeInUp} className="flex flex-wrap items-center justify-center gap-3 md:gap-4 mb-6 md:mb-8">
+              <div className="bg-white px-4 py-1.5 md:px-5 md:py-2 text-sm md:text-base rounded-2xl border-4 border-gray-800 shadow-[4px_4px_0px_#45b596] font-black uppercase flex items-center gap-2 transform -rotate-2">
+                <Target className="text-[#e94e77] w-[18px] h-[18px] md:w-5 md:h-5" /> CESGLOBAL
               </div>
-              <div className="bg-white px-5 py-2 rounded-2xl border-4 border-gray-800 shadow-[4px_4px_0px_#ffcc00] font-black uppercase flex items-center gap-2 transform rotate-2">
-                <Calendar size={20} className="text-[#2a3b8f]" /> 28/03/2026
+              <div className="bg-white px-4 py-1.5 md:px-5 md:py-2 text-sm md:text-base rounded-2xl border-4 border-gray-800 shadow-[4px_4px_0px_#ffcc00] font-black uppercase flex items-center gap-2 transform rotate-2">
+                <Calendar className="text-[#2a3b8f] w-[18px] h-[18px] md:w-5 md:h-5" /> 28/03/2026
               </div>
             </motion.div>
 
             <motion.div variants={fadeInUp} className="relative mb-8">
-               <Tape className="-top-6 left-1/4 transform -rotate-3" />
-               <Tape className="-top-4 right-1/4 transform rotate-6 bg-[#45b596]/90" />
-               <div className="bg-white p-8 md:p-12 border-4 border-gray-800 rounded-3xl shadow-[12px_12px_0px_#2a3b8f] transform -rotate-1">
-                  <h2 className="text-xl md:text-3xl font-black text-gray-500 mb-2 uppercase tracking-widest">Khóa học thực chiến</h2>
-                  <h1 className="text-5xl md:text-7xl lg:text-8xl font-black uppercase leading-[1] text-gray-800"
+               <Tape className="-top-4 md:-top-6 left-1/4 transform -rotate-3" />
+               <Tape className="-top-2 md:-top-4 right-1/4 transform rotate-6 bg-[#45b596]/90" />
+               <div className="bg-white p-6 md:p-12 border-4 border-gray-800 rounded-[1.5rem] md:rounded-3xl shadow-[8px_8px_0px_#2a3b8f] md:shadow-[12px_12px_0px_#2a3b8f] transform -rotate-1">
+                  <h2 className="text-lg md:text-3xl font-black text-gray-500 mb-2 uppercase tracking-widest">Khóa học thực chiến</h2>
+                  <h1 className="text-4xl md:text-7xl lg:text-8xl font-black uppercase leading-[1.2] md:leading-[1] text-gray-800"
                       style={{ textShadow: '4px 4px 0px #ffcc00, 8px 8px 0px #e94e77, -2px -2px 0 #1f2937, 2px -2px 0 #1f2937, -2px 2px 0 #1f2937, 2px 2px 0 #1f2937' }}>
                     Khai Mở<br/>Sức Mạnh AI
                   </h1>
                </div>
             </motion.div>
             
-            <motion.p variants={fadeInUp} className="text-xl md:text-2xl font-bold bg-[#ffcc00] border-4 border-gray-800 px-8 py-4 rounded-full shadow-[6px_6px_0px_#1f2937] max-w-3xl transform rotate-1 mb-12">
+            <motion.p variants={fadeInUp} className="text-lg md:text-2xl font-bold bg-[#ffcc00] border-4 border-gray-800 px-6 py-4 md:px-8 md:py-4 rounded-3xl md:rounded-full shadow-[6px_6px_0px_#1f2937] max-w-3xl transform rotate-1 mb-10 md:mb-12">
               Chương trình ứng dụng Hệ sinh thái Google. <br className="hidden md:block"/> Trợ lý đa năng cho giáo viên kỷ nguyên số!
             </motion.p>
 
-            <motion.div variants={fadeInUp} className="flex flex-col sm:flex-row gap-6">
-              <FunkyButton href="/register" bgClass="bg-[#e94e77]" shadowColor="#1f2937" className="text-2xl">
-                Đăng Ký Ngay <Rocket className="ml-2 animate-pulse" />
+            <motion.div variants={fadeInUp} className="flex flex-col sm:flex-row gap-4 md:gap-6">
+              <FunkyButton href="/register" bgClass="bg-[#e94e77]" shadowColor="#1f2937" className="!text-xl md:!text-2xl">
+                Đăng Ký Ngay <Rocket className="ml-2 w-5 h-5 md:w-6 md:h-6 animate-pulse" />
               </FunkyButton>
               <FunkyButton href="#thuc-trang" bgClass="bg-white" textColor="text-gray-800" shadowColor="#45b596">
                 Khám Phá
@@ -507,6 +511,10 @@ export default function App() {
           </div>
         </div>
       </footer>
+      
+      </div> 
+      {/* -- KẾT THÚC KHUNG ẨN THU NHỎ MOBILE -- */}
+
     </div>
   );
 }
