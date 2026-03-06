@@ -44,10 +44,12 @@ interface FunkyButtonProps {
   shadowColor?: string;
   textColor?: string;
   className?: string;
+  target?: string;
 }
 
-const FunkyButton: React.FC<FunkyButtonProps> = ({ children, href, bgClass = "bg-[#e94e77]", shadowColor = "#2a3b8f", textColor="text-white", className="" }) => (
+const FunkyButton: React.FC<FunkyButtonProps> = ({ children, href, bgClass = "bg-[#e94e77]", shadowColor = "#2a3b8f", textColor="text-white", className="", target }) => (
   <a href={href} 
+     target={target}
      className={`relative inline-flex items-center justify-center px-6 py-3 md:px-8 md:py-4 font-black text-base md:text-xl uppercase tracking-wider border-4 border-gray-800 rounded-2xl transition-all duration-200 active:translate-x-[6px] active:translate-y-[6px] hover:-translate-y-1 ${bgClass} ${textColor} ${className}`}
      style={{ boxShadow: `6px 6px 0px ${shadowColor}`, '--tw-shadow-color': shadowColor } as React.CSSProperties}
      onMouseDown={(e) => e.currentTarget.style.boxShadow = '0px 0px 0px transparent'}
@@ -118,7 +120,7 @@ export default function App() {
           </nav>
 
           {/* Header CTA */}
-          <FunkyButton href="/register" bgClass="bg-[#e94e77]" shadowColor="#1f2937" className="!px-6 !py-2 text-sm md:text-base pointer-events-auto transform rotate-2">
+          <FunkyButton href="https://zalo.me/g/grybmv805" bgClass="bg-[#e94e77]" shadowColor="#1f2937" className="!px-6 !py-2 text-sm md:text-base pointer-events-auto transform rotate-2" target="_blank">
             ĐĂNG KÝ
             <Rocket className="ml-2 w-4 h-4 md:w-5 md:h-5 animate-pulse" />
           </FunkyButton>
@@ -162,7 +164,7 @@ export default function App() {
             </motion.p>
 
             <motion.div variants={fadeInUp} className="flex flex-col sm:flex-row gap-4 md:gap-6">
-              <FunkyButton href="/register" bgClass="bg-[#e94e77]" shadowColor="#1f2937" className="!text-xl md:!text-2xl">
+              <FunkyButton href="https://zalo.me/g/grybmv805" bgClass="bg-[#e94e77]" shadowColor="#1f2937" className="!text-xl md:!text-2xl" target="_blank">
                 Đăng Ký Ngay <Rocket className="ml-2 w-5 h-5 md:w-6 md:h-6 animate-pulse" />
               </FunkyButton>
               <FunkyButton href="#thuc-trang" bgClass="bg-white" textColor="text-gray-800" shadowColor="#45b596">
@@ -477,9 +479,18 @@ export default function App() {
               <div className="flex items-center gap-3"><Clock className="text-[#45b596] w-5 h-5" /> Thứ 4 & Thứ 7 (19h30 - 22h00)</div>
             </div>
 
-            <FunkyButton href="/register" bgClass="bg-[#2a3b8f]" shadowColor="#1f2937" className="w-full relative z-10 py-4 md:py-6 text-xl md:text-2xl">
-              ĐĂNG KÝ GIỮ CHỖ!
+            <FunkyButton href="https://zalo.me/g/grybmv805" bgClass="bg-[#2a3b8f]" shadowColor="#1f2937" className="w-full relative z-10 py-4 md:py-6 text-xl md:text-2xl mb-6" target="_blank">
+              THAM GIA NHÓM ZALO
             </FunkyButton>
+
+            <div className="relative z-10 flex flex-col items-center">
+              <p className="text-gray-800 font-black mb-3 text-sm md:text-base uppercase bg-white px-4 py-1.5 rounded-xl border-2 border-gray-800 shadow-[2px_2px_0px_#2a3b8f] transform -rotate-2">
+                 Hoặc quét mã QR
+              </p>
+              <div className="bg-white p-3 rounded-2xl border-4 border-gray-800 shadow-[6px_6px_0px_#e94e77] transform rotate-1 transition-transform hover:scale-105">
+                <img src="/images/qr-zalo.png" alt="Mã QR Zalo nhóm" className="w-32 h-32 md:w-40 md:h-40 object-cover rounded-xl" />
+              </div>
+            </div>
           </motion.div>
 
         </div>
