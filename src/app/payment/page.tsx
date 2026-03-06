@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { AlertTriangle, Clock, Copy, Check, X, ShieldCheck, HelpCircle, ArrowRight, Wallet, CheckCircle2, RotateCcw } from "lucide-react";
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || "https://lms-api.cesglobal.com.vn";
 const POLL_INTERVAL_MS = 3000;
 
 interface PaymentData {

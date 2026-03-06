@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { User, Phone, Mail, Briefcase, ArrowRight, ShieldCheck, CheckCircle2, ChevronDown, Info, AlertCircle, Target, Sparkles, AlertTriangle } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || "https://lms-api.cesglobal.com.vn";
 const COURSE_SLUG = 'ai-for-teacher-k1';
 
 interface FormData {
