@@ -331,7 +331,7 @@ function PaymentContent() {
                   {/* NÚT TEST CHUYỂN TRANG */}
                   <div className="mt-8 pt-6 border-t-2 border-dashed border-gray-300">
                     <button onClick={() => router.replace(`/success?id=${registrationId}`)} className="w-full bg-[#ffcc00] py-3 text-gray-900 border-4 border-gray-800 font-black uppercase rounded-xl hover:bg-[#e94e77] hover:text-white transition-colors">
-                      [Test] Giả lập CK thành công
+                      CHUYỂN KHOẢN THÀNH CÔNG
                     </button>
                   </div>
               </div>

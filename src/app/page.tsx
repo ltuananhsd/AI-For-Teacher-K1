@@ -211,7 +211,7 @@ export default function App() {
               { icon: PenTool, color: theme.pink, title: "Tự động hóa", desc: "Viết SKKN chuẩn format, lên giáo án chỉ trong vài phút." },
               { icon: Palette, color: theme.yellow, title: "Sáng tạo ảnh", desc: "Tự tạo hình ảnh, flashcard 3D sinh động không cần biết thiết kế." },
               { icon: Brain, color: theme.navy, title: "Bộ não thứ 2", desc: "Biến tài liệu thành Sơ đồ tư duy, Podcast học tập cuốn hút." },
-              { icon: Gamepad2, color: theme.orange, title: "Kiến tạo Game", desc: "Tự làm Mini-game và đưa lên Web chỉ bằng vài câu lệnh." }
+              { icon: Gamepad2, color: theme.orange, title: "Kiến tạo Game", desc: "Tự làm Mini-game tương tác với học sinh và đưa lên Web chỉ bằng vài câu lệnh." }
             ].map((item, idx) => (
               <motion.div key={idx} variants={fadeInUp} className="bg-[#fdfbf7] p-10 rounded-[2.5rem] border-4 border-gray-800 relative group flex gap-6 items-start"
                    style={{ boxShadow: `10px 10px 0px ${item.color}` }}>
@@ -314,12 +314,12 @@ export default function App() {
               },
               {
                 buoi: "BUỔI 3", title: "AI STUDIO - TẠO GAME", color: "bg-[#00b0ff]",
-                content: ["Sinh code tạo Game Trắc nghiệm, Lật Thẻ Bài.", "Thiết lập System Persona lập trình viên.", "Nghiệm thu, AI tự động sửa lỗi."],
+                content: ["Lên ý tưởng game", "Biến ý tưởng thành thực tế", "Nghiệm thu, kiểm tra và sửa lỗi hệ thống"],
                 product: "1 Mini-game giáo dục chạy trên máy tính."
               },
               {
-                buoi: "BUỔI 4", title: "ĐƯA GAME LÊN WEB", color: "bg-[#ff7e67]",
-                content: ["Nâng cấp: Tính điểm, đếm ngược, pháo hoa.", "Tạo GitHub, Deploy lên Vercel trong 30s."],
+                buoi: "BUỔI 4", title: "ĐƯA LÊN WEB", color: "bg-[#ff7e67]",
+                content: ["Cập nhật tính năng cho game: Tính điểm, đếm ngược, hiệu ứng …", "Tạo github, deploy: đưa game lên web"],
                 product: "1 Link Web Game hoạt động thực tế!"
               }
             ].map((item, idx) => (
@@ -467,7 +467,7 @@ export default function App() {
               </div>
               
               <div className="bg-[#1f2937] text-[#ffcc00] inline-block px-6 py-2 rounded-xl font-black uppercase tracking-wider border-2 border-gray-800 mb-2 transform -rotate-2">
-                EARLY BIRD ƯU ĐÃI
+                HỌC PHÍ ƯU ĐÃI
               </div>
               <p className="text-sm font-bold text-gray-800 mt-2">Trước ngày 18/03/2026</p>
             </div>
