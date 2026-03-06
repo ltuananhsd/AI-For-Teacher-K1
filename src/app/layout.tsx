@@ -12,8 +12,15 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: "Google AI Bootcamp 2026 - Chinh Phục Hệ Sinh Thái AI",
-  description: "Xây dựng đội ngũ 'nhân sự ảo' tối ưu hiệu suất công việc với 5 buổi học thực chiến",
+  title: "Khai Mở Sức Mạnh AI | CES GLOBAL",
+  description:
+    "Khóa học thực chiến ứng dụng Hệ sinh thái Google AI dành riêng cho giáo viên kỷ nguyên số.",
+  openGraph: {
+    title: "Khai Mở Sức Mạnh AI | CES GLOBAL",
+    description:
+      "Khóa học thực chiến ứng dụng AI (Gemini, NotebookLM, AI Studio...) cho giáo viên kỷ nguyên số.",
+    images: ["https://ai4edu.cesglobal.com.vn/images/logo-xanh.png"],
+  },
 };
 
 export default function RootLayout({
@@ -29,10 +36,10 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className={`${spaceGrotesk.variable} antialiased min-h-screen flex flex-col bg-[#0A101E] text-slate-100`}>
-        <main className="flex-grow">
-          {children}
-        </main>
+      <body
+        className={`${spaceGrotesk.variable} antialiased min-h-screen flex flex-col bg-[#0A101E] text-slate-100`}
+      >
+        <main className="flex-grow">{children}</main>
         <Chatbot />
       </body>
     </html>
