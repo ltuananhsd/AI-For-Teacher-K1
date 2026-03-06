@@ -154,7 +154,7 @@ function SuccessContent() {
               {/* QR Zalo */}
               <div className="mb-6 bg-gray-100 border-4 border-gray-800 rounded-2xl p-3 shadow-[inset_0px_4px_0px_rgba(0,0,0,0.1)]">
                 <div className="relative bg-white border-4 border-gray-800 rounded-xl overflow-hidden shadow-[4px_4px_0px_#e94e77]">
-                  <img src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=https://zalo.me/g/grybmv805&margin=10" alt="Zalo community QR" className="object-contain w-48 h-48 md:w-56 md:h-56 pointer-events-none" />
+                  <img src="/images/qr-zalo.png" alt="Mã QR Zalo nhóm khóa học" className="object-contain w-48 h-48 md:w-56 md:h-56 pointer-events-none" />
                 </div>
               </div>
 
