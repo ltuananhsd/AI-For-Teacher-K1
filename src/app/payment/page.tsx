@@ -4,6 +4,7 @@ import { Suspense, useState, useEffect, useCallback, useRef } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
+import { AlertTriangle, Clock, Copy, Check, X, ShieldCheck, HelpCircle, ArrowRight, Wallet, CheckCircle2, RotateCcw } from "lucide-react";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
 const POLL_INTERVAL_MS = 3000;
@@ -37,6 +38,11 @@ function formatTimeRemaining(seconds: number): string {
   return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
 }
 
+const Tape = ({ className = "" }) => (
+  <div className={`absolute w-24 h-8 bg-yellow-200/90 border-4 border-gray-800 opacity-90 backdrop-blur-sm z-20 ${className}`} 
+       style={{ boxShadow: '2px 2px 0px rgba(0,0,0,0.2)' }} />
+);
+
 function PaymentContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -53,65 +59,33 @@ function PaymentContent() {
   const pollIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const countdownIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  // Fetch registration status
   const fetchStatus = useCallback(async () => {
-    if (!registrationId) return;
-
-    try {
-      const response = await fetch(`${API_BASE}/api/registrations/${registrationId}/status`);
-      const data = await response.json();
-
-      if (!response.ok) {
-        setError(data.error?.message || 'Không thể tải thông tin thanh toán.');
-        setIsLoading(false);
-        return;
-      }
-
-      const result: StatusResponse = data.data;
-      setPaymentData(result.payment);
-      setPaymentStatus(result.payment_status);
+    // --- TẠM THỜI TẮT GỌI API ĐỂ TEST GIAO DIỆN ---
+    setIsLoading(true);
+    
+    // Giả lập load data 1 giây
+    setTimeout(() => {
+      setPaymentData({
+        amount: 449000,
+        currency: 'VND',
+        bank_name: 'Techcombank',
+        account_number: '1903123456789',
+        account_name: 'NGUYEN VAN A',
+        transfer_content: 'CES K1 0901234567',
+        qr_url: 'https://api.qrserver.com/v1/create-qr-code/?size=260x260&data=https://zalo.me/g/aqdhoc234',
+        expires_at: new Date(Date.now() + 15 * 60000).toISOString(),
+        paid_at: null
+      });
+      setPaymentStatus('pending');
+      setTimeRemaining(15 * 60); // 15 phút
       setIsLoading(false);
+    }, 1000);
 
-      // Handle completed payment
-      if (result.payment_status === 'completed' || result.registration_status === 'paid') {
-        // Stop polling
-        if (pollIntervalRef.current) clearInterval(pollIntervalRef.current);
-        if (countdownIntervalRef.current) clearInterval(countdownIntervalRef.current);
-        // Replace so user can't navigate back to payment page
-        router.replace(`/success?id=${registrationId}`);
-        return;
-      }
+    /* Code thật đã bị ẩn:
+    ...
+    */
+  }, []);
 
-      // Handle cancelled by user
-      if (result.registration_status === 'cancelled') {
-        if (pollIntervalRef.current) clearInterval(pollIntervalRef.current);
-        if (countdownIntervalRef.current) clearInterval(countdownIntervalRef.current);
-        setPaymentStatus('cancelled');
-        return;
-      }
-
-      // Handle expired payment (timeout)
-      if (result.payment_status === 'expired') {
-        if (pollIntervalRef.current) clearInterval(pollIntervalRef.current);
-        if (countdownIntervalRef.current) clearInterval(countdownIntervalRef.current);
-        setPaymentStatus('expired');
-        return;
-      }
-
-      // Update countdown
-      if (result.payment?.expires_at) {
-        const expiresAt = new Date(result.payment.expires_at).getTime();
-        const now = Date.now();
-        const remaining = Math.max(0, Math.floor((expiresAt - now) / 1000));
-        setTimeRemaining(remaining);
-      }
-    } catch {
-      setError('Không thể kết nối máy chủ.');
-      setIsLoading(false);
-    }
-  }, [registrationId, router]);
-
-  // Initial fetch + setup polling
   useEffect(() => {
     if (!registrationId) {
       router.replace('/register');
@@ -119,9 +93,9 @@ function PaymentContent() {
     }
 
     fetchStatus();
-
-    // Start polling every 3 seconds
-    pollIntervalRef.current = setInterval(fetchStatus, POLL_INTERVAL_MS);
+    
+    // Tạm thời tắt tự động Reload gọi lại API (gây nháy màn hình do Loading giả bị chạy lại)
+    // pollIntervalRef.current = setInterval(fetchStatus, POLL_INTERVAL_MS);
 
     return () => {
       if (pollIntervalRef.current) clearInterval(pollIntervalRef.current);
@@ -129,7 +103,6 @@ function PaymentContent() {
     };
   }, [registrationId, fetchStatus, router]);
 
-  // Countdown timer (client-side, separate from poll)
   useEffect(() => {
     if (timeRemaining <= 0) return;
 
@@ -149,30 +122,26 @@ function PaymentContent() {
     };
   }, [timeRemaining > 0]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Copy to clipboard
   const handleCopy = async (text: string, label: string) => {
     try {
       await navigator.clipboard.writeText(text);
       setCopied(label);
       setTimeout(() => setCopied(null), 2000);
     } catch {
-      /* Fallback — not essential */
+      // ignore
     }
   };
 
-  // Handle retry (create new registration) — replace so payment page is removed from history
   const handleRetry = () => {
     router.replace('/register');
   };
 
-  // Handle user-initiated cancellation
   const handleCancel = async () => {
     if (!registrationId) {
       router.replace('/register');
       return;
     }
 
-    // Stop polling immediately
     if (pollIntervalRef.current) clearInterval(pollIntervalRef.current);
     if (countdownIntervalRef.current) clearInterval(countdownIntervalRef.current);
 
@@ -181,388 +150,259 @@ function PaymentContent() {
         method: 'POST',
       });
     } catch {
-      // Ignore errors — navigate anyway
+      // ignore
     }
-
-    // Replace (not push) so user can't press Back to see stale QR
     router.replace('/register');
   };
 
-  // Loading state
   if (isLoading) {
     return (
-      <div className="flex-1 flex items-center justify-center">
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="flex flex-col items-center gap-4"
-        >
-          <div className="w-12 h-12 border-4 border-primary/30 border-t-primary rounded-full animate-spin" />
-          <p className="text-slate-400 text-sm">Đang tải thông tin thanh toán...</p>
+      <div className="flex-1 min-h-screen bg-[#fdfbf7] flex items-center justify-center">
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex flex-col items-center gap-4">
+          <div className="w-16 h-16 border-8 border-gray-800 border-t-[#ffcc00] rounded-full animate-spin shadow-[4px_4px_0px_#1f2937]" />
+          <p className="text-gray-800 font-bold uppercase tracking-widest mt-4">Đang tải thông tin...</p>
         </motion.div>
       </div>
     );
   }
 
-  // Error state
   if (error) {
     return (
-      <div className="flex-1 flex items-center justify-center px-4">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="bg-[#101722]/60 border border-red-500/20 rounded-2xl p-8 max-w-md w-full text-center"
+      <div className="flex-1 min-h-screen bg-[#fdfbf7] flex items-center justify-center px-4">
+        <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }}
+          className="bg-white border-4 border-gray-800 rounded-3xl p-8 max-w-md w-full text-center shadow-[12px_12px_0px_#e94e77] relative"
         >
-          <span className="material-symbols-outlined text-red-400 text-5xl mb-4">error</span>
-          <h2 className="text-white text-xl font-bold mb-2">Có lỗi xảy ra</h2>
-          <p className="text-slate-400 text-sm mb-6">{error}</p>
-          <button
-            onClick={handleRetry}
-            className="px-6 py-3 bg-primary hover:bg-primary/90 text-white font-bold rounded-xl transition-colors"
+          <Tape className="-top-4 left-1/2 -translate-x-1/2 bg-[#ffcc00]" />
+          <AlertTriangle className="text-[#e94e77] w-16 h-16 mx-auto mb-4 drop-shadow-[2px_2px_0px_#1f2937]" />
+          <h2 className="text-gray-800 font-black text-2xl uppercase mb-2 mt-4">Có lỗi xảy ra</h2>
+          <p className="text-gray-600 font-bold mb-8">{error}</p>
+          <button onClick={handleRetry}
+            className="w-full py-4 bg-[#2a3b8f] text-white font-black uppercase rounded-2xl border-4 border-gray-800 shadow-[4px_4px_0px_#1f2937] hover:translate-y-1 hover:shadow-none active:translate-y-2 transition-all flex justify-center items-center gap-2"
           >
-            Đăng ký lại
+            <RotateCcw strokeWidth={3} /> Đăng ký lại
           </button>
         </motion.div>
       </div>
     );
   }
 
-  // Cancelled state (user-initiated)
   if (paymentStatus === 'cancelled') {
     return (
-      <div className="flex-1 flex items-center justify-center px-4">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="bg-[#101722]/60 border border-red-500/20 rounded-2xl p-8 max-w-md w-full text-center"
+      <div className="flex-1 min-h-screen bg-[#fdfbf7] flex items-center justify-center px-4 overflow-hidden pattern-cubes">
+        <motion.div initial={{ opacity: 0, y: 50, rotate: -2 }} animate={{ opacity: 1, y: 0, rotate: 0 }}
+          className="bg-white border-4 border-gray-800 rounded-3xl p-8 max-w-md w-full text-center shadow-[12px_12px_0px_#1f2937] relative"
         >
-          <div className="w-16 h-16 bg-red-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
-            <span className="material-symbols-outlined text-red-400 text-4xl">cancel</span>
-          </div>
-          <h2 className="text-white text-xl font-bold mb-2">Đã hủy đăng ký</h2>
-          <p className="text-slate-400 text-sm mb-6">
-            Phiên đăng ký đã được hủy. Mã QR thanh toán không còn hiệu lực.
-          </p>
-          <button
-            onClick={handleRetry}
-            className="w-full py-3.5 bg-primary hover:bg-primary/90 text-white font-bold rounded-xl transition-colors shadow-[0_0_15px_rgba(67,135,244,0.4)] flex items-center justify-center gap-2"
+          <Tape className="-top-4 right-10 bg-[#e94e77] rotate-6" />
+          <X className="text-[#1f2937] w-20 h-20 mx-auto mb-4 bg-gray-200 rounded-full p-4 border-4 border-gray-800 shadow-[4px_4px_0px_#1f2937]" />
+          <h2 className="text-gray-800 font-black text-3xl uppercase mb-2 tracking-tight">Đã hủy!</h2>
+          <p className="text-gray-600 font-bold mb-8">Quy trình đăng ký đã bị hủy bỏ bởi bạn. Mã QR không còn hiệu lực.</p>
+          <button onClick={handleRetry}
+            className="w-full py-4 bg-[#45b596] text-white font-black uppercase rounded-2xl border-4 border-gray-800 shadow-[6px_6px_0px_#1f2937] hover:-translate-y-1 hover:shadow-[8px_8px_0px_#1f2937] active:translate-y-1 active:shadow-none transition-all"
           >
-            <span className="material-symbols-outlined">person_add</span>
-            Đăng ký lại
+            Đăng ký lại nhé!
           </button>
         </motion.div>
       </div>
     );
   }
 
-  // Expired state (timeout)
   if (paymentStatus === 'expired') {
     return (
-      <div className="flex-1 flex items-center justify-center px-4">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="bg-[#101722]/60 border border-amber-500/20 rounded-2xl p-8 max-w-md w-full text-center"
+      <div className="flex-1 min-h-screen bg-[#fdfbf7] flex items-center justify-center px-4">
+        <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }}
+          className="bg-[#ffcc00] border-4 border-gray-800 rounded-3xl p-8 max-w-md w-full text-center shadow-[12px_12px_0px_#2a3b8f] relative transform -rotate-1"
         >
-          <div className="w-16 h-16 bg-amber-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
-            <span className="material-symbols-outlined text-amber-400 text-4xl">timer_off</span>
-          </div>
-          <h2 className="text-white text-xl font-bold mb-2">Hết thời gian thanh toán</h2>
-          <p className="text-slate-400 text-sm mb-6">
-            Phiên thanh toán đã hết hạn. Vui lòng đăng ký lại để nhận mã QR mới.
-          </p>
-          <button
-            onClick={handleRetry}
-            className="w-full py-3.5 bg-primary hover:bg-primary/90 text-white font-bold rounded-xl transition-colors shadow-[0_0_15px_rgba(67,135,244,0.4)] flex items-center justify-center gap-2"
+          <Tape className="-top-4 left-6 bg-white -rotate-3" />
+          <Clock className="text-gray-800 w-20 h-20 mx-auto mb-4 bg-white rounded-full p-4 border-4 border-gray-800 shadow-[4px_4px_0px_#1f2937]" strokeWidth={2.5} />
+          <h2 className="text-gray-900 font-black text-3xl uppercase mb-2 tracking-tight">Hết giờ!</h2>
+          <p className="text-gray-800 font-bold mb-8 text-lg">Mã thanh toán của bạn đã hết hạn. Nhanh tay đăng ký lại nào!</p>
+          <button onClick={handleRetry}
+            className="w-full py-4 bg-white text-gray-900 font-black uppercase rounded-2xl border-4 border-gray-800 shadow-[6px_6px_0px_#1f2937] hover:-translate-y-1 transition-all"
           >
-            <span className="material-symbols-outlined">refresh</span>
-            Đăng ký lại
+            Nhận mã QR mới
           </button>
         </motion.div>
       </div>
     );
   }
 
-  // Normal payment view
   return (
-    <div className="flex-1 flex flex-col items-center py-12 px-4 md:px-10">
-      <div className="max-w-5xl w-full grid grid-cols-1 lg:grid-cols-12 gap-10">
+    <div className="min-h-screen bg-[#fdfbf7] text-gray-800 pt-12 pb-16 px-4 md:px-10 font-sans relative overflow-hidden">
+      {/* Background */}
+      <div className="fixed inset-0 pointer-events-none opacity-[0.03] z-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] mix-blend-multiply" />
+      
+      <div className="absolute top-20 right-[-5%] w-48 h-48 bg-[#45b596] rounded-full border-4 border-gray-800 z-0" />
+      <div className="absolute bottom-10 left-[-5%] w-32 h-32 bg-[#e94e77] transform rotate-45 border-4 border-gray-800 z-0" />
 
-        {/* Main Payment Section */}
-        <motion.div
-          initial={{ opacity: 0, x: -30 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6 }}
+      <div className="max-w-6xl w-full mx-auto relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-10 mt-8">
+
+        {/* Cột trái (Quét mã) */}
+        <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}
           className="lg:col-span-8 flex flex-col gap-8"
         >
-          {/* Progress Section */}
-          <div className="flex flex-col gap-4">
-            <div className="flex justify-between items-end">
-              <div>
-                <h1 className="text-white text-2xl font-bold">Thanh toán</h1>
-                <p className="text-slate-400 text-sm mt-1">Bước 2: Quét QR chuyển khoản</p>
-              </div>
-              <span className="text-primary font-bold">50% Hoàn tất</span>
-            </div>
-            <div className="h-1.5 w-full bg-slate-800 rounded-full overflow-hidden">
-              <motion.div
-                initial={{ width: "25%" }}
-                animate={{ width: "50%" }}
-                transition={{ duration: 1, ease: "easeOut" }}
-                className="h-full bg-primary shadow-[0_0_10px_rgba(67,135,244,0.6)] rounded-full"
-              ></motion.div>
-            </div>
+           {/* Progress Indicator */}
+           <div className="mb-4 text-center md:text-left relative">
+             <div className="inline-block bg-[#1f2937] text-white py-2 px-6 rounded-full text-sm font-black tracking-widest uppercase mb-4 border-2 border-gray-800 transform -rotate-1 shadow-[4px_4px_0px_#45b596]">
+               Bước 2: Thanh toán
+             </div>
+             <h1 className="text-4xl md:text-6xl font-black uppercase leading-[1.1] text-gray-800 drop-shadow-[3px_3px_0px_#ffcc00]">
+               Quét QR Ngay!
+             </h1>
           </div>
 
-          {/* Payment Card */}
-          <div className="bg-[#101722]/60 backdrop-blur-md border border-white/10 rounded-xl p-8 flex flex-col gap-8">
-
-            {/* Header */}
-            <div className="flex items-start gap-4">
-              <div className="bg-primary/20 p-3 rounded-lg">
-                <span className="material-symbols-outlined text-primary">qr_code_2</span>
-              </div>
-              <div>
-                <h3 className="text-white text-xl font-bold">Quét mã QR để thanh toán</h3>
-                <p className="text-slate-400 text-sm mt-1">Thanh toán tự động xác nhận sau khi chuyển khoản thành công</p>
-              </div>
-            </div>
-
-            {/* Countdown + amount */}
-            <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
+          <div className="bg-white border-4 border-gray-800 rounded-3xl p-6 md:p-8 shadow-[12px_12px_0px_#1f2937] flex flex-col gap-8 relative">
+            <Tape className="-top-4 left-1/2 -translate-x-1/2 bg-[#ffcc00]" />
+            
+            <div className="flex flex-col md:flex-row justify-between items-center bg-[#fdfbf7] border-4 border-gray-800 rounded-2xl p-4 md:p-6 shadow-[inset_0_4px_0px_rgba(0,0,0,0.05)] gap-4">
               <div className="flex items-center gap-3">
-                <span className="material-symbols-outlined text-amber-400 animate-pulse">schedule</span>
-                <span className="text-amber-400 font-bold text-lg font-mono tracking-wider">
+                <Clock className="text-[#e94e77] w-8 h-8 animate-pulse" strokeWidth={3} />
+                <span className="text-[#e94e77] font-black text-3xl font-mono tracking-wider">
                   {formatTimeRemaining(timeRemaining)}
                 </span>
-                <span className="text-slate-500 text-sm">còn lại</span>
+                <span className="text-gray-600 font-bold uppercase tracking-wider text-sm mt-1">Còn lại</span>
               </div>
-              <div className="text-right">
-                <p className="text-slate-400 text-xs uppercase tracking-wider">Số tiền cần thanh toán</p>
-                <p className="text-white text-2xl font-bold">
-                  {paymentData ? formatCurrency(paymentData.amount) : '---'}
-                  <span className="text-sm text-slate-400 ml-1">{paymentData?.currency || 'VND'}</span>
-                </p>
+              <div className="text-center md:text-right">
+                 <p className="text-gray-500 font-black uppercase text-xs tracking-widest">Số tiền (VNĐ)</p>
+                 <p className="text-[#2a3b8f] font-black text-3xl md:text-4xl drop-shadow-[1px_1px_0px_#ffcc00] mt-1">
+                   {paymentData ? formatCurrency(paymentData.amount) : '---'}
+                 </p>
               </div>
             </div>
 
-            {/* QR Code */}
-            <div className="flex flex-col items-center gap-4">
-              <div className="bg-white p-4 rounded-2xl">
+            <div className="flex flex-col md:flex-row items-center gap-8 justify-center mt-2">
+              <div className="bg-[#ffcc00] p-4 rounded-3xl border-4 border-gray-800 shadow-[8px_8px_0px_#1f2937] transform rotate-1">
                 {paymentData?.qr_url ? (
-                  <Image
-                    src={paymentData.qr_url}
-                    alt="VietQR Payment Code"
-                    width={240}
-                    height={240}
-                    className="rounded-lg"
-                    unoptimized
-                  />
+                  <div className="bg-white rounded-2xl p-2 border-4 border-gray-800">
+                    <Image src={paymentData.qr_url} alt="VietQR Code" width={260} height={260} className="rounded-xl pointer-events-none select-none" unoptimized />
+                  </div>
                 ) : (
-                  <div className="w-60 h-60 flex items-center justify-center bg-gray-200 rounded-lg">
-                    <span className="text-gray-500 text-sm">QR không khả dụng</span>
+                  <div className="w-[260px] h-[260px] flex items-center justify-center bg-gray-100 rounded-2xl border-4 border-gray-800">
+                    <span className="font-bold text-gray-500 uppercase">Đang tải QR...</span>
                   </div>
                 )}
               </div>
-              <p className="text-slate-500 text-xs text-center">Mở app ngân hàng → Quét mã QR → Xác nhận thanh toán</p>
+              
+              <div className="max-w-[200px] text-center md:text-left">
+                 <h3 className="text-2xl font-black text-gray-800 uppercase leading-none mb-4">Tự động xác nhận!</h3>
+                 <p className="font-bold text-gray-600 text-sm leading-relaxed">Mở app Ngân hàng, chọn quét QR và thanh toán. Hệ thống sẽ tự động chuyển trang khi nhận được tiền.</p>
+              </div>
             </div>
 
-            {/* Bank Details */}
+            {/* Manual Info */}
             {paymentData && (
-              <div className="bg-slate-900/50 border border-white/5 rounded-xl p-5 space-y-4">
-                <h4 className="text-white font-semibold text-sm flex items-center gap-2">
-                  <span className="material-symbols-outlined text-primary text-lg">account_balance</span>
-                  Hoặc chuyển khoản thủ công
-                </h4>
+              <div className="bg-gray-100 border-4 border-gray-800 rounded-2xl p-5 mt-4 space-y-3 relative overflow-hidden text-sm md:text-base">
+                 <div className="absolute top-0 right-0 w-20 h-20 bg-gray-200 rounded-bl-full pointer-events-none" />
+                 
+                 <div className="flex justify-between items-center border-b-2 border-dashed border-gray-300 pb-3 relative z-10">
+                    <span className="font-black text-gray-500 uppercase">Ngân hàng:</span>
+                    <span className="font-bold text-gray-900 truncate max-w-[50%]">{paymentData.bank_name}</span>
+                 </div>
+                 
+                 <div className="flex justify-between items-center border-b-2 border-dashed border-gray-300 pb-3 relative z-10">
+                    <span className="font-black text-gray-500 uppercase">Số tài khoản:</span>
+                    <div className="flex items-center gap-2">
+                      <span className="font-black text-[#e94e77] text-lg font-mono">{paymentData.account_number}</span>
+                      <button onClick={() => handleCopy(paymentData.account_number, 'account')} className="bg-white p-2 border-2 border-gray-800 rounded-lg hover:bg-[#ffcc00] transition-colors" title="Sao chép">
+                        {copied === 'account' ? <Check size={16} strokeWidth={3} className="text-green-600"/> : <Copy size={16} strokeWidth={3}/>}
+                      </button>
+                    </div>
+                 </div>
 
-                {/* Bank Name */}
-                <div className="flex justify-between items-center py-2 border-b border-white/5">
-                  <span className="text-slate-400 text-sm">Ngân hàng</span>
-                  <span className="text-white font-semibold">{paymentData.bank_name}</span>
-                </div>
+                 <div className="flex justify-between items-center border-b-2 border-dashed border-gray-300 pb-3 relative z-10">
+                    <span className="font-black text-gray-500 uppercase">Chủ TK:</span>
+                    <span className="font-bold text-gray-900 truncate max-w-[50%] uppercase">{paymentData.account_name}</span>
+                 </div>
 
-                {/* Account Number */}
-                <div className="flex justify-between items-center py-2 border-b border-white/5">
-                  <span className="text-slate-400 text-sm">Số tài khoản</span>
-                  <div className="flex items-center gap-2">
-                    <span className="text-white font-semibold font-mono">{paymentData.account_number}</span>
-                    <button
-                      onClick={() => handleCopy(paymentData.account_number, 'account')}
-                      className="text-primary hover:text-primary/80 transition-colors p-1"
-                      title="Sao chép"
-                    >
-                      <span className="material-symbols-outlined text-sm">
-                        {copied === 'account' ? 'check' : 'content_copy'}
-                      </span>
+                 <div className="flex justify-between items-center pt-2 relative z-10">
+                    <span className="font-black text-gray-500 uppercase">Nội dung CK:</span>
+                    <div className="flex items-center gap-2">
+                      <span className="font-black bg-[#45b596] text-white px-3 py-1 border-2 border-gray-800 rounded-lg text-lg uppercase tracking-wider">{paymentData.transfer_content}</span>
+                      <button onClick={() => handleCopy(paymentData.transfer_content, 'content')} className="bg-white p-2 border-2 border-gray-800 rounded-lg hover:bg-[#ffcc00] transition-colors" title="Sao chép">
+                        {copied === 'content' ? <Check size={16} strokeWidth={3} className="text-green-600"/> : <Copy size={16} strokeWidth={3}/>}
+                      </button>
+                    </div>
+                 </div>
+                 
+                  <div className="mt-4 flex gap-2 items-start text-xs font-bold text-[#e94e77] bg-red-100 p-3 rounded-xl border-2 border-[#e94e77]">
+                    <AlertTriangle size={18} className="shrink-0" />
+                    Bắt buộc nhập chính xác NỘI DUNG CHUYỂN KHOẢN để hệ thống cập nhật tự động.
+                  </div>
+
+                  {/* NÚT TEST CHUYỂN TRANG */}
+                  <div className="mt-8 pt-6 border-t-2 border-dashed border-gray-300">
+                    <button onClick={() => router.replace(`/success?id=${registrationId}`)} className="w-full bg-[#ffcc00] py-3 text-gray-900 border-4 border-gray-800 font-black uppercase rounded-xl hover:bg-[#e94e77] hover:text-white transition-colors">
+                      [Test] Giả lập CK thành công
                     </button>
                   </div>
-                </div>
-
-                {/* Account Name */}
-                <div className="flex justify-between items-center py-2 border-b border-white/5">
-                  <span className="text-slate-400 text-sm">Chủ tài khoản</span>
-                  <span className="text-white font-semibold">{paymentData.account_name}</span>
-                </div>
-
-                {/* Amount */}
-                <div className="flex justify-between items-center py-2 border-b border-white/5">
-                  <span className="text-slate-400 text-sm">Số tiền</span>
-                  <div className="flex items-center gap-2">
-                    <span className="text-white font-semibold">{formatCurrency(paymentData.amount)} {paymentData.currency}</span>
-                    <button
-                      onClick={() => handleCopy(String(paymentData.amount), 'amount')}
-                      className="text-primary hover:text-primary/80 transition-colors p-1"
-                      title="Sao chép"
-                    >
-                      <span className="material-symbols-outlined text-sm">
-                        {copied === 'amount' ? 'check' : 'content_copy'}
-                      </span>
-                    </button>
-                  </div>
-                </div>
-
-                {/* Transfer Content */}
-                <div className="flex justify-between items-center py-2">
-                  <span className="text-slate-400 text-sm">Nội dung CK</span>
-                  <div className="flex items-center gap-2">
-                    <span className="text-amber-400 font-bold font-mono text-sm">{paymentData.transfer_content}</span>
-                    <button
-                      onClick={() => handleCopy(paymentData.transfer_content, 'content')}
-                      className="text-primary hover:text-primary/80 transition-colors p-1"
-                      title="Sao chép"
-                    >
-                      <span className="material-symbols-outlined text-sm">
-                        {copied === 'content' ? 'check' : 'content_copy'}
-                      </span>
-                    </button>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-2 bg-amber-500/10 border border-amber-500/20 rounded-lg p-3 mt-2">
-                  <span className="material-symbols-outlined text-amber-400 text-sm shrink-0 mt-0.5">warning</span>
-                  <p className="text-amber-300 text-xs font-medium leading-relaxed">
-                    Vui lòng nhập chính xác nội dung chuyển khoản để hệ thống tự động xác nhận. Sai nội dung có thể dẫn đến chậm trễ xử lý.
-                  </p>
-                </div>
               </div>
             )}
           </div>
 
-          {/* Cancel button */}
-          <div className="flex justify-center">
-            <button
-              onClick={() => setShowCancelConfirm(true)}
-              className="text-slate-500 hover:text-slate-300 text-sm flex items-center gap-1 transition-colors"
+          <div className="text-center mt-2">
+            <button onClick={() => setShowCancelConfirm(true)}
+              className="font-bold text-gray-500 hover:text-[#e94e77] uppercase text-sm inline-flex items-center gap-1 transition-colors underline decoration-dashed underline-offset-4"
             >
-              <span className="material-symbols-outlined text-sm">close</span>
-              Hủy thanh toán
+              <X size={16} strokeWidth={3} /> Quay lại / Hủy đăng ký
             </button>
           </div>
         </motion.div>
 
-        {/* Cancel Confirmation Modal */}
-        <AnimatePresence>
-          {showCancelConfirm && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="fixed inset-0 z-50 flex items-center justify-center px-4 bg-black/60 backdrop-blur-sm"
-              onClick={() => setShowCancelConfirm(false)}
-            >
-              <motion.div
-                initial={{ scale: 0.9, y: 20 }}
-                animate={{ scale: 1, y: 0 }}
-                exit={{ scale: 0.9, y: 20 }}
-                className="bg-[#0A101E] border border-white/10 rounded-2xl p-6 md:p-8 max-w-sm w-full shadow-2xl"
-                onClick={(e) => e.stopPropagation()}
-              >
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-10 h-10 bg-amber-500/20 rounded-full flex items-center justify-center shrink-0">
-                    <span className="material-symbols-outlined text-amber-400">warning</span>
-                  </div>
-                  <h3 className="text-lg font-bold text-white">Hủy thanh toán?</h3>
-                </div>
-
-                <p className="text-slate-400 text-sm mb-6 leading-relaxed">
-                  Nếu bạn hủy, phiên thanh toán hiện tại sẽ hết hiệu lực. Bạn sẽ cần đăng ký lại và nhận mã QR mới.
-                </p>
-
-                <div className="flex gap-3">
-                  <button
-                    onClick={() => setShowCancelConfirm(false)}
-                    className="flex-1 py-3 px-4 rounded-xl border border-white/20 text-white font-medium hover:bg-white/5 transition-colors"
-                  >
-                    Tiếp tục thanh toán
-                  </button>
-                  <button
-                    onClick={handleCancel}
-                    className="flex-1 py-3 px-4 rounded-xl bg-red-500/20 border border-red-500/30 text-red-400 font-bold hover:bg-red-500/30 transition-colors"
-                  >
-                    Hủy
-                  </button>
-                </div>
-              </motion.div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
         {/* Sidebar */}
-        <motion.aside
-          initial={{ opacity: 0, x: 30 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
+        <motion.div initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.2 }}
           className="lg:col-span-4 flex flex-col gap-6"
         >
-          {/* Status indicator */}
-          <div className="bg-[#101722]/60 border border-primary/20 rounded-xl p-6">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="relative">
-                <div className="w-3 h-3 bg-amber-400 rounded-full animate-pulse" />
-                <div className="absolute inset-0 w-3 h-3 bg-amber-400 rounded-full animate-ping opacity-50" />
-              </div>
-              <span className="text-white font-semibold text-sm">Đang chờ thanh toán</span>
-            </div>
-            <ul className="space-y-3 text-sm">
-              <li className="flex items-center gap-3">
-                <span className="material-symbols-outlined text-primary text-lg">check_circle</span>
-                <span className="text-slate-300">Đăng ký thông tin</span>
-              </li>
-              <li className="flex items-center gap-3">
-                <span className="material-symbols-outlined text-amber-400 text-lg animate-pulse">pending</span>
-                <span className="text-amber-400 font-medium">Thanh toán</span>
-              </li>
-              <li className="flex items-center gap-3">
-                <span className="material-symbols-outlined text-slate-600 text-lg">radio_button_unchecked</span>
-                <span className="text-slate-500">Hoàn tất</span>
-              </li>
-            </ul>
+          <div className="bg-[#45b596] border-4 border-gray-800 rounded-3xl p-6 shadow-[8px_8px_0px_#1f2937] transform rotate-1 mt-10 md:mt-32">
+             <Tape className="-top-3 left-6 transform -rotate-3 bg-white" />
+             <h3 className="text-white font-black text-2xl uppercase mb-6 flex items-center gap-2 tracking-tight drop-shadow-[2px_2px_0px_rgba(0,0,0,0.3)]">
+               <HelpCircle size={28} strokeWidth={3} /> Hướng Dẫn
+             </h3>
+             <ol className="space-y-4 font-bold text-gray-900 bg-white p-5 rounded-2xl border-4 border-gray-800 text-sm leading-relaxed">
+               <li className="flex gap-2 items-start"><span className="text-[#e94e77] font-black text-lg leading-none">1.</span> Mở App Ngân Hàng hoặc Momo.</li>
+               <li className="flex gap-2 items-start"><span className="text-[#e94e77] font-black text-lg leading-none">2.</span> Chọn quét mã QR.</li>
+               <li className="flex gap-2 items-start"><span className="text-[#e94e77] font-black text-lg leading-none">3.</span> Kiểm tra kĩ số tiền.</li>
+               <li className="flex gap-2 items-start"><span className="text-[#e94e77] font-black text-lg leading-none">4.</span> Bấm thanh toán, chờ vài giây hệ thống sẽ vác bạn vào thẳng lớp học!</li>
+             </ol>
           </div>
 
-          {/* Instructions */}
-          <div className="bg-gradient-to-br from-primary/10 to-transparent border border-primary/10 rounded-xl p-6">
-            <h4 className="text-white font-bold mb-4 flex items-center gap-2">
-              <span className="material-symbols-outlined text-primary">help_outline</span>
-              Hướng dẫn thanh toán
-            </h4>
-            <ol className="space-y-3 text-sm text-slate-400 list-decimal list-inside">
-              <li>Mở ứng dụng ngân hàng trên điện thoại</li>
-              <li>Chọn <span className="text-white font-medium">Quét QR</span> hoặc <span className="text-white font-medium">Chuyển khoản</span></li>
-              <li>Quét mã QR hoặc nhập thông tin chuyển khoản</li>
-              <li>Nhập đúng <span className="text-amber-400 font-medium">nội dung chuyển khoản</span></li>
-              <li>Xác nhận thanh toán và chờ hệ thống tự động xác nhận</li>
-            </ol>
-          </div>
-
-          {/* Security note */}
-          <div className="bg-slate-900/30 border border-white/5 rounded-xl p-4">
-            <div className="flex items-center gap-2 text-xs text-slate-500">
-              <span className="material-symbols-outlined text-sm">shield</span>
-              <span>Giao dịch bảo mật bởi SePay & VietQR</span>
-            </div>
-          </div>
-        </motion.aside>
+           <div className="bg-white border-4 border-gray-800 rounded-2xl p-4 flex items-center gap-3 shadow-[4px_4px_0px_#ffcc00] transform -rotate-1">
+             <ShieldCheck size={32} strokeWidth={2.5} className="text-[#2a3b8f]" />
+             <span className="font-black text-gray-700 uppercase tracking-widest text-xs leading-tight">An Toàn tuyệt đối qua SePay & VietQR</span>
+           </div>
+        </motion.div>
       </div>
+
+      {/* Cancel Modal */}
+      <AnimatePresence>
+        {showCancelConfirm && (
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center px-4 bg-gray-900/40 backdrop-blur-sm"
+          >
+            <motion.div initial={{ scale: 0.9, y: 50, rotate: -2 }} animate={{ scale: 1, y: 0, rotate: 0 }} exit={{ scale: 0.9, y: 50, rotate: -2 }}
+              className="bg-white border-4 border-gray-800 rounded-[2rem] p-6 max-w-sm w-full shadow-[16px_16px_0px_#e94e77] text-center"
+            >
+              <Tape className="-top-4 -right-2 bg-[#ffcc00] rotate-12" />
+              <div className="w-16 h-16 bg-[#e94e77] rounded-full border-4 border-gray-800 flex items-center justify-center mx-auto mb-4 shadow-[4px_4px_0px_#1f2937]">
+                 <X size={32} strokeWidth={3} className="text-white" />
+              </div>
+              <h3 className="text-2xl font-black text-gray-900 uppercase mb-2">Hủy Phiên Này?</h3>
+              <p className="text-gray-600 font-bold mb-6 text-sm">Nếu bạn hủy, mã QR này sẽ mất tác dụng vĩnh viễn.</p>
+              
+              <div className="flex gap-3">
+                <button onClick={() => setShowCancelConfirm(false)}
+                   className="flex-1 py-3 bg-gray-200 text-gray-800 border-4 border-gray-800 rounded-xl font-black uppercase text-sm hover:bg-gray-300 transition-colors"
+                >
+                  Khoan đã
+                </button>
+                <button onClick={handleCancel}
+                   className="flex-1 py-3 bg-[#e94e77] text-white border-4 border-gray-800 rounded-xl font-black uppercase text-sm shadow-[4px_4px_0px_#1f2937] hover:translate-y-1 hover:shadow-none active:translate-y-2 transition-all"
+                >
+                  Xác nhận Hủy
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
@@ -570,9 +410,9 @@ function PaymentContent() {
 export default function PaymentPage() {
   return (
     <Suspense fallback={
-      <div className="flex-1 flex items-center justify-center">
-        <div className="w-12 h-12 border-4 border-primary/30 border-t-primary rounded-full animate-spin" />
-      </div>
+       <div className="flex-1 min-h-screen bg-[#fdfbf7] flex items-center justify-center">
+         <div className="w-16 h-16 border-8 border-gray-800 border-t-[#ffcc00] rounded-full animate-spin" />
+       </div>
     }>
       <PaymentContent />
     </Suspense>

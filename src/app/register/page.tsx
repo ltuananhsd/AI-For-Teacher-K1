@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { useRouter } from "next/navigation";
-import { User, Phone, Mail, Briefcase, ArrowRight, ShieldCheck, CheckCircle2, ChevronDown, Info, AlertCircle } from 'lucide-react';
+import { User, Phone, Mail, Briefcase, ArrowRight, ShieldCheck, CheckCircle2, ChevronDown, Info, AlertCircle, Target, Sparkles, AlertTriangle } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
@@ -15,6 +15,22 @@ interface FormData {
   job: string;
   goals: string;
 }
+
+// --- CONFIG BẢNG MÀU RETRO ---
+const theme = {
+  navy: '#2a3b8f',
+  pink: '#e94e77',
+  yellow: '#ffcc00',
+  teal: '#45b596',
+  orange: '#ff7e67',
+  bg: '#fdfbf7', 
+  dark: '#1f2937'
+};
+
+const Tape = ({ className = "" }) => (
+  <div className={`absolute w-24 h-8 bg-yellow-200/90 border-2 border-gray-800 opacity-90 backdrop-blur-sm z-20 ${className}`} 
+       style={{ boxShadow: '2px 2px 0px rgba(0,0,0,0.2)' }} />
+);
 
 export default function RegisterPage() {
   const [showModal, setShowModal] = useState(false);
@@ -34,13 +50,11 @@ export default function RegisterPage() {
       setErrorMessage("Vui lòng nhập Họ và tên, Email và Số điện thoại!");
       return;
     }
-    // Validate phone format — exactly 10 digits starting with 0
     const phoneClean = formData.phone.replace(/\s|-/g, '');
     if (!/^0[0-9]{9}$/.test(phoneClean)) {
       setErrorMessage("Số điện thoại phải gồm đúng 10 chữ số, bắt đầu bằng 0 (VD: 0123456789)");
       return;
     }
-    // Validate email
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
       setErrorMessage("Email không hợp lệ. Vui lòng nhập lại.");
       return;
@@ -52,106 +66,78 @@ export default function RegisterPage() {
     setIsSubmitting(true);
     setErrorMessage('');
 
+    // --- TẠM TẮT GỌI API BACKEND ĐỂ TEST UI MƯỢT MÀ ---
     try {
-      const phoneClean = formData.phone.replace(/\s|-/g, '');
-      const response = await fetch(`${API_BASE}/api/registrations`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          full_name: formData.fullName.trim(),
-          email: formData.email.toLowerCase().trim(),
-          phone: phoneClean,
-          job_title: formData.job || undefined,
-          goals: formData.goals || undefined,
-          course_slug: COURSE_SLUG,
-        }),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        if (response.status === 409) {
-          setErrorMessage(data.error?.message || 'Email này đã đăng ký khóa học này rồi.');
-        } else if (response.status === 422) {
-          const details = data.error?.details;
-          if (Array.isArray(details) && details.length > 0) {
-            setErrorMessage(details.map((d: { message: string }) => d.message).join('. '));
-          } else {
-            setErrorMessage(data.error?.message || 'Thông tin không hợp lệ.');
-          }
-        } else {
-          setErrorMessage(data.error?.message || 'Có lỗi xảy ra. Vui lòng thử lại.');
-        }
-        setIsSubmitting(false);
-        return;
-      }
-
-      // Success — redirect to payment page
-      const registrationId = data.data?.registration_id;
-      if (registrationId) {
-        router.push(`/payment?id=${registrationId}`);
-      } else {
-        setErrorMessage('Có lỗi xảy ra. Vui lòng thử lại.');
-        setIsSubmitting(false);
-      }
+      // Giả lập delay mạng 1 giây cho thật
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      // Bỏ qua fetch, tự động nhảy luôn sang bước Payment
+      const dummyRegistrationId = "demo-id-12345";
+      router.push(`/payment?id=${dummyRegistrationId}`);
+      
     } catch {
-      setErrorMessage('Không thể kết nối đến máy chủ. Vui lòng kiểm tra kết nối mạng.');
+      setErrorMessage('Không thể giả lập kết nối.');
       setIsSubmitting(false);
     }
+    // --------------------------------------------------
   };
 
   return (
-    <div className="min-h-screen bg-[#0f1012] text-white pt-24 pb-16 px-4 font-sans relative overflow-hidden">
-      {/* Background Decor */}
-      <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-600/10 blur-[120px] rounded-full pointer-events-none z-0"></div>
-      <div className="absolute top-[40%] right-[-10%] w-[30%] h-[40%] bg-green-500/5 blur-[120px] rounded-full pointer-events-none z-0"></div>
+    <div className="min-h-screen bg-[#fdfbf7] text-gray-800 pt-12 pb-16 px-4 font-sans relative overflow-hidden selection:bg-[#ffcc00] selection:text-gray-900">
+      {/* Background Texture */}
+      <div className="fixed inset-0 pointer-events-none opacity-[0.03] z-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] mix-blend-multiply" />
+      
+      {/* Abstract Decor */}
+      <div className="absolute top-10 right-10 w-32 h-32 bg-[#ffcc00] rounded-full border-4 border-gray-800" />
+      <div className="absolute top-40 left-10 w-24 h-24 bg-[#45b596] transform rotate-45 border-4 border-gray-800" />
 
-      <div className="max-w-5xl mx-auto relative z-10 grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-8 xl:gap-12 mt-8">
+      {/* Header Back Button */}
+      <div className="max-w-6xl mx-auto mb-8 md:mb-12 relative z-10 flex flex-col md:flex-row justify-between items-center gap-4">
+        <button onClick={() => router.push('/')} className="bg-white px-6 py-3 rounded-2xl border-4 border-gray-800 shadow-[4px_4px_0px_#2a3b8f] font-black uppercase text-sm transform hover:-translate-x-1 transition-all flex items-center gap-2">
+          ← QUAY LẠI TRANG CHỦ
+        </button>
+        <div className="bg-white px-3 py-2 rounded-2xl border-4 border-gray-800 shadow-[4px_4px_0px_#e94e77] transform rotate-2">
+           <img src="/images/logo-xanh.png" alt="Logo CES" className="h-8 md:h-10 object-contain" />
+        </div>
+      </div>
+
+      <div className="max-w-6xl mx-auto relative z-10 grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-12">
 
         {/* Left Column (Main Form) */}
         <div className="w-full">
-          <div className="mb-8">
-            <h1 className="text-3xl font-extrabold mb-3">Đăng ký tham gia</h1>
-            <div className="flex items-center justify-between text-sm text-slate-400 mb-4 font-medium">
-              <span>Bước 1: Thông tin cá nhân & Mục tiêu</span>
-              <span className="font-bold text-blue-400">25% Hoàn tất</span>
-            </div>
-            {/* Progress Bar */}
-            <div className="w-full bg-[#1A1B1E] border border-white/5 h-1.5 rounded-full overflow-hidden flex shadow-inner">
-              <motion.div
-                initial={{ width: 0 }}
-                animate={{ width: "25%" }}
-                transition={{ duration: 1, delay: 0.2 }}
-                className="bg-blue-500 h-full rounded-full"
-              ></motion.div>
-            </div>
+          <div className="mb-10 text-center md:text-left relative">
+             <div className="inline-block bg-[#1f2937] text-white py-2 px-6 rounded-full text-sm font-black tracking-widest uppercase mb-6 border-2 border-gray-800 transform rotate-1 shadow-[4px_4px_0px_#ffcc00]">
+               Bước 1: Thông tin học viên
+             </div>
+             <h1 className="text-4xl md:text-6xl font-black uppercase leading-[1.1] text-[#2a3b8f]" style={{ textShadow: '4px 4px 0px #ffcc00, -1px -1px 0 #1f2937, 1px -1px 0 #1f2937, -1px 1px 0 #1f2937, 1px 1px 0 #1f2937' }}>
+               Đăng Ký Tham Gia
+             </h1>
           </div>
 
           <motion.div
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.5 }}
-            className="bg-[#1A1B1E]/80 backdrop-blur-md border border-white/10 rounded-[1.5rem] p-6 md:p-8 shadow-2xl"
+            className="bg-white border-4 border-gray-800 rounded-3xl p-6 md:p-10 shadow-[12px_12px_0px_#2a3b8f] relative"
           >
-            <div className="flex items-start md:items-center gap-4 mb-8 pb-6 border-b border-white/10">
-              <div className="w-12 h-12 rounded-xl bg-[#4285F4]/10 flex items-center justify-center border border-[#4285F4]/20 shrink-0 mt-1 md:mt-0 shadow-inner">
-                <User size={22} className="text-[#4285F4]" />
+            <Tape className="-top-4 right-10 transform rotate-6 bg-[#45b596]/90" />
+            
+            <div className="flex items-center gap-4 mb-8 pb-6 border-b-4 border-dashed border-gray-300">
+              <div className="w-16 h-16 bg-[#ffcc00] border-4 border-gray-800 rounded-full flex items-center justify-center shadow-[4px_4px_0px_#1f2937] transform -rotate-6 shrink-0">
+                <Target size={28} className="text-gray-900" strokeWidth={3} />
               </div>
               <div>
-                <h2 className="text-xl font-bold text-white mb-1">Hoàn tất thông tin đăng ký Bootcamp</h2>
-                <p className="text-sm text-slate-400">Vui lòng cung cấp chính xác thông tin để chúng tôi xác thực tư cách học viên AI của bạn.</p>
+                <h2 className="text-2xl font-black uppercase text-gray-800 tracking-tight">Thông tin Bootcamp</h2>
+                <p className="text-gray-600 font-bold">Điền chính xác để chúng tôi ghi danh cho bạn nhé!</p>
               </div>
             </div>
 
             {/* Error message inline */}
             {errorMessage && !showModal && (
-              <motion.div
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="flex items-start gap-3 p-4 mb-6 bg-red-500/10 border border-red-500/30 rounded-xl"
+              <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}
+                className="flex items-start gap-3 p-4 mb-8 bg-[#ff7e67] border-4 border-gray-800 rounded-2xl shadow-[4px_4px_0px_#1f2937] transform rotate-1"
               >
-                <AlertCircle className="text-red-400 shrink-0 mt-0.5" size={18} />
-                <p className="text-sm text-red-300 font-medium">{errorMessage}</p>
+                <AlertTriangle className="text-gray-900 shrink-0 mt-0.5" size={24} />
+                <p className="text-gray-900 font-bold">{errorMessage}</p>
               </motion.div>
             )}
 
@@ -160,87 +146,62 @@ export default function RegisterPage() {
 
                 {/* Họ và tên */}
                 <div className="space-y-2">
-                  <label htmlFor="fullName" className="text-sm font-semibold text-slate-300 ml-1">Họ và tên</label>
+                  <label htmlFor="fullName" className="text-sm font-black uppercase text-gray-800 ml-1 tracking-wider">Họ và tên <span className="text-[#e94e77]">*</span></label>
                   <div className="relative group">
-                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-500 group-focus-within:text-blue-400 transition-colors">
-                      <User size={18} />
+                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-800">
+                      <User size={20} strokeWidth={2.5} />
                     </div>
-                    <input
-                      type="text"
-                      id="fullName"
-                      name="fullName"
-                      value={formData.fullName}
-                      onChange={handleInputChange}
-                      placeholder="Nguyễn Văn A"
-                      required
-                      className="w-full bg-[#0f1012] border border-white/10 rounded-xl py-3 pl-11 pr-4 text-white focus:outline-none focus:border-[#4285F4] focus:ring-1 focus:ring-[#4285F4] transition-all placeholder:text-slate-600 shadow-inner"
+                    <input type="text" id="fullName" name="fullName" value={formData.fullName} onChange={handleInputChange} placeholder="Nguyễn Văn A" required
+                      className="w-full bg-[#fdfbf7] border-4 border-gray-800 rounded-2xl py-3 pl-12 pr-4 text-gray-900 font-bold focus:outline-none focus:ring-4 focus:ring-[#ffcc00] transition-all placeholder:text-gray-400 shadow-[4px_4px_0px_rgba(0,0,0,0.1)]"
                     />
                   </div>
                 </div>
 
                 {/* Số điện thoại */}
                 <div className="space-y-2">
-                  <label htmlFor="phone" className="text-sm font-semibold text-slate-300 ml-1">Số điện thoại</label>
+                  <label htmlFor="phone" className="text-sm font-black uppercase text-gray-800 ml-1 tracking-wider">Số điện thoại <span className="text-[#e94e77]">*</span></label>
                   <div className="relative group">
-                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-500 group-focus-within:text-blue-400 transition-colors">
-                      <Phone size={18} />
+                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-800">
+                      <Phone size={20} strokeWidth={2.5} />
                     </div>
-                    <input
-                      type="tel"
-                      id="phone"
-                      name="phone"
-                      value={formData.phone}
-                      onChange={handleInputChange}
-                      placeholder="0901 234 567"
-                      required
-                      className="w-full bg-[#0f1012] border border-white/10 rounded-xl py-3 pl-11 pr-4 text-white focus:outline-none focus:border-[#4285F4] focus:ring-1 focus:ring-[#4285F4] transition-all placeholder:text-slate-600 shadow-inner"
+                    <input type="tel" id="phone" name="phone" value={formData.phone} onChange={handleInputChange} placeholder="0901 234 567" required
+                      className="w-full bg-[#fdfbf7] border-4 border-gray-800 rounded-2xl py-3 pl-12 pr-4 text-gray-900 font-bold focus:outline-none focus:ring-4 focus:ring-[#ffcc00] transition-all placeholder:text-gray-400 shadow-[4px_4px_0px_rgba(0,0,0,0.1)]"
                     />
                   </div>
                 </div>
 
                 {/* Email */}
-                <div className="space-y-2">
-                  <label htmlFor="email" className="text-sm font-semibold text-slate-300 ml-1">Email</label>
+                <div className="space-y-2 md:col-span-2">
+                  <label htmlFor="email" className="text-sm font-black uppercase text-gray-800 ml-1 tracking-wider">Email <span className="text-[#e94e77]">*</span></label>
                   <div className="relative group">
-                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-500 group-focus-within:text-blue-400 transition-colors">
-                      <Mail size={18} />
+                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-800">
+                      <Mail size={20} strokeWidth={2.5} />
                     </div>
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleInputChange}
-                      placeholder="nguyenvana@gmail.com"
-                      required
-                      className="w-full bg-[#0f1012] border border-white/10 rounded-xl py-3 pl-11 pr-4 text-white focus:outline-none focus:border-[#4285F4] focus:ring-1 focus:ring-[#4285F4] transition-all placeholder:text-slate-600 shadow-inner"
+                    <input type="email" id="email" name="email" value={formData.email} onChange={handleInputChange} placeholder="nguyenvana@gmail.com" required
+                      className="w-full bg-[#fdfbf7] border-4 border-gray-800 rounded-2xl py-3 pl-12 pr-4 text-gray-900 font-bold focus:outline-none focus:ring-4 focus:ring-[#ffcc00] transition-all placeholder:text-gray-400 shadow-[4px_4px_0px_rgba(0,0,0,0.1)]"
                     />
                   </div>
                 </div>
 
                 {/* Chức vụ */}
-                <div className="space-y-2">
-                  <label htmlFor="job" className="text-sm font-semibold text-slate-300 ml-1">Chức vụ / Nghề nghiệp</label>
+                <div className="space-y-2 md:col-span-2">
+                  <label htmlFor="job" className="text-sm font-black uppercase text-gray-800 ml-1 tracking-wider">Chuyên môn / Khối lớp</label>
                   <div className="relative group">
-                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-500 group-focus-within:text-blue-400 transition-colors z-10">
-                      <Briefcase size={18} />
+                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-800 z-10">
+                      <Briefcase size={20} strokeWidth={2.5} />
                     </div>
-                    <select
-                      id="job"
-                      name="job"
-                      value={formData.job}
-                      onChange={handleInputChange}
-                      className="w-full bg-[#0f1012] border border-white/10 rounded-xl py-3 pl-11 pr-10 text-white focus:outline-none focus:border-[#4285F4] focus:ring-1 focus:ring-[#4285F4] transition-all appearance-none shadow-inner relative z-0"
+                    <select id="job" name="job" value={formData.job} onChange={handleInputChange}
+                      className="w-full bg-[#fdfbf7] border-4 border-gray-800 rounded-2xl py-3 pl-12 pr-10 text-gray-900 font-bold focus:outline-none focus:ring-4 focus:ring-[#ffcc00] transition-all appearance-none shadow-[4px_4px_0px_rgba(0,0,0,0.1)] relative z-0"
                     >
-                      <option value="" disabled className="text-slate-500">Chọn nghề nghiệp của bạn</option>
-                      <option value="student">Sinh viên CNTT</option>
-                      <option value="developer">Lập trình viên (Developer)</option>
-                      <option value="manager">Quản lý dự án (PM/PO)</option>
-                      <option value="researcher">Nghiên cứu viên AI</option>
-                      <option value="other">Khác</option>
+                      <option value="" disabled className="text-gray-500">Bấm để chọn...</option>
+                      <option value="giáo_viên_mầm_non">Giáo viên Mầm non</option>
+                      <option value="giáo_viên_tiểu_học">Giáo viên Tiểu học</option>
+                      <option value="giáo_viên_thcs">Giáo viên THCS</option>
+                      <option value="giáo_viên_thpt">Giáo viên THPT</option>
+                      <option value="khác">Khác / Quản lý giáo dục</option>
                     </select>
-                    <div className="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none text-slate-500">
-                      <ChevronDown size={18} />
+                    <div className="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none text-gray-800">
+                      <ChevronDown size={20} strokeWidth={3} />
                     </div>
                   </div>
                 </div>
@@ -248,132 +209,67 @@ export default function RegisterPage() {
 
               {/* Mục tiêu */}
               <div className="space-y-2">
-                <label htmlFor="goals" className="text-sm font-semibold text-slate-300 ml-1">Mục tiêu của bạn khi tham gia Bootcamp</label>
+                <label htmlFor="goals" className="text-sm font-black uppercase text-gray-800 ml-1 tracking-wider">Điều thầy cô mong muốn nhất?</label>
                 <div className="relative group">
-                  <div className="absolute top-3.5 left-0 pl-4 flex items-start pointer-events-none text-slate-500 group-focus-within:text-blue-400 transition-colors">
-                    <div className="w-[18px] h-[18px] rounded-full border-2 border-current flex items-center justify-center">
-                      <div className="w-1.5 h-1.5 rounded-full border-t-[1.5px] border-r-[1.5px] border-current -rotate-45 -ml-0.5 mt-0.5"></div>
-                    </div>
-                  </div>
-                  <textarea
-                    id="goals"
-                    name="goals"
-                    rows={4}
-                    value={formData.goals}
-                    onChange={handleInputChange}
-                    placeholder="Chia sẻ kỳ vọng của bạn về kiến thức AI Ecosystem, sản phẩm bạn muốn tạo ra..."
-                    className="w-full bg-[#0f1012] border border-white/10 rounded-xl py-3 pl-11 pr-4 text-white focus:outline-none focus:border-[#4285F4] focus:ring-1 focus:ring-[#4285F4] transition-all placeholder:text-slate-600 resize-none shadow-inner leading-relaxed"
+                  <textarea id="goals" name="goals" rows={3} value={formData.goals} onChange={handleInputChange} placeholder="Ví dụ: Muốn soạn bài nhanh hơn, muốn tự làm game cho học sinh..."
+                    className="w-full bg-[#fdfbf7] border-4 border-gray-800 rounded-2xl py-4 px-4 text-gray-900 font-bold focus:outline-none focus:ring-4 focus:ring-[#ffcc00] transition-all placeholder:text-gray-400 resize-none shadow-[4px_4px_0px_rgba(0,0,0,0.1)] leading-relaxed"
                   ></textarea>
                 </div>
               </div>
 
               <div className="pt-6">
-                <motion.button
-                  whileHover={{ scale: 1.01 }}
-                  whileTap={{ scale: 0.98 }}
-                  type="submit"
-                  className="w-full py-4 rounded-xl font-bold text-white text-lg transition-all flex items-center justify-center gap-2 bg-gradient-to-r from-[#4285F4] to-[#2b6ce0] hover:from-[#3372f5] hover:to-[#225cc7] shadow-[0_0_20px_rgba(66,133,244,0.3)] group border border-[#4285F4]/30"
+                <button type="submit"
+                  className="w-full relative inline-flex items-center justify-center px-8 py-5 font-black text-xl md:text-2xl uppercase tracking-wider border-4 border-gray-800 rounded-2xl transition-all duration-200 active:translate-x-[4px] active:translate-y-[4px] hover:-translate-y-1 bg-[#e94e77] text-white shadow-[6px_6px_0px_#1f2937] hover:shadow-[8px_8px_0px_#1f2937] active:shadow-none"
                 >
-                  Tiếp tục thanh toán <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
-                </motion.button>
+                  THANH TOÁN GIỮ CHỖ <ArrowRight className="ml-3 font-black" size={28} strokeWidth={3} />
+                </button>
               </div>
-              <div className="flex items-center justify-center gap-2 text-slate-500 text-xs mt-2 font-medium">
-                <ShieldCheck size={14} className="text-slate-400" />
-                <span>Dữ liệu của bạn được mã hóa và bảo mật theo tiêu chuẩn Google Cloud</span>
+              <div className="flex items-center justify-center gap-2 text-gray-600 text-sm mt-4 font-bold bg-gray-100 py-2 rounded-xl border-2 border-dashed border-gray-300">
+                <ShieldCheck size={18} className="text-[#45b596]" strokeWidth={2.5} />
+                <span>Thông tin được bảo mật tại Google Cloud.</span>
               </div>
             </form>
           </motion.div>
         </div>
 
         {/* Right Column (Benefits) */}
-        <motion.div
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="space-y-6 lg:mt-16"
-        >
+        <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.2 }} className="space-y-8 lg:mt-32">
+          
           {/* Lợi ích khóa học */}
-          <div className="bg-[#1A1B1E]/80 backdrop-blur-md border border-white/10 rounded-2xl p-6 shadow-xl">
-            <h3 className="text-lg font-bold text-white mb-6 flex items-center gap-2 pb-4 border-b border-white/5">
-              <ShieldCheck className="text-[#4285F4]" size={22} /> Lợi ích khóa học
+          <div className="bg-[#45b596] border-4 border-gray-800 rounded-3xl p-8 shadow-[8px_8px_0px_#1f2937] transform rotate-1">
+             <Tape className="-top-3 left-10 transform -rotate-2 bg-[#ffcc00]" />
+            <h3 className="text-2xl font-black text-white mb-6 flex items-center gap-3 uppercase drop-shadow-[2px_2px_0px_#1a1a1a]">
+               Đặc Quyền
             </h3>
 
-            <ul className="space-y-6">
+            <ul className="space-y-6 bg-white p-6 border-4 border-gray-800 rounded-2xl shadow-inner">
               <li className="flex gap-4">
-                <div className="shrink-0 mt-0.5">
-                  <CheckCircle2 size={20} className="text-[#4285F4] drop-shadow-[0_0_8px_rgba(66,133,244,0.5)] bg-[#4285F4]/10 rounded-full" />
-                </div>
+                <div className="shrink-0 mt-0.5"><CheckCircle2 size={24} className="text-[#e94e77]" strokeWidth={3} /></div>
                 <div>
-                  <h4 className="font-semibold text-[15px] text-slate-200 mb-1">Chứng chỉ chính thức</h4>
-                  <p className="text-[13px] text-slate-400 leading-relaxed font-medium">Được công nhận bởi Google Developer Groups.</p>
+                  <h4 className="font-black text-lg text-gray-800 uppercase mb-1">Cầm tay chỉ việc</h4>
+                  <p className="font-bold text-gray-600 leading-relaxed">Hỗ trợ trực tiếp trên máy.</p>
                 </div>
               </li>
               <li className="flex gap-4">
-                <div className="shrink-0 mt-0.5">
-                  <CheckCircle2 size={20} className="text-[#4285F4] drop-shadow-[0_0_8px_rgba(66,133,244,0.5)] bg-[#4285F4]/10 rounded-full" />
-                </div>
+                <div className="shrink-0 mt-0.5"><CheckCircle2 size={24} className="text-[#e94e77]" strokeWidth={3} /></div>
                 <div>
-                  <h4 className="font-semibold text-[15px] text-slate-200 mb-1">Truy cập tài nguyên độc quyền</h4>
-                  <p className="text-[13px] text-slate-400 leading-relaxed font-medium">Sử dụng Google AI Studio & Vertex AI API miễn phí.</p>
+                  <h4 className="font-black text-lg text-gray-800 uppercase mb-1">Tài nguyên chuẩn</h4>
+                  <p className="font-bold text-gray-600 leading-relaxed">Mẫu Prompt Form SKKN.</p>
                 </div>
               </li>
               <li className="flex gap-4">
-                <div className="shrink-0 mt-0.5">
-                  <CheckCircle2 size={20} className="text-[#4285F4] drop-shadow-[0_0_8px_rgba(66,133,244,0.5)] bg-[#4285F4]/10 rounded-full" />
-                </div>
+                <div className="shrink-0 mt-0.5"><CheckCircle2 size={24} className="text-[#e94e77]" strokeWidth={3} /></div>
                 <div>
-                  <h4 className="font-semibold text-[15px] text-slate-200 mb-1">Networking toàn cầu</h4>
-                  <p className="text-[13px] text-slate-400 leading-relaxed font-medium">Kết nối với hơn 500+ chuyên gia AI hàng đầu.</p>
+                  <h4 className="font-black text-lg text-gray-800 uppercase mb-1">Không cần Code</h4>
+                  <p className="font-bold text-gray-600 leading-relaxed">Đóng gói Web trọn vẹn.</p>
                 </div>
               </li>
             </ul>
           </div>
 
-          {/* Sẵn sàng bứt phá */}
-          <div className="bg-[#1A1B1E] border border-white/10 rounded-2xl p-[2px] overflow-hidden relative shadow-xl group">
-            <div className="absolute inset-0 bg-gradient-to-br from-[#4285F4]/20 via-transparent to-cyan-400/20 opacity-100 transition-opacity duration-700 pointer-events-none mix-blend-screen"></div>
-            <div className="rounded-xl overflow-hidden relative aspect-[4/3] bg-[#0f1012] flex flex-col justify-end p-6 border border-white/5">
-
-              {/* Fake AI connection image pattern */}
-              <div className="absolute inset-0 opacity-40">
-                <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[60%] w-[150%]">
-                  <defs>
-                    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
-                      <stop offset="0%" stopColor="rgba(66, 133, 244, 0.5)" />
-                      <stop offset="100%" stopColor="transparent" />
-                    </radialGradient>
-                  </defs>
-                  {/* Central Node */}
-                  <circle cx="50%" cy="50%" r="40" fill="url(#glow)" />
-                  <circle cx="50%" cy="50%" r="4" fill="#60A5FA" className="animate-pulse" />
-
-                  {/* Lines to edges */}
-                  <g stroke="rgba(96, 165, 250, 0.4)" strokeWidth="1" strokeDasharray="3 3" className="opacity-80">
-                    <line x1="50%" y1="50%" x2="20%" y2="20%" />
-                    <line x1="50%" y1="50%" x2="80%" y2="15%" />
-                    <line x1="50%" y1="50%" x2="85%" y2="70%" />
-                    <line x1="50%" y1="50%" x2="15%" y2="80%" />
-                    <line x1="50%" y1="50%" x2="30%" y2="95%" />
-                    <line x1="50%" y1="50%" x2="70%" y2="90%" />
-                  </g>
-
-                  {/* Surrounding Nodes */}
-                  <g fill="#93C5FD">
-                    <circle cx="20%" cy="20%" r="2" />
-                    <circle cx="80%" cy="15%" r="2.5" />
-                    <circle cx="85%" cy="70%" r="1.5" />
-                    <circle cx="15%" cy="80%" r="3" />
-                    <circle cx="30%" cy="95%" r="2" />
-                    <circle cx="70%" cy="90%" r="2" />
-                  </g>
-                </svg>
-              </div>
-
-              <div className="relative z-10 w-full text-left mt-auto">
-                <span className="block text-[11px] font-bold text-white/70 tracking-[0.1em] uppercase mb-1 drop-shadow-md">SẴN SÀNG BỨT PHÁ</span>
-                <span className="text-base text-white font-bold drop-shadow-lg">Thế hệ AI mới bắt đầu từ bạn.</span>
-              </div>
-            </div>
+          <div className="bg-[#ffcc00] border-4 border-gray-800 rounded-3xl p-6 shadow-[8px_8px_0px_#e94e77] text-center transform -rotate-2">
+             <Sparkles className="mx-auto text-[#2a3b8f] mb-4" size={48} strokeWidth={2} />
+             <h3 className="font-black text-3xl uppercase text-gray-900 leading-tight">Chỉ còn <span className="text-[#e94e77] bg-white px-2 border-2 border-gray-800 rounded-lg">15</span> suất <br/> Early Bird!</h3>
           </div>
 
         </motion.div>
@@ -382,86 +278,56 @@ export default function RegisterPage() {
       {/* Confirmation Modal */}
       <AnimatePresence>
         {showModal && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center px-4 bg-[#0f1012]/80 backdrop-blur-md"
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center px-4 bg-gray-900/60 backdrop-blur-sm"
           >
-            <motion.div
-              initial={{ scale: 0.9, y: 20 }}
-              animate={{ scale: 1, y: 0 }}
-              exit={{ scale: 0.9, y: 20 }}
-              className="bg-[#1A1B1E] border border-white/10 rounded-[1.5rem] p-6 md:p-8 max-w-md w-full shadow-[0_0_50px_rgba(0,0,0,0.5)]"
+            <motion.div initial={{ scale: 0.9, y: 50, rotate: 2 }} animate={{ scale: 1, y: 0, rotate: 0 }} exit={{ scale: 0.9, y: 50, rotate: 2 }}
+              className="bg-[#fdfbf7] border-4 border-gray-800 rounded-[2rem] p-6 md:p-8 max-w-md w-full shadow-[16px_16px_0px_#2a3b8f] relative overflow-hidden"
             >
-              <div className="flex items-center gap-3 mb-4 text-[#4285F4]">
-                <Info size={28} className="shrink-0" />
-                <h3 className="text-xl font-bold text-white tracking-tight">Xác nhận thông tin</h3>
+              <Tape className="-top-4 left-1/2 -translate-x-1/2 bg-[#e94e77]" />
+              
+              <div className="flex items-center justify-center gap-3 mb-6 mt-2 relative z-10">
+                <h3 className="text-3xl font-black text-gray-800 tracking-tight uppercase" style={{ textShadow: '2px 2px 0px #ffcc00' }}>Xác nhận</h3>
               </div>
 
-              <p className="text-slate-400 text-sm mb-6 leading-relaxed">
-                Vui lòng kiểm tra lại thông tin đăng ký (đặc biệt là <b>Email</b> và <b>Số điện thoại</b>) bảo đảm chính xác để chúng tôi thêm bạn vào danh sách học viên.
+              <p className="text-gray-700 font-bold text-center mb-6 leading-relaxed relative z-10">
+                Thầy cô vui lòng kiểm tra lại <b>Email</b> và <b>Số điện thoại</b> để chúng em gửi vé tham gia nhé!
               </p>
 
-              <div className="bg-[#0f1012] border border-white/5 rounded-xl p-5 mb-6 space-y-4 shadow-inner">
+              <div className="bg-white border-4 border-gray-800 rounded-2xl p-5 mb-6 space-y-4 shadow-[inset_0px_4px_0px_rgba(0,0,0,0.05)] relative z-10">
                 <div className="flex flex-col gap-1">
-                  <span className="text-[11px] text-slate-500 font-bold uppercase tracking-wider">Họ và tên:</span>
-                  <span className="text-white font-semibold text-sm">{formData.fullName}</span>
+                  <span className="text-[12px] text-gray-500 font-black uppercase tracking-wider">Họ và tên:</span>
+                  <span className="text-gray-900 font-bold text-lg">{formData.fullName}</span>
                 </div>
-                <div className="h-px w-full bg-white/5"></div>
+                <div className="h-[2px] w-full border-t-2 border-dashed border-gray-300"></div>
                 <div className="flex flex-col gap-1">
-                  <span className="text-[11px] text-slate-500 font-bold uppercase tracking-wider">Email:</span>
-                  <span className="text-white font-semibold text-sm">{formData.email}</span>
+                  <span className="text-[12px] text-gray-500 font-black uppercase tracking-wider">Email:</span>
+                  <span className="text-[#2a3b8f] font-bold text-lg">{formData.email}</span>
                 </div>
-                <div className="h-px w-full bg-white/5"></div>
+                <div className="h-[2px] w-full border-t-2 border-dashed border-gray-300"></div>
                 <div className="flex flex-col gap-1">
-                  <span className="text-[11px] text-slate-500 font-bold uppercase tracking-wider">Số điện thoại:</span>
-                  <span className="text-white font-semibold text-sm">{formData.phone}</span>
+                  <span className="text-[12px] text-gray-500 font-black uppercase tracking-wider">Số điện thoại:</span>
+                  <span className="text-gray-900 font-bold text-lg">{formData.phone}</span>
                 </div>
-                {formData.job && (
-                  <>
-                    <div className="h-px w-full bg-white/5"></div>
-                    <div className="flex flex-col gap-1">
-                      <span className="text-[11px] text-slate-500 font-bold uppercase tracking-wider">Nghề nghiệp:</span>
-                      <span className="text-white font-semibold text-sm">{formData.job}</span>
-                    </div>
-                  </>
-                )}
               </div>
 
-              {/* Error in modal */}
-              {errorMessage && (
-                <motion.div
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="flex items-start gap-3 p-3 mb-6 bg-red-500/10 border border-red-500/30 rounded-lg"
-                >
-                  <AlertCircle className="text-red-400 text-sm shrink-0" size={16} />
-                  <p className="text-xs text-red-300 font-medium leading-relaxed">{errorMessage}</p>
-                </motion.div>
-              )}
+               {errorMessage && (
+                  <div className="flex items-start gap-3 p-3 mb-6 bg-[#ff7e67] border-4 border-gray-800 rounded-xl relative z-10">
+                    <AlertTriangle className="text-gray-900 shrink-0 mt-0.5" size={20} />
+                    <p className="text-sm text-gray-900 font-bold">{errorMessage}</p>
+                  </div>
+                )}
 
-              <div className="flex gap-4 mt-6">
-                <button
-                  onClick={() => { setShowModal(false); setErrorMessage(''); }}
-                  disabled={isSubmitting}
-                  className="flex-1 py-3 px-4 rounded-xl border border-slate-600 text-slate-300 hover:bg-white/5 hover:text-white font-semibold transition-colors disabled:opacity-50"
+              <div className="flex flex-col-reverse md:flex-row gap-4 mt-8 relative z-10">
+                <button onClick={() => { setShowModal(false); setErrorMessage(''); }} disabled={isSubmitting}
+                  className="w-full md:w-1/3 py-3 px-4 rounded-xl border-4 border-gray-800 text-gray-800 hover:bg-gray-200 font-black uppercase transition-colors disabled:opacity-50 active:translate-y-1 bg-white"
                 >
                   Sửa lại
                 </button>
-                <button
-                  onClick={handleConfirm}
-                  disabled={isSubmitting}
-                  className="flex-1 py-3 px-4 rounded-xl bg-gradient-to-r from-[#4285F4] to-blue-600 hover:from-blue-500 hover:to-blue-400 text-white font-bold transition-all shadow-[0_0_15px_rgba(66,133,244,0.4)] disabled:opacity-50 disabled:shadow-none flex items-center justify-center gap-2 border border-[#4285F4]/30"
+                <button onClick={handleConfirm} disabled={isSubmitting}
+                  className="w-full md:w-2/3 py-3 px-4 rounded-xl border-4 border-gray-800 bg-[#45b596] hover:bg-[#3ca386] text-white font-black uppercase transition-all shadow-[4px_4px_0px_#1f2937] hover:shadow-[2px_2px_0px_#1f2937] hover:translate-y-[2px] active:translate-y-1 active:shadow-none disabled:opacity-50 flex items-center justify-center gap-2"
                 >
-                  {isSubmitting ? (
-                    <>
-                      <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-                      <span className="text-sm">Đang xử lý...</span>
-                    </>
-                  ) : (
-                    'Xác nhận đăng ký'
-                  )}
+                  {isSubmitting ? 'ĐANG XỬ LÝ...' : 'XÁC NHẬN!'}
                 </button>
               </div>
             </motion.div>

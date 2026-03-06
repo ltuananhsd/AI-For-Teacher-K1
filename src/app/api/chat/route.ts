@@ -3,12 +3,14 @@ import OpenAI from 'openai';
 import { courseFAQs } from '@/data/chatbot-faq';
 
 // Khởi tạo interface của DeepSeek thông qua thư viện OpenAI
-const openai = new OpenAI({
-  apiKey: process.env.DEEPSEEK_API_KEY,
+// Đưa vào trong hàm POST để tránh lỗi "Missing credentials" lúc chạy build trên Vercel do thiếu env
+const getOpenAIClient = () => new OpenAI({
+  apiKey: process.env.DEEPSEEK_API_KEY || "dummy_key_for_build",
   baseURL: 'https://api.deepseek.com/v1',
 });
 
 export async function POST(req: Request) {
+  const openai = getOpenAIClient();
   try {
     const { messages } = await req.json();
 

@@ -1,0 +1,23 @@
+
+> google-ai-bootcamp-2026@0.1.0 build
+> next build
+
+Γû▓ Next.js 16.1.6 (Turbopack)
+- Environments: .env.local
+
+  Creating an optimized production build ...
+Γ£ô Compiled successfully in 3.0s
+  Running TypeScript ...
+  Collecting page data using 31 workers ...
+Error: Missing credentials. Please pass an `apiKey`, or set the `OPENAI_API_KEY` environment variable.
+    at instantiateModule (F:\OneDrive - www.KeyBanQuyen.VN\Documents\GitHub\CES_AI_For_Teacher\AI-For-Teacher-K1\.next\server\chunks\[turbopack]_runtime.js:740:9)
+    at instantiateRuntimeModule (F:\OneDrive - www.KeyBanQuyen.VN\Documents\GitHub\CES_AI_For_Teacher\AI-For-Teacher-K1\.next\server\chunks\[turbopack]_runtime.js:768:12)
+    at getOrInstantiateRuntimeModule (F:\OneDrive - www.KeyBanQuyen.VN\Documents\GitHub\CES_AI_For_Teacher\AI-For-Teacher-K1\.next\server\chunks\[turbopack]_runtime.js:781:12)
+    at Object.m (F:\OneDrive - www.KeyBanQuyen.VN\Documents\GitHub\CES_AI_For_Teacher\AI-For-Teacher-K1\.next\server\chunks\[turbopack]_runtime.js:790:18)
+    at Object.<anonymous> (F:\OneDrive - www.KeyBanQuyen.VN\Documents\GitHub\CES_AI_For_Teacher\AI-For-Teacher-K1\.next\server\app\api\chat\route.js:6:3)
+
+> Build error occurred
+Error: Failed to collect page data for /api/chat
+    at ignore-listed frames {
+  type: 'Error'
+}

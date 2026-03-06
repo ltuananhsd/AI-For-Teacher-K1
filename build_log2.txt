@@ -1,0 +1,23 @@
+
+> google-ai-bootcamp-2026@0.1.0 build
+> next build
+
+Γû▓ Next.js 16.1.6 (Turbopack)
+- Environments: .env.local
+
+  Creating an optimized production build ...
+Γ£ô Compiled successfully in 3.4s
+  Running TypeScript ...
+Failed to compile.
+
+./src/app/page.tsx:52:56
+Type error: Object literal may only specify known properties, and ''--tw-shadow-color'' does not exist in type 'Properties<string | number, string & {}>'.
+
+  50 |   <a href={href} 
+  51 |      className={`relative inline-flex items-center justify-center px-8 py-4 font-black text-lg md:text-xl uppercase tracking-wider border-4 border-gray-800 rounded-2xl transition-all duration-200 active:translate-x-[6px] active:translate-y-[6px] hover:-translate-y-1 ${bgClass} ${textColor} ${className}`}
+> 52 |      style={{ boxShadow: `6px 6px 0px ${shadowColor}`, '--tw-shadow-color': shadowColor }}
+     |                                                        ^
+  53 |      onMouseDown={(e) => e.currentTarget.style.boxShadow = '0px 0px 0px transparent'}
+  54 |      onMouseUp={(e) => e.currentTarget.style.boxShadow = `6px 6px 0px ${shadowColor}`}
+  55 |      onMouseLeave={(e) => e.currentTarget.style.boxShadow = `6px 6px 0px ${shadowColor}`}
+Next.js build worker exited with code: 1 and signal: null

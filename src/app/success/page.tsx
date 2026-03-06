@@ -3,8 +3,8 @@
 import { Suspense, useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
-import Image from "next/image";
 import Link from "next/link";
+import { Check, Star, Sparkles, Send, MapPin, Users, TicketCheck } from "lucide-react";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
 
@@ -15,12 +15,17 @@ interface PaymentInfo {
   transfer_content: string;
 }
 
+const Tape = ({ className = "" }) => (
+  <div className={`absolute w-24 h-8 bg-[#e94e77]/90 border-4 border-gray-800 opacity-90 backdrop-blur-sm z-20 ${className}`} 
+       style={{ boxShadow: '2px 2px 0px rgba(0,0,0,0.2)' }} />
+);
+
 export default function SuccessPage() {
   return (
     <Suspense fallback={
-      <div className="flex-1 flex items-center justify-center">
-        <div className="w-12 h-12 border-4 border-primary/30 border-t-primary rounded-full animate-spin" />
-      </div>
+       <div className="flex-1 min-h-[80vh] bg-[#fdfbf7] flex items-center justify-center">
+         <div className="w-16 h-16 border-8 border-gray-800 border-t-[#ffcc00] rounded-full animate-spin shadow-[4px_4px_0px_#1f2937]" />
+       </div>
     }>
       <SuccessContent />
     </Suspense>
@@ -33,14 +38,24 @@ function SuccessContent() {
   const [paymentInfo, setPaymentInfo] = useState<PaymentInfo | null>(null);
   const [isVerified, setIsVerified] = useState(false);
 
-  // Verify payment status on mount
   useEffect(() => {
     if (!registrationId) {
-      setIsVerified(true); // Show page even without ID (direct access)
+      setIsVerified(true);
       return;
     }
 
     const verifyPayment = async () => {
+      // --- TẠM TẮT GỌI API ĐỂ TEST UI ---
+      setTimeout(() => {
+        setPaymentInfo({
+          amount: 449000,
+          currency: 'VND',
+          paid_at: new Date().toISOString(),
+          transfer_content: 'CES K1 ' + new Date().toISOString().slice(11, 19).replace(/:/g, '')
+        });
+        setIsVerified(true);
+      }, 1000);
+      /* Code gọi thật đã bị ẩn
       try {
         const response = await fetch(`${API_BASE}/api/registrations/${registrationId}/status`);
         const data = await response.json();
@@ -51,9 +66,10 @@ function SuccessContent() {
           }
         }
       } catch {
-        /* Non-critical — page works without verified data */
+        //
       }
       setIsVerified(true);
+      */
     };
 
     verifyPayment();
@@ -61,167 +77,111 @@ function SuccessContent() {
 
   if (!isVerified) {
     return (
-      <div className="flex-1 flex items-center justify-center">
-        <div className="w-12 h-12 border-4 border-primary/30 border-t-primary rounded-full animate-spin" />
-      </div>
+       <div className="flex-1 min-h-[80vh] bg-[#fdfbf7] flex items-center justify-center">
+         <div className="w-16 h-16 border-8 border-gray-800 border-t-[#ffcc00] rounded-full animate-spin shadow-[4px_4px_0px_#1f2937]" />
+       </div>
     );
   }
 
   return (
-    <div className="flex-1 flex flex-col items-center justify-center px-4 py-12 md:py-20 mb-[100px]">
-      <div className="max-w-[1000px] w-full grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+    <div className="min-h-screen flex flex-col items-center justify-center px-4 py-12 md:py-20 mb-[50px] bg-[#fdfbf7] font-sans relative overflow-hidden">
+      
+      <div className="fixed inset-0 pointer-events-none opacity-[0.03] z-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] mix-blend-multiply" />
+      
+      {/* Abstract Decor */}
+      <div className="absolute top-10 right-10 w-32 h-32 bg-[#ffcc00] rounded-full border-4 border-gray-800" />
+      <div className="absolute top-40 left-10 w-24 h-24 bg-[#45b596] transform rotate-45 border-4 border-gray-800" />
 
-        {/* Success Messaging */}
-        <motion.div
-          initial={{ opacity: 0, x: -30 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.7 }}
-          className="flex flex-col space-y-8"
+      <div className="max-w-6xl w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
+
+        {/* Messaging (Left) */}
+        <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.7 }}
+          className="lg:col-span-7 flex flex-col space-y-8"
         >
-          <div className="inline-flex items-center gap-2 bg-google-green/10 text-google-green px-4 py-2 rounded-full w-fit">
-            <span className="material-symbols-outlined text-xl">check_circle</span>
-            <span className="text-sm font-bold tracking-wider uppercase">Success Confirmed</span>
+          <div className="inline-flex items-center gap-2 bg-[#ffcc00] border-4 border-gray-800 shadow-[4px_4px_0px_#1f2937] text-gray-900 px-6 py-3 rounded-full w-fit transform -rotate-2">
+            <Check size={24} strokeWidth={3} className="text-[#2a3b8f]" />
+            <span className="text-sm md:text-base font-black tracking-widest uppercase">Thanh toán hoàn tất!</span>
           </div>
 
           <div className="space-y-4">
-            <h1 className="text-4xl md:text-6xl font-bold text-white leading-tight">
-              Chào mừng tới <br />
-              <span className="text-[#4285F4] drop-shadow-[0_0_15px_rgba(66,133,244,0.6)] font-black tracking-tight">Thế hệ AI 2026</span>
+            <h1 className="text-4xl md:text-5xl lg:text-5xl font-black text-gray-800 uppercase leading-[1.3] drop-shadow-[4px_4px_0px_#e94e77]">
+              CHÀO MỪNG ĐẾN VỚI <span className="text-[#2a3b8f] tracking-tight border-b-8 border-[#ffcc00] mt-2 xl:mt-0 xl:inline-block">KHOÁ HỌC!</span>
             </h1>
-            <p className="text-lg md:text-xl text-slate-300 max-w-lg leading-relaxed">
-              Chúc mừng! Bạn đã chính thức trở thành thành viên của Google AI Ecosystem Bootcamp 2026. Một hành trình khai phá tiềm năng AI đang chờ đón bạn.
+            <p className="text-lg md:text-xl text-gray-600 font-bold max-w-lg leading-relaxed mt-4 bg-white border-4 border-gray-800 p-4 rounded-xl shadow-[4px_4px_0px_#1f2937] transform rotate-1">
+              Tuyệt vời quá thầy cô ơi! 🚀 Vé tham gia đã chính thức nằm trong tay. Một hành trình bứt phá công việc giảng dạy với AI đã rục rịch khởi hành!
             </p>
           </div>
 
-          {/* Payment confirmation info */}
+          {/* Payment receipt */}
           {paymentInfo && paymentInfo.paid_at && (
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-              className="bg-google-green/5 border border-google-green/20 rounded-xl p-4 space-y-2"
+            <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}
+              className="bg-[#45b596] border-4 border-gray-800 rounded-3xl p-6 shadow-[8px_8px_0px_#1f2937] space-y-3 relative transform -rotate-1 max-w-lg w-full"
             >
-              <div className="flex items-center gap-2 text-google-green text-sm font-semibold">
-                <span className="material-symbols-outlined text-lg">verified</span>
-                Thanh toán đã được xác nhận
+
+              <div className="flex items-center gap-3 text-white text-lg font-black uppercase tracking-wider bg-black/20 p-3 rounded-xl mb-4 border-4 border-gray-800">
+                <TicketCheck strokeWidth={3} />
+                Vé đã kích hoạt
               </div>
-              <div className="flex flex-col gap-1 text-sm">
-                <div className="flex justify-between">
-                  <span className="text-slate-400">Số tiền:</span>
-                  <span className="text-white font-semibold">
-                    {new Intl.NumberFormat('vi-VN').format(paymentInfo.amount)} {paymentInfo.currency}
-                  </span>
+              <div className="bg-white border-4 border-gray-800 rounded-2xl p-4 font-bold text-gray-800 flex flex-col gap-2">
+                <div className="flex justify-between items-center pb-2 border-b-2 border-dashed border-gray-300">
+                  <span className="uppercase text-gray-500 text-xs font-black">Số tiền</span>
+                  <span className="text-lg text-[#e94e77]">{new Intl.NumberFormat('vi-VN').format(paymentInfo.amount)} {paymentInfo.currency}</span>
                 </div>
-                <div className="flex justify-between">
-                  <span className="text-slate-400">Thời gian:</span>
-                  <span className="text-white font-semibold">
-                    {new Date(paymentInfo.paid_at).toLocaleString('vi-VN')}
-                  </span>
+                <div className="flex justify-between items-center pb-2 border-b-2 border-dashed border-gray-300">
+                  <span className="uppercase text-gray-500 text-xs font-black">Thời gian xử lý</span>
+                  <span>{new Date(paymentInfo.paid_at).toLocaleString('vi-VN')}</span>
                 </div>
-                <div className="flex justify-between">
-                  <span className="text-slate-400">Mã giao dịch:</span>
-                  <span className="text-white font-mono text-xs">{paymentInfo.transfer_content}</span>
+                <div className="flex justify-between items-center">
+                  <span className="uppercase text-gray-500 text-xs font-black">Mã vé (Giao dịch)</span>
+                  <span className="font-mono text-[#2a3b8f] uppercase bg-blue-50 px-2 py-1 rounded border-2 border-gray-800">{paymentInfo.transfer_content}</span>
                 </div>
               </div>
             </motion.div>
           )}
 
-          <div className="flex flex-col sm:flex-row gap-4 pt-4">
-            <a href="https://zalo.me/g/aqdhoc234" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-3 bg-primary text-white px-8 py-4 rounded-xl font-bold text-lg hover:shadow-lg hover:shadow-primary/20 transition-all active:scale-[0.98] whitespace-nowrap">
-              <span className="material-symbols-outlined">group</span>
-              Vào Nhóm Zalo Ngay
+          <div className="flex flex-col sm:flex-row gap-4 pt-4 mt-8 max-w-lg">
+            <a href="https://zalo.me/g/aqdhoc234" target="_blank" rel="noopener noreferrer" 
+               className="flex items-center justify-center gap-3 bg-[#e94e77] text-white px-8 py-5 border-4 border-gray-800 rounded-2xl font-black text-xl uppercase tracking-wider hover:-translate-y-1 shadow-[6px_6px_0px_#1f2937] hover:shadow-[8px_8px_0px_#1f2937] active:translate-y-2 active:shadow-none transition-all w-full text-center whitespace-nowrap"
+            >
+              <Send size={24} strokeWidth={3} /> VÀO ZALO NGAY
             </a>
-            <Link href="/" className="flex items-center justify-center gap-2 text-slate-400 hover:text-white px-6 py-4 font-medium transition-colors group">
-              Quay lại Trang chủ
-              <span className="material-symbols-outlined text-lg group-hover:translate-x-1 transition-transform">arrow_forward</span>
+            <Link href="/" className="flex items-center justify-center gap-3 bg-white text-gray-800 px-8 py-5 border-4 border-gray-800 rounded-2xl font-black text-lg uppercase tracking-wider hover:-translate-y-1 shadow-[6px_6px_0px_#1f2937] hover:shadow-[8px_8px_0px_#1f2937] active:translate-y-2 active:shadow-none transition-all w-full md:w-auto text-center">
+              TRANG CHỦ
             </Link>
-          </div>
-
-          {/* Steps Timeline */}
-          <div className="pt-8 border-t border-slate-800">
-            <p className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-6">Tiếp theo là gì?</p>
-            <div className="flex flex-col gap-6">
-              {[
-                { step: "1", title: "Tham gia cộng đồng", desc: "Kết nối với hơn 500+ học viên và chuyên gia tại nhóm Zalo chính thức.", active: true },
-                { step: "2", title: "Kiểm tra Email", desc: "Chúng tôi đã gửi bộ tài liệu khởi đầu và lịch trình chi tiết vào hòm thư của bạn.", active: false }
-              ].map((item, idx) => (
-                <div key={idx} className="flex gap-4">
-                  <div className={`flex-none size-8 rounded-full flex items-center justify-center font-bold ${item.active ? 'bg-primary/20 text-primary' : 'bg-slate-800/80 border border-white/5 text-slate-400'}`}>
-                    {item.step}
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-white">{item.title}</h4>
-                    <p className="text-sm text-slate-400">{item.desc}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
           </div>
         </motion.div>
 
-        {/* QR & Community Card */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.7, delay: 0.2 }}
-          className="relative @container"
+        {/* QR & Community Card (Right) */}
+        <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.7, delay: 0.2 }}
+          className="lg:col-span-5 relative flex justify-center mt-10 lg:mt-0"
         >
-          <div className="glow-border bg-[#101722]/60 backdrop-blur-xl border border-white/10 rounded-3xl p-8 flex flex-col items-center text-center shadow-2xl relative overflow-hidden">
-            {/* Background Pattern Decor */}
-            <div className="absolute top-0 right-0 p-8 opacity-5">
-              <span className="material-symbols-outlined text-9xl">qr_code_2</span>
+          <div className="bg-white border-4 border-gray-800 rounded-[2rem] p-8 md:p-10 flex flex-col items-center text-center shadow-[16px_16px_0px_#2a3b8f] relative overflow-hidden transform rotate-2 max-w-sm w-full">
+            <Tape className="-top-4 right-8 bg-[#45b596] -rotate-6" />
+
+            <div className="w-16 h-16 bg-[#2a3b8f] rounded-full border-4 border-gray-800 flex items-center justify-center absolute -top-8 -left-8 shadow-[4px_4px_0px_#ffcc00] z-20">
+              <Star className="text-white fill-[#ffcc00] w-8 h-8 rotate-45" />
             </div>
-
-            <div className="relative z-10 w-full flex flex-col items-center">
-              <div className="mb-6 p-4 bg-white/5 rounded-2xl">
-                <div className="size-64 md:size-72 bg-white/10 backdrop-blur-sm p-4 rounded-lg shadow-inner flex items-center justify-center relative group">
-                  <div className="absolute inset-0 bg-gradient-to-tr from-white/5 to-transparent rounded-lg"></div>
-
-                  <img src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=https://zalo.me/g/aqdhoc234&margin=10" alt="Zalo community group QR code" className="object-contain w-[98%] h-[98%] bg-white relative z-10 rounded-lg" />
-
-                  {/* QR Frame Corners */}
-                  <div className="absolute -top-2 -left-2 size-6 border-t-4 border-l-4 border-google-blue rounded-tl-lg"></div>
-                  <div className="absolute -top-2 -right-2 size-6 border-t-4 border-r-4 border-google-red rounded-tr-lg"></div>
-                  <div className="absolute -bottom-2 -left-2 size-6 border-b-4 border-l-4 border-google-yellow rounded-bl-lg"></div>
-                  <div className="absolute -bottom-2 -right-2 size-6 border-b-4 border-r-4 border-google-green rounded-br-lg"></div>
+            
+            <div className="relative z-10 w-full flex flex-col items-center mt-4">
+               {/* QR Zalo */}
+              <div className="mb-6 bg-gray-100 border-4 border-gray-800 rounded-2xl p-3 shadow-[inset_0px_4px_0px_rgba(0,0,0,0.1)]">
+                <div className="relative bg-white border-4 border-gray-800 rounded-xl overflow-hidden shadow-[4px_4px_0px_#e94e77]">
+                  <img src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=https://zalo.me/g/aqdhoc234&margin=10" alt="Zalo community QR" className="object-contain w-48 h-48 md:w-56 md:h-56 pointer-events-none" />
                 </div>
               </div>
 
-              <h3 className="text-2xl font-bold text-white mb-2">Quét mã để gia nhập</h3>
-              <p className="text-slate-300 mb-8 max-w-xs">
-                Tham gia nhóm thảo luận của cohort 2026 để nhận cập nhật tài liệu đào tạo sớm nhất.
+              <h3 className="text-2xl md:text-3xl font-black text-gray-800 uppercase mb-2 drop-shadow-[1px_1px_0px_#ffcc00]">Quét phát vào lớp!</h3>
+              <p className="text-gray-600 font-bold mb-6 text-sm leading-relaxed border-t-2 border-dashed border-gray-300 pt-4">
+                Thầy cô nhớ gia nhập nhóm Zalo ngay để nhận tài liệu chuẩn bị, Link cài đặt các phần mềm nhé.
               </p>
 
-              <div className="w-full space-y-4">
-                <div className="flex items-center justify-center gap-4 text-sm font-medium text-slate-500">
-                  <div className="h-px grow bg-white/10"></div>
-                  <span>HOẶC</span>
-                  <div className="h-px grow bg-white/10"></div>
-                </div>
-                <button
-                  onClick={() => navigator.clipboard.writeText("https://zalo.me/g/aqdhoc234")}
-                  className="w-full py-3 px-4 border border-white/20 text-white rounded-xl font-bold hover:bg-white/10 transition-colors"
-                >
-                  Copy Link Tham Gia
-                </button>
-              </div>
+              <button onClick={() => navigator.clipboard.writeText("https://zalo.me/g/aqdhoc234")}
+                 className="w-full py-4 px-4 bg-white border-4 border-gray-800 text-gray-900 rounded-2xl font-black uppercase text-sm tracking-wider hover:bg-[#ffcc00] transition-colors shadow-[4px_4px_0px_#1f2937] active:translate-y-1 active:shadow-none"
+              >
+                Copy Link Zalo
+              </button>
             </div>
           </div>
-
-          {/* Floating Badge */}
-          <motion.div
-            animate={{ y: [0, -10, 0] }}
-            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute -top-6 -right-6 md:-right-12 bg-[#101722]/80 backdrop-blur-xl p-4 rounded-2xl shadow-xl flex items-center gap-4 border border-white/10 z-20"
-          >
-            <div className="size-12 rounded-full bg-google-blue/10 flex items-center justify-center text-google-blue">
-              <span className="material-symbols-outlined">verified</span>
-            </div>
-            <div className="text-left">
-              <p className="text-xs font-bold text-slate-400 uppercase">Trusted by</p>
-              <p className="font-bold text-white line-clamp-1">Google Developers</p>
-            </div>
-          </motion.div>
         </motion.div>
 
       </div>
