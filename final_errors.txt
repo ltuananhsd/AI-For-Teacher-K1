@@ -122,3 +122,4 @@ src/app/home-v2/page.tsx(1250,17): error TS2322: Type '{ hidden: { opacity: numb
                 Type '{ duration: number; ease: string; }' is not assignable to type 'ValueAnimationTransition<any>'.
                   Types of property 'ease' are incompatible.
                     Type 'string' is not assignable to type 'Easing | Easing[] | undefined'.
+
