@@ -1,83 +1,74 @@
-# Google AI Ecosystem Bootcamp 2026 — Frontend
+# Khai Mở Sức Mạnh AI - Khóa Học Thực Chiến Cho Giáo Viên (K1)
 
-Landing page and registration flow for the **Google AI Ecosystem Bootcamp 2026** training program by CES Global.
+Trang Landing page và luồng đăng ký cho chương trình đào tạo **Khóa học ứng dụng AI cho Giáo viên - Khai Mở Sức Mạnh AI** do CES Global tổ chức.
 
-Built with **Next.js 16**, **React 19**, **Tailwind CSS v4**, and **Framer Motion**.
-
----
-
-## Tech Stack
-
-| Technology       | Version | Purpose                                        |
-| ---------------- | ------- | ---------------------------------------------- |
-| Next.js          | 16.1.6  | App Router, SSR/SSG, Image & Font optimization |
-| React            | 19.2.3  | UI rendering                                   |
-| TypeScript       | ^5      | Static type safety (strict mode)               |
-| Tailwind CSS     | ^4      | Utility-first styling via PostCSS plugin       |
-| Framer Motion    | ^12     | Scroll animations & page transitions           |
-| Lucide React     | ^0.575  | Icon library                                   |
-| Material Symbols | CDN     | Google icon font                               |
+Dự án được xây dựng với **Next.js 16**, **React 19**, **Tailwind CSS v4**, và **Framer Motion**.
+Đặc biệt, giao diện sử dụng ngôn ngữ thiết kế **Retro Brutalism / Playful Education** với viền nét đậm, bóng đổ màu khối cứng, và hiệu ứng dán giấy (tape) mang lại cảm giác sổ tay giáo dục sinh động.
 
 ---
 
-## Prerequisites
+## Công nghệ sử dụng
+
+| Công nghệ        | Phiên bản | Mục đích                                       |
+| ---------------- | --------- | ---------------------------------------------- |
+| Next.js          | 16.1.6    | App Router, SSR/SSG, Tối ưu Image & Font       |
+| React            | 19.2.3    | Render UI                                      |
+| TypeScript       | ^5        | Kiểm soát kiểu dữ liệu tĩnh (strict mode)      |
+| Tailwind CSS     | ^4        | Utility-first styling (PostCSS plugin)         |
+| Framer Motion    | ^12       | Hiệu ứng cuộn trang & animations lò xo (spring)|
+| Lucide React     | ^0.575    | Thư viện Icon                                  |
+
+---
+
+## Yêu cầu hệ thống
 
 - **Node.js** >= 20
-- **npm** (included with Node.js)
+- **npm** (đi kèm với Node.js)
 
 ---
 
-## Getting Started
+## Hướng dẫn cài đặt & Khởi động
 
 ```bash
-# 1. Install dependencies
+# 1. Cài đặt các thư viện (dependencies)
 npm install
 
-# 2. Start development server
+# 2. Khởi động server môi trường phát triển (development)
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+Mở [http://localhost:3000](http://localhost:3000) trên trình duyệt để xem kết quả.
 
 ---
 
-## Available Scripts
+## Các tập lệnh (Scripts)
 
-| Script          | Command      | Description               |
-| --------------- | ------------ | ------------------------- |
-| `npm run dev`   | `next dev`   | Start dev server with HMR |
-| `npm run build` | `next build` | Production build          |
-| `npm run start` | `next start` | Start production server   |
-| `npm run lint`  | `eslint`     | Run ESLint checks         |
+| Lệnh            | Lệnh gốc     | Mô tả                                       |
+| --------------- | ------------ | ------------------------------------------- |
+| `npm run dev`   | `next dev`   | Mở local server với tính năng Hot Reload    |
+| `npm run build` | `next build` | Build ứng dụng cho môi trường Production    |
+| `npm run start` | `next start` | Khởi chạy server Production sau khi build   |
+| `npm run lint`  | `eslint`     | Chạy kiểm tra mã nguồn (ESLint)             |
 
 ---
 
-## Project Structure
+## Cấu trúc dự án
 
-```
+```text
 ├── public/
-│   └── images/              # Static assets (logos, avatars, QR codes)
+│   └── images/              # Assets hình ảnh (logo, avatar) 
 ├── src/
 │   ├── app/                 # Next.js App Router
-│   │   ├── globals.css      # Tailwind config + custom theme
-│   │   ├── layout.tsx       # Root layout (font, metadata, Header/Footer)
-│   │   ├── page.tsx         # Landing page
-│   │   ├── register/        # Step 1: Registration form
-│   │   ├── payment/         # Step 2: QR payment
-│   │   └── success/         # Step 3: Confirmation
+│   │   ├── globals.css      # Cấu hình Tailwind (v4) & các Utility class cốt lõi
+│   │   ├── layout.tsx       # Root layout (font chữ, thẻ metadata)
+│   │   ├── page.tsx         # Trang chủ (Monolithic component với Retro UI)
+│   │   ├── register/        # Bước 1: Form đăng ký
+│   │   ├── payment/         # Bước 2: Thanh toán QR Code
+│   │   └── success/         # Bước 3: Hoàn tất đăng ký
 │   └── components/
-│       ├── layout/
-│       │   ├── Header.tsx   # Fixed glassmorphism navbar
-│       │   └── Footer.tsx   # Site footer
-│       └── home/            # Landing page section components
-│           ├── TubesBackground.tsx
-│           ├── HeroSection.tsx
-│           ├── ProblemSection.tsx
-│           ├── SolutionSection.tsx
-│           ├── RoadmapSection.tsx
-│           ├── OutcomesSection.tsx
-│           └── CallToAction.tsx
-├── AGENTS.md                # AI Coding Agent guidelines
+│       ├── layout/          # Header, Footer, Chatbot
+│       └── home/            # Các section của landing page (nếu được tách)
+├── AGENTS.md                # Quy tắc dành cho AI Agent code trong dự án
 ├── package.json
 ├── tsconfig.json
 ├── eslint.config.mjs
@@ -87,85 +78,75 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ---
 
-## User Flow
+## Luồng người dùng (User Flow)
 
+```text
+Trang Chủ (/) → Đăng Ký (/register) → Thanh Toán (/payment) → Thành Công (/success)
 ```
-Landing (/) → Register (/register) → Payment (/payment) → Success (/success)
-```
 
-| Page        | Description                                                                       |
-| ----------- | --------------------------------------------------------------------------------- |
-| `/`         | Marketing landing page with 10 sections (hero, roadmap, ecosystem map, CTA, etc.) |
-| `/register` | Multi-step registration form with validation                                      |
-| `/payment`  | QR code payment with countdown timer + auto-verification                          |
-| `/success`  | Confirmation page with Zalo community group link                                  |
+| Route       | Mô tả                                                                               |
+| ----------- | ----------------------------------------------------------------------------------- |
+| `/`         | Landing page marketing (Hero, Thực trạng, Giải pháp, Lộ trình, Hình ảnh giảng viên) |
+| `/register` | Form thu thập thông tin đăng ký của giáo viên học viên                              |
+| `/payment`  | Cổng quét mã QR thanh toán với đồng hồ đếm ngược                                    |
+| `/success`  | Trang xác nhận sau khi thanh toán, cung cấp link vào nhóm Zalo lớp học            |
 
 ---
 
-## Design System
+## Hệ thống thiết kế (Design System)
 
-The visual design uses a **dark theme** with Google brand colors:
+Dự án sử dụng ngôn ngữ thiết kế **Retro Brutalism** kết hợp phong cách Scrapbook trường học. Không sử dụng thiết kế Flat, Sleek, hay Glassmorphism thông thường.
 
-| Token           | Hex       | Usage                    |
-| --------------- | --------- | ------------------------ |
-| `primary`       | `#4387f4` | Google Blue — CTA, links |
-| `google-red`    | `#ea4335` | Accent, warnings         |
-| `google-yellow` | `#fbbc05` | Highlights, badges       |
-| `google-green`  | `#34a853` | Success states           |
+### Bảng màu chủ đạo (Retro Palette):
 
-Custom theme tokens are defined in `src/app/globals.css` using Tailwind v4's `@theme` directive.
+| Tên biến | Mã Hex    | Chức năng                   |
+| -------- | --------- | --------------------------- |
+| `navy`   | `#2a3b8f` | Heading, khối tạo độ tương phản |
+| `pink`   | `#e94e77` | Nút hành động chính (CTA), Miếng dán |
+| `yellow` | `#ffcc00` | Highlight nổi bật, Tag, Bóng đổ |
+| `teal`   | `#45b596` | Màu nhấn, trạng thái thành công |
+| `orange` | `#ff7e67` | Màu nhấn, cảnh báo              |
+| `bg`     | `#fdfbf7` | Màu nền tĩnh như giấy cream     |
+| `dark`   | `#1f2937` | Màu đoạn văn tả text cốt lõi    |
 
-### Key UI Patterns
+### 4 Nguyên tắc UI cốt lõi:
 
-- **Glassmorphism cards**: Semi-transparent backgrounds with `backdrop-blur`
-- **3D Tubes Background**: WebGL effect via threejs-components CDN on hero section
-- **Scroll reveal animations**: Framer Motion `whileInView` with stagger effects
-- **Responsive grid**: Mobile-first, 1 → 2 → 3 column layouts
-
----
-
-## Font
-
-**Space Grotesk** — loaded via `next/font/google` with Vietnamese subset support.
-
-Weights: 300 (Light), 400 (Regular), 500 (Medium), 600 (SemiBold), 700 (Bold)
+1. **Viền (Borders)**: Tất cả module chính phải có viền dày cứng `border-4 border-gray-800`.
+2. **Bóng cứng (Solid Shadows)**: Không dùng bóng mờ, đổ bóng bằng block màu đặc: `shadow-[6px_6px_0px_#2a3b8f]`.
+3. **Typography**: Chữ Headline đè viền (`text-shadow`) kết hợp in hoa cứng cáp.
+4. **Góc nghiêng (Tilt)**: Các sticker, thiệp báo hiệu, giấy dính (tape) hoặc module mang sắc thái lộn xộn nhẹ `rotate-2`, `-rotate-3`. 
 
 ---
 
-## Deployment
+## Font chữ
 
-### Vercel (Recommended)
+**Space Grotesk** — Tích hợp qua `next/font/google` với subset tiếng Việt.
+Hỗ trợ nét cứng, phù hợp với phong cách Brutalism.
+
+---
+
+## Hướng dẫn Triển khai (Deployment)
+
+### Khuyến nghị: Vercel
 
 ```bash
-# Build
+# Chạy câu lệnh sinh ra các assets frontend tĩnh (nếu cần test)
 npm run build
-
-# The .next/ directory is the build output
-# Vercel handles this automatically
 ```
 
-1. Push to GitHub
-2. Import the repo in [Vercel](https://vercel.com)
-3. Deploy — no environment variables required for the frontend
-
-### Other Platforms
-
-Any platform supporting Node.js can serve this app:
-
-```bash
-npm run build
-npm run start    # Starts on port 3000
-```
+1. Đẩy code lên môi trường GitHub/GitLab.
+2. Thêm mới dự án lấy từ tài khoản trên [Vercel](https://vercel.com).
+3. Ấn Deploy — Với Frontend tĩnh không cần thiết lập Variable môi trường đính kèm.
 
 ---
 
-## Related
+## Xem thêm
 
-- **Backend**: Separate repository at [vuhai2002/backend-google-ai-bootcamp-2026](https://github.com/vuhai2002/backend-google-ai-bootcamp-2026) (Express + TypeScript + Supabase)
-- **AI Agent Guidelines**: See [AGENTS.md](./AGENTS.md) for coding conventions and architectural rules
+- **Cẩm nang cho AI**: Tệp [AGENTS.md](./AGENTS.md) mô tả luật sinh code và kiến trúc.
+- **Backend**: (Cần bổ sung URL tới Repo Express backend nếu dự án đăng ký có liên kết trực tiếp).
 
 ---
 
-## License
+## Bản quyền
 
-© 2026 CES Global. All rights reserved. Andy
+© 2026 CES Global. Toàn quyền sở hữu.
