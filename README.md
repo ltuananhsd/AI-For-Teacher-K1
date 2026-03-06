@@ -8,15 +8,15 @@ Built with **Next.js 16**, **React 19**, **Tailwind CSS v4**, and **Framer Motio
 
 ## Tech Stack
 
-| Technology       | Version | Purpose                                    |
-| ---------------- | ------- | ------------------------------------------ |
+| Technology       | Version | Purpose                                        |
+| ---------------- | ------- | ---------------------------------------------- |
 | Next.js          | 16.1.6  | App Router, SSR/SSG, Image & Font optimization |
-| React            | 19.2.3  | UI rendering                               |
-| TypeScript       | ^5      | Static type safety (strict mode)           |
-| Tailwind CSS     | ^4      | Utility-first styling via PostCSS plugin   |
-| Framer Motion    | ^12     | Scroll animations & page transitions       |
-| Lucide React     | ^0.575  | Icon library                               |
-| Material Symbols | CDN     | Google icon font                           |
+| React            | 19.2.3  | UI rendering                                   |
+| TypeScript       | ^5      | Static type safety (strict mode)               |
+| Tailwind CSS     | ^4      | Utility-first styling via PostCSS plugin       |
+| Framer Motion    | ^12     | Scroll animations & page transitions           |
+| Lucide React     | ^0.575  | Icon library                                   |
+| Material Symbols | CDN     | Google icon font                               |
 
 ---
 
@@ -43,12 +43,12 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ## Available Scripts
 
-| Script          | Command            | Description                     |
-| --------------- | ------------------ | ------------------------------- |
-| `npm run dev`   | `next dev`         | Start dev server with HMR       |
-| `npm run build` | `next build`       | Production build                 |
-| `npm run start` | `next start`       | Start production server          |
-| `npm run lint`  | `eslint`           | Run ESLint checks                |
+| Script          | Command      | Description               |
+| --------------- | ------------ | ------------------------- |
+| `npm run dev`   | `next dev`   | Start dev server with HMR |
+| `npm run build` | `next build` | Production build          |
+| `npm run start` | `next start` | Start production server   |
+| `npm run lint`  | `eslint`     | Run ESLint checks         |
 
 ---
 
@@ -93,12 +93,12 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 Landing (/) → Register (/register) → Payment (/payment) → Success (/success)
 ```
 
-| Page        | Description                                                |
-| ----------- | ---------------------------------------------------------- |
+| Page        | Description                                                                       |
+| ----------- | --------------------------------------------------------------------------------- |
 | `/`         | Marketing landing page with 10 sections (hero, roadmap, ecosystem map, CTA, etc.) |
-| `/register` | Multi-step registration form with validation               |
-| `/payment`  | QR code payment with countdown timer + auto-verification   |
-| `/success`  | Confirmation page with Zalo community group link           |
+| `/register` | Multi-step registration form with validation                                      |
+| `/payment`  | QR code payment with countdown timer + auto-verification                          |
+| `/success`  | Confirmation page with Zalo community group link                                  |
 
 ---
 
@@ -106,12 +106,12 @@ Landing (/) → Register (/register) → Payment (/payment) → Success (/succes
 
 The visual design uses a **dark theme** with Google brand colors:
 
-| Token          | Hex       | Usage                    |
-| -------------- | --------- | ------------------------ |
-| `primary`      | `#4387f4` | Google Blue — CTA, links |
-| `google-red`   | `#ea4335` | Accent, warnings         |
-| `google-yellow`| `#fbbc05` | Highlights, badges       |
-| `google-green` | `#34a853` | Success states           |
+| Token           | Hex       | Usage                    |
+| --------------- | --------- | ------------------------ |
+| `primary`       | `#4387f4` | Google Blue — CTA, links |
+| `google-red`    | `#ea4335` | Accent, warnings         |
+| `google-yellow` | `#fbbc05` | Highlights, badges       |
+| `google-green`  | `#34a853` | Success states           |
 
 Custom theme tokens are defined in `src/app/globals.css` using Tailwind v4's `@theme` directive.
 
@@ -168,4 +168,4 @@ npm run start    # Starts on port 3000
 
 ## License
 
-© 2026 CES Global. All rights reserved.
+© 2026 CES Global. All rights reserved. Andy
